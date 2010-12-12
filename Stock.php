@@ -211,6 +211,16 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form17")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Sector_ID=%s, In_Charge=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Sector_ID'], "int"),
+                       GetSQLValueString($_POST['In_Charge'], "int"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form13")) {
   $insertSQL = sprintf("INSERT INTO Details (Stock_ID, Last_Entry_Date, Sector_Analysis_Title, Sector_Analysis_Text) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "int"),
@@ -334,6 +344,12 @@ $Detail = mysql_query($query_Detail, $localhost) or die(mysql_error());
 $row_Detail = mysql_fetch_assoc($Detail);
 $totalRows_Detail = mysql_num_rows($Detail);
 
+mysql_select_db($database_localhost, $localhost);
+$query_Sectors = "SELECT * FROM Sectors";
+$Sectors = mysql_query($query_Sectors, $localhost) or die(mysql_error());
+$row_Sectors = mysql_fetch_assoc($Sectors);
+$totalRows_Sectors = mysql_num_rows($Sectors);
+
 $queryString_Discussions = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);
@@ -395,31 +411,43 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
         <div class="TabbedPanelsContent">
           <table width="100%" border="0">
             <tr>
-              <td colspan="2"><form id="form14" name="form14" method="post" action="">
-                </form>
-                <form action="<?php echo $editFormAction; ?>" method="post" name="form16" id="form16">
-                  <table width="100%" align="center">
-                    <tr valign="baseline">
-                      <td width="42%" align="right" nowrap="nowrap">In charge</td>
-                      <td width="58%"><select name="In_Charge">
-                        <?php 
+              <td colspan="2">
+              <form action="<?php echo $editFormAction; ?>" method="post" name="form17" id="form17">
+                <table width="100%" align="center">
+                  <tr valign="baseline">
+                    <td width="37%" align="right" nowrap="nowrap">Sector</td>
+                    <td width="63%"><select name="Sector_ID">
+                      <?php 
 do {  
 ?>
-                        <option value="<?php echo $row_Users['Id']?>" <?php if (!(strcmp($row_Users['Id'], htmlentities($row_Sector['In_Charge'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_Users['Initiales']?></option>
-                        <?php
+                      <option value="<?php echo $row_Sectors['Sector_ID']?>" <?php if (!(strcmp($row_Sectors['Sector_ID'], htmlentities($row_Sector['Sector_ID'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_Sectors['Sector_Name']?></option>
+                      <?php
+} while ($row_Sectors = mysql_fetch_assoc($Sectors));
+?>
+                    </select></td>
+                  </tr>
+                  <tr> </tr>
+                  <tr valign="baseline">
+                    <td nowrap="nowrap" align="right">In charge</td>
+                    <td><select name="In_Charge">
+                      <?php 
+do {  
+?>
+                      <option value="<?php echo $row_Users['Id']?>" <?php if (!(strcmp($row_Users['Id'], htmlentities($row_Sector['In_Charge'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_Users['Initiales']?></option>
+                      <?php
 } while ($row_Users = mysql_fetch_assoc($Users));
 ?>
-                      </select></td>
-                    </tr>
-                    <tr> </tr>
-                    <tr valign="baseline">
-                      <td nowrap="nowrap" align="right">&nbsp;</td>
-                      <td><input type="submit" value="Update" /></td>
-                    </tr>
-                  </table>
-                  <input type="hidden" name="MM_update" value="form16" />
-                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-                </form>
+                    </select></td>
+                  </tr>
+                  <tr> </tr>
+                  <tr valign="baseline">
+                    <td nowrap="nowrap" align="right">&nbsp;</td>
+                    <td><input type="submit" value="Update record" /></td>
+                  </tr>
+                </table>
+                <input type="hidden" name="MM_update" value="form17" />
+                <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+              </form>
               <p>&nbsp;</p></td>
               <td align="right" valign="top">&nbsp;</td>
               <td valign="top">&nbsp;Available analysis :
@@ -983,6 +1011,8 @@ var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "date
 </html>
 <?php
 mysql_free_result($Detail);
+
+mysql_free_result($Sectors);
 
 mysql_free_result($Sector);
 
