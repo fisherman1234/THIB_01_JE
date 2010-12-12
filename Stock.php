@@ -524,11 +524,7 @@ do {
             <input type="hidden" name="MM_update" value="form2" />
             <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
           </form>
-          <p>&nbsp;</p>
-<p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
+          
         </div>
         <div class="TabbedPanelsContent">
           <form id="form3" name="form3" method="post" action="">
@@ -925,7 +921,6 @@ do {
             <div class="AccordionPanel">
               <div class="AccordionPanelTab">All entries</div>
               <div class="AccordionPanelContent">
-                <p>&nbsp;
                 <table width="100%" border="1" align="center">
                   <tr>
                     <td width="20%">Last entry date</td>
@@ -947,7 +942,7 @@ do {
             <div class="AccordionPanel">
               <div class="AccordionPanelTab">New entry</div>
               <div class="AccordionPanelContent">
-                <p>&nbsp;</p>
+                
                 <form action="<?php echo $editFormAction; ?>" method="post" name="form13" id="form13">
                   <table align="center">
                     <tr valign="baseline">
@@ -987,9 +982,7 @@ do {
     <p>BDL Capital Management - 2010</p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
-<ul>
-  <li></li>
-</ul>
+
 <script type="text/javascript">
 <!--
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
