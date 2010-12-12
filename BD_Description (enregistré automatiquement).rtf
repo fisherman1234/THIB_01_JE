@@ -1,0 +1,79 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf540
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww5360\viewh10820\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 Stock Table\
+
+\b0 \
+Stock_ID				Integer\
+Stock_name			Varchar(30)\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 Sector_ID				Integer\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 In_Charge			Integer\
+Environment			Text-long\
+Business_Description	Text-long\
+Competition			Text-long\
+Management			Text-long\
+Is_In_Portfolio			Boolean\
+Valorisation			Link\
+Investment_case		Memo_Text\
+Investment_risk	s_macro	Text_long\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 Investment_risks_micro	Text_long\
+Rating				Integer\
+\
+
+\b BDL_Discussions\
+
+\b0 Discussion_ID			Integer\
+Stock_ID				Integer\
+Discussion_Date		Date\
+View_BDL			Varchar\
+Alert_BDL				Boolean\
+Stock_Price			Varchar\
+Alert_Date			Date\
+Position_BDL			Integer\
+\
+
+\b Meetings_Results\
+
+\b0 Meeting_ID			Integer\
+Stock_ID				Integer\
+Meeting_Type			Integer\
+Meeting_Date			Integer\
+Meeting_Contact		Varchar\
+BDL_Contact			Integer \
+Meeting_Notes			Memo\
+Conclusions			Memo\
+\
+
+\b Contacts\
+
+\b0 Contact_ID			Integer\
+Stock_ID				Integer\
+Job_Position			Integer\
+Name				Integer\
+Title					Integer\
+Email				Integer	\
+Telephone			Integer\
+\
+
+\b Detail
+\b0 \
+Detail_ID				Integer\
+Stock_ID				Integer\
+Last_Entry_Date		Integer\
+Sector_Analysis_Title	Integer\
+Sector_Analysis_Text	Memo\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b \cf0 Sectors\
+
+\b0 Sector_Name			String\
+Sector_ID				Int\
+\
+}
