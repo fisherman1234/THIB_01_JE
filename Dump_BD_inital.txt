@@ -1,0 +1,788 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.5
+-- http://www.phpmyadmin.net
+--
+-- Serveur: localhost
+-- Généré le : Mar 14 Décembre 2010 à 00:32
+-- Version du serveur: 5.1.44
+-- Version de PHP: 5.2.13
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Base de données: `BDL_Capital_Management`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `BDL_Discussions`
+--
+
+CREATE TABLE `BDL_Discussions` (
+  `Discussion_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Discussion_Date` date DEFAULT NULL,
+  `Stock_ID` int(6) NOT NULL,
+  `View_BDL` longtext,
+  `Alert_BDL` tinyint(1) NOT NULL,
+  `Alert_Date` date DEFAULT NULL,
+  `Stock_Price` text,
+  `Position_BDL` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`Discussion_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Contenu de la table `BDL_Discussions`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Contacts`
+--
+
+CREATE TABLE `Contacts` (
+  `Contact_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Stock_ID` int(6) NOT NULL,
+  `Job_Title` varchar(60) DEFAULT NULL,
+  `Name` varchar(200) DEFAULT NULL,
+  `Title` varchar(200) DEFAULT NULL,
+  `Email` varchar(200) DEFAULT NULL,
+  `Telephone` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`Contact_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Contenu de la table `Contacts`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Details`
+--
+
+CREATE TABLE `Details` (
+  `Detail_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Sector_ID` int(6) NOT NULL,
+  `Last_Entry_Date` date DEFAULT NULL,
+  `Sector_Analysis_Title` varchar(200) DEFAULT NULL,
+  `Sector_Analysis_Text` longtext,
+  PRIMARY KEY (`Detail_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `Details`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Meetings_Results`
+--
+
+CREATE TABLE `Meetings_Results` (
+  `Meeting_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Stock_ID` int(6) NOT NULL,
+  `Meeting_Type` varchar(30) DEFAULT NULL,
+  `Meeting_Date` date DEFAULT NULL,
+  `Meeting_Contact` varchar(200) DEFAULT NULL,
+  `BDL_Contact` int(6) DEFAULT NULL,
+  `Meeting_Notes` longtext,
+  `Meeting_Conclusions` longtext,
+  PRIMARY KEY (`Meeting_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Contenu de la table `Meetings_Results`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Sectors`
+--
+
+CREATE TABLE `Sectors` (
+  `Sector_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Sector_Name` varchar(60) NOT NULL,
+  PRIMARY KEY (`Sector_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Contenu de la table `Sectors`
+--
+
+INSERT INTO `Sectors` VALUES(2, 'Automobiles & Parts');
+INSERT INTO `Sectors` VALUES(3, 'Banks');
+INSERT INTO `Sectors` VALUES(4, 'Basic Resources');
+INSERT INTO `Sectors` VALUES(5, 'Chemicals');
+INSERT INTO `Sectors` VALUES(6, 'Construction & Materials');
+INSERT INTO `Sectors` VALUES(7, 'Financial Services');
+INSERT INTO `Sectors` VALUES(8, 'Food & Beverage');
+INSERT INTO `Sectors` VALUES(9, 'Health Care');
+INSERT INTO `Sectors` VALUES(10, 'Industrial Goods & Services');
+INSERT INTO `Sectors` VALUES(11, 'Insurance');
+INSERT INTO `Sectors` VALUES(12, 'Media');
+INSERT INTO `Sectors` VALUES(13, 'Oil & Gas');
+INSERT INTO `Sectors` VALUES(14, 'Personal & Household Goods');
+INSERT INTO `Sectors` VALUES(15, 'Real Estate');
+INSERT INTO `Sectors` VALUES(16, 'Retail');
+INSERT INTO `Sectors` VALUES(17, 'Technology');
+INSERT INTO `Sectors` VALUES(18, 'Telecommunications');
+INSERT INTO `Sectors` VALUES(19, 'Travel & Leisure');
+INSERT INTO `Sectors` VALUES(20, 'Utilities');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Stocks`
+--
+
+CREATE TABLE `Stocks` (
+  `Stock_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Stock_Name` varchar(30) NOT NULL,
+  `Sector_ID` int(6) NOT NULL,
+  `In_Charge` int(6) NOT NULL,
+  `Environment` longtext NOT NULL,
+  `Business_Description` longtext NOT NULL,
+  `Competition` longtext NOT NULL,
+  `Management` longtext NOT NULL,
+  `Is_In_Portfolio` tinyint(1) NOT NULL,
+  `Valorisation` varchar(500) NOT NULL,
+  `Investment_Case` longtext NOT NULL,
+  `Investment_Risks_Macro` longtext NOT NULL,
+  `Investment_Risks_Micro` longtext NOT NULL,
+  `Rating` varchar(20) NOT NULL,
+  `Ticker` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`Stock_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=602 ;
+
+--
+-- Contenu de la table `Stocks`
+--
+
+INSERT INTO `Stocks` VALUES(2, 'A2A SPA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'A2A IM');
+INSERT INTO `Stocks` VALUES(3, 'ANGLO AMERICAN PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'AAL LN');
+INSERT INTO `Stocks` VALUES(4, 'ABB LTD-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ABBN VX');
+INSERT INTO `Stocks` VALUES(5, 'ABERTIS INFRAESTRUCTURAS SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ABE SQ');
+INSERT INTO `Stocks` VALUES(6, 'ASSOCIATED BRITISH FOODS PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'ABF LN');
+INSERT INTO `Stocks` VALUES(7, 'ANHEUSER-BUSCH INBEV NV', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'ABI BB');
+INSERT INTO `Stocks` VALUES(8, 'ACCOR SA', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'AC FP');
+INSERT INTO `Stocks` VALUES(9, 'CREDIT AGRICOLE SA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'ACA FP');
+INSERT INTO `Stocks` VALUES(10, 'ACKERMANS & VAN HAAREN', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'ACKB BB');
+INSERT INTO `Stocks` VALUES(11, 'ACS ACTIVIDADES CONS Y SERV', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'ACS SQ');
+INSERT INTO `Stocks` VALUES(12, 'ACERINOX SA', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'ACX SQ');
+INSERT INTO `Stocks` VALUES(13, 'ACERGY SA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'ACY NO');
+INSERT INTO `Stocks` VALUES(14, 'ADECCO SA-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ADEN VX');
+INSERT INTO `Stocks` VALUES(15, 'ADMIRAL GROUP PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'ADM LN');
+INSERT INTO `Stocks` VALUES(16, 'ABERDEEN ASSET MGMT PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'ADN LN');
+INSERT INTO `Stocks` VALUES(17, 'ADP', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ADP FP');
+INSERT INTO `Stocks` VALUES(18, 'ADIDAS AG', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'ADS GY');
+INSERT INTO `Stocks` VALUES(19, 'AIR FRANCE-KLM', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'AF FP');
+INSERT INTO `Stocks` VALUES(20, 'AGGREKO PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'AGK LN');
+INSERT INTO `Stocks` VALUES(21, 'AEGON NV', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'AGN NA');
+INSERT INTO `Stocks` VALUES(22, 'AGEAS', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'AGS BB');
+INSERT INTO `Stocks` VALUES(23, 'AEGIS GROUP PLC', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'AGS LN');
+INSERT INTO `Stocks` VALUES(24, 'KONINKLIJKE AHOLD NV', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'AH NA');
+INSERT INTO `Stocks` VALUES(25, 'AIR LIQUIDE SA', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'AI FP');
+INSERT INTO `Stocks` VALUES(26, 'AIXTRON AG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'AIXA GY');
+INSERT INTO `Stocks` VALUES(27, 'ARKEMA', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'AKE FP');
+INSERT INTO `Stocks` VALUES(28, 'AKER SOLUTIONS ASA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'AKSO NO');
+INSERT INTO `Stocks` VALUES(29, 'AKZO NOBEL', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'AKZA NA');
+INSERT INTO `Stocks` VALUES(30, 'ALFA LAVAL AB', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ALFA SS');
+INSERT INTO `Stocks` VALUES(31, 'ALSTOM', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ALO FP');
+INSERT INTO `Stocks` VALUES(32, 'ALPIQ HOLDING AG-REG', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'ALPH SE');
+INSERT INTO `Stocks` VALUES(33, 'ALPHA BANK A.E.', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'ALPHA GA');
+INSERT INTO `Stocks` VALUES(34, 'ALCATEL-LUCENT', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ALU FP');
+INSERT INTO `Stocks` VALUES(35, 'ALLIANZ SE-REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'ALV GY');
+INSERT INTO `Stocks` VALUES(36, 'AMEC PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'AMEC LN');
+INSERT INTO `Stocks` VALUES(37, 'AMLIN PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'AML LN');
+INSERT INTO `Stocks` VALUES(38, 'AMADEUS IT HOLDING SA-A SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'AMS SQ');
+INSERT INTO `Stocks` VALUES(39, 'ACCIONA SA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'ANA SQ');
+INSERT INTO `Stocks` VALUES(40, 'ANDRITZ AG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ANDR AV');
+INSERT INTO `Stocks` VALUES(41, 'ANTOFAGASTA PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'ANTO LN');
+INSERT INTO `Stocks` VALUES(42, 'ARM HOLDINGS PLC', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ARM LN');
+INSERT INTO `Stocks` VALUES(43, 'ARYZTA AG', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'ARYN SE');
+INSERT INTO `Stocks` VALUES(44, 'ASHMORE GROUP PLC.', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'ASHM LN');
+INSERT INTO `Stocks` VALUES(45, 'ASML HOLDING NV', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ASML NA');
+INSERT INTO `Stocks` VALUES(46, 'ASSA ABLOY AB-B', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'ASSAB SS');
+INSERT INTO `Stocks` VALUES(47, 'ATLAS COPCO AB-A SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ATCOA SS');
+INSERT INTO `Stocks` VALUES(48, 'ATLANTIA SPA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ATL IM');
+INSERT INTO `Stocks` VALUES(49, 'ACTELION LTD-REG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'ATLN VX');
+INSERT INTO `Stocks` VALUES(50, 'ATOS ORIGIN SA', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ATO FP');
+INSERT INTO `Stocks` VALUES(51, 'AUTONOMY CORP PLC', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'AU/ LN');
+INSERT INTO `Stocks` VALUES(52, 'AVIVA PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'AV/ LN');
+INSERT INTO `Stocks` VALUES(53, 'AZIMUT HOLDING SPA', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'AZM IM');
+INSERT INTO `Stocks` VALUES(54, 'ASTRAZENECA PLC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'AZN LN');
+INSERT INTO `Stocks` VALUES(55, 'BAE SYSTEMS PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'BA/ LN');
+INSERT INTO `Stocks` VALUES(56, 'BABCOCK INTL GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'BAB LN');
+INSERT INTO `Stocks` VALUES(57, 'JULIUS BAER GROUP LTD', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BAER VX');
+INSERT INTO `Stocks` VALUES(58, 'BALOISE HOLDING AG - REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'BALN VX');
+INSERT INTO `Stocks` VALUES(59, 'BARCLAYS PLC', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BARC LN');
+INSERT INTO `Stocks` VALUES(60, 'BASF SE', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'BAS GY');
+INSERT INTO `Stocks` VALUES(61, 'BRITISH AMERICAN TOBACCO PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'BATS LN');
+INSERT INTO `Stocks` VALUES(62, 'BRITISH AIRWAYS PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'BAY LN');
+INSERT INTO `Stocks` VALUES(63, 'BAYER AG-REG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'BAYN GY');
+INSERT INTO `Stocks` VALUES(64, 'SOCIETE BIC SA', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'BB FP');
+INSERT INTO `Stocks` VALUES(65, 'BANCO BILBAO VIZCAYA ARGENTA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BBVA SQ');
+INSERT INTO `Stocks` VALUES(66, 'BALFOUR BEATTY PLC', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'BBY LN');
+INSERT INTO `Stocks` VALUES(67, 'BANCO COMERCIAL PORTUGUES-R', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BCP PL');
+INSERT INTO `Stocks` VALUES(68, 'BARRATT DEVELOPMENTS PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'BDEV LN');
+INSERT INTO `Stocks` VALUES(69, 'BEIERSDORF AG', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'BEI GY');
+INSERT INTO `Stocks` VALUES(70, 'BEKAERT NV', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'BEKB BB');
+INSERT INTO `Stocks` VALUES(71, 'BELGACOM SA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'BELG BB');
+INSERT INTO `Stocks` VALUES(72, 'BANCO ESPIRITO SANTO-REG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BES PL');
+INSERT INTO `Stocks` VALUES(73, 'BG GROUP PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'BG/ LN');
+INSERT INTO `Stocks` VALUES(74, 'BIOMERIEUX', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'BIM FP');
+INSERT INTO `Stocks` VALUES(75, 'BERKELEY GROUP HOLDINGS', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'BKG LN');
+INSERT INTO `Stocks` VALUES(76, 'BANK OF IRELAND', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BKIR ID');
+INSERT INTO `Stocks` VALUES(77, 'BANKINTER SA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BKT SQ');
+INSERT INTO `Stocks` VALUES(78, 'BRITISH LAND CO PLC', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'BLND LN');
+INSERT INTO `Stocks` VALUES(79, 'BHP BILLITON PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'BLT LN');
+INSERT INTO `Stocks` VALUES(80, 'BOLSAS Y MERCADOS ESPANOLES', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'BME SQ');
+INSERT INTO `Stocks` VALUES(81, 'BANCA MONTE DEI PASCHI SIENA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BMPS IM');
+INSERT INTO `Stocks` VALUES(82, 'BAYERISCHE MOTOREN WERKE AG', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'BMW GY');
+INSERT INTO `Stocks` VALUES(83, 'DANONE', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'BN FP');
+INSERT INTO `Stocks` VALUES(84, 'BNP PARIBAS', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BNP FP');
+INSERT INTO `Stocks` VALUES(85, 'BUNZL PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'BNZL LN');
+INSERT INTO `Stocks` VALUES(86, 'BOSKALIS WESTMINSTER', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'BOKA NA');
+INSERT INTO `Stocks` VALUES(87, 'BOLIDEN AB', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'BOL SS');
+INSERT INTO `Stocks` VALUES(88, 'BANCO POPOLARE SCARL', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BP IM');
+INSERT INTO `Stocks` VALUES(89, 'BP PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'BP/ LN');
+INSERT INTO `Stocks` VALUES(90, 'BANCA POPOL EMILIA ROMAGNA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BPE IM');
+INSERT INTO `Stocks` VALUES(91, 'BANCA POPOLARE DI SONDRIO', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BPSO IM');
+INSERT INTO `Stocks` VALUES(92, 'BURBERRY GROUP PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'BRBY LN');
+INSERT INTO `Stocks` VALUES(93, 'BRISA-AUTO-ESTRADAS PORTUGAL', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'BRI PL');
+INSERT INTO `Stocks` VALUES(94, 'BRITISH SKY BROADCASTING GRO', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'BSY LN');
+INSERT INTO `Stocks` VALUES(95, 'BT GROUP PLC', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'BT/A LN');
+INSERT INTO `Stocks` VALUES(96, 'BANCO DE VALENCIA SA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'BVA SQ');
+INSERT INTO `Stocks` VALUES(97, 'BUREAU VERITAS SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'BVI FP');
+INSERT INTO `Stocks` VALUES(98, 'BRITVIC PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'BVIC LN');
+INSERT INTO `Stocks` VALUES(99, 'BWIN INTERACTIVE ENTERTAINME', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'BWIN AV');
+INSERT INTO `Stocks` VALUES(100, 'CARREFOUR SA', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'CA FP');
+INSERT INTO `Stocks` VALUES(101, 'CAP GEMINI', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'CAP FP');
+INSERT INTO `Stocks` VALUES(102, 'CARLSBERG AS-B', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'CARLB DC');
+INSERT INTO `Stocks` VALUES(103, 'CATTOLICA ASSICURAZIONI SCRL', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'CASS IM');
+INSERT INTO `Stocks` VALUES(104, 'CASTELLUM AB', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'CAST SS');
+INSERT INTO `Stocks` VALUES(105, 'CLOSE BROTHERS GROUP PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'CBG LN');
+INSERT INTO `Stocks` VALUES(106, 'COMMERZBANK AG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'CBK GY');
+INSERT INTO `Stocks` VALUES(107, 'CARNIVAL PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'CCL LN');
+INSERT INTO `Stocks` VALUES(108, 'CHRISTIAN DIOR', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'CDI FP');
+INSERT INTO `Stocks` VALUES(109, 'CIE FINANCIERE RICHEMON-BR A', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'CFR VX');
+INSERT INTO `Stocks` VALUES(110, 'CATLIN GROUP LTD', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'CGL LN');
+INSERT INTO `Stocks` VALUES(111, 'CHEMRING GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'CHG LN');
+INSERT INTO `Stocks` VALUES(112, 'CHARTER INTERNATIONAL PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'CHTR LN');
+INSERT INTO `Stocks` VALUES(113, 'COOKSON GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'CKSN LN');
+INSERT INTO `Stocks` VALUES(114, 'CARILLION PLC', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'CLLN LN');
+INSERT INTO `Stocks` VALUES(115, 'CLARIANT AG-REG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'CLN VX');
+INSERT INTO `Stocks` VALUES(116, 'CELESIO AG', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'CLS1 GY');
+INSERT INTO `Stocks` VALUES(117, 'CENTRICA PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'CNA LN');
+INSERT INTO `Stocks` VALUES(118, 'CAIRN ENERGY PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'CNE LN');
+INSERT INTO `Stocks` VALUES(119, 'CNP ASSURANCES', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'CNP FP');
+INSERT INTO `Stocks` VALUES(120, 'CASINO GUICHARD PERRACHON', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'CO FP');
+INSERT INTO `Stocks` VALUES(121, 'COBHAM PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'COB LN');
+INSERT INTO `Stocks` VALUES(122, 'COFINIMMO', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'COFB BB');
+INSERT INTO `Stocks` VALUES(123, 'COLOPLAST-B', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'COLOB DC');
+INSERT INTO `Stocks` VALUES(124, 'COLRUYT SA', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'COLR BB');
+INSERT INTO `Stocks` VALUES(125, 'CONTINENTAL AG', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'CON GY');
+INSERT INTO `Stocks` VALUES(126, 'CORIO NV', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'CORA NA');
+INSERT INTO `Stocks` VALUES(127, 'COMPASS GROUP PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'CPG LN');
+INSERT INTO `Stocks` VALUES(128, 'CAPITA GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'CPI LN');
+INSERT INTO `Stocks` VALUES(129, 'DAVIDE CAMPARI-MILANO SPA', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'CPR IM');
+INSERT INTO `Stocks` VALUES(130, 'CIMPOR-CIMENTOS DE PORTUGAL', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'CPR PL');
+INSERT INTO `Stocks` VALUES(131, 'CRODA INTERNATIONAL PLC', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'CRDA LN');
+INSERT INTO `Stocks` VALUES(132, 'BANCA CARIGE SPA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'CRG IM');
+INSERT INTO `Stocks` VALUES(133, 'CRH PLC', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'CRH ID');
+INSERT INTO `Stocks` VALUES(134, 'CRITERIA CAIXACORP SA', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'CRI SQ');
+INSERT INTO `Stocks` VALUES(135, 'CRUCELL NV', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'CRXL NA');
+INSERT INTO `Stocks` VALUES(136, 'AXA SA', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'CS FP');
+INSERT INTO `Stocks` VALUES(137, 'CAPITAL SHOPPING CENTRES GRO', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'CSCG LN');
+INSERT INTO `Stocks` VALUES(138, 'CREDIT SUISSE GROUP AG-REG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'CSGN VX');
+INSERT INTO `Stocks` VALUES(139, 'CSM', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'CSM NA');
+INSERT INTO `Stocks` VALUES(140, 'PICCOLO CREDITO VALTELLINESE', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'CVAL IM');
+INSERT INTO `Stocks` VALUES(141, 'CABLE & WIRELESS WORLDWIDE', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'CW/ LN');
+INSERT INTO `Stocks` VALUES(142, 'CABLE & WIRELESS COMMUNICATI', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'CWC LN');
+INSERT INTO `Stocks` VALUES(143, 'DAIMLER AG-REGISTERED SHARES', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'DAI GY');
+INSERT INTO `Stocks` VALUES(144, 'DANSKE BANK A/S', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'DANSKE DC');
+INSERT INTO `Stocks` VALUES(145, 'DEUTSCHE BOERSE AG', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'DB1 GY');
+INSERT INTO `Stocks` VALUES(146, 'DEUTSCHE BANK AG-REGISTERED', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'DBK GY');
+INSERT INTO `Stocks` VALUES(147, 'DCC PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'DCC ID');
+INSERT INTO `Stocks` VALUES(148, 'DANISCO A/S', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'DCO DC');
+INSERT INTO `Stocks` VALUES(149, 'DEBENHAMS PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'DEB LN');
+INSERT INTO `Stocks` VALUES(150, 'JC DECAUX SA', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'DEC FP');
+INSERT INTO `Stocks` VALUES(151, 'DELHAIZE GROUP', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'DELB BB');
+INSERT INTO `Stocks` VALUES(152, 'DEXIA SA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'DEXB BB');
+INSERT INTO `Stocks` VALUES(153, 'VINCI SA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'DG FP');
+INSERT INTO `Stocks` VALUES(154, 'DIAGEO PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'DGE LN');
+INSERT INTO `Stocks` VALUES(155, 'DRAGON OIL PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'DGO ID');
+INSERT INTO `Stocks` VALUES(156, 'DELTA LLOYD NV', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'DL NA');
+INSERT INTO `Stocks` VALUES(157, 'DE LA RUE PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'DLAR LN');
+INSERT INTO `Stocks` VALUES(158, 'DERWENT LONDON PLC', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'DLN LN');
+INSERT INTO `Stocks` VALUES(159, 'DAILY MAIL&GENERAL TST-A NV', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'DMGT LN');
+INSERT INTO `Stocks` VALUES(160, 'DNB NOR ASA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'DNBNOR NO');
+INSERT INTO `Stocks` VALUES(161, 'DEUTSCHE POSTBANK AG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'DPB GY');
+INSERT INTO `Stocks` VALUES(162, 'DEUTSCHE POST AG-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'DPW GY');
+INSERT INTO `Stocks` VALUES(163, 'DRAX GROUP PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'DRX LN');
+INSERT INTO `Stocks` VALUES(164, 'KONINKLIJKE DSM NV', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'DSM NA');
+INSERT INTO `Stocks` VALUES(165, 'DSV A/S', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'DSV DC');
+INSERT INTO `Stocks` VALUES(166, 'DASSAULT SYSTEMES SA', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'DSY FP');
+INSERT INTO `Stocks` VALUES(167, 'DEUTSCHE TELEKOM AG-REG', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'DTE GY');
+INSERT INTO `Stocks` VALUES(168, 'DIXONS RETAIL PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'DXNS LN');
+INSERT INTO `Stocks` VALUES(169, 'EADS NV', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'EAD FP');
+INSERT INTO `Stocks` VALUES(170, 'EBRO FOODS SA', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'EBRO SQ');
+INSERT INTO `Stocks` VALUES(171, 'ERSTE GROUP BANK AG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'EBS AV');
+INSERT INTO `Stocks` VALUES(172, 'ELECTROCOMPONENTS PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ECM LN');
+INSERT INTO `Stocks` VALUES(173, 'EDENRED', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'EDEN FP');
+INSERT INTO `Stocks` VALUES(174, 'EDF', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'EDF FP');
+INSERT INTO `Stocks` VALUES(175, 'EDP-ENERGIAS DE PORTUGAL SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'EDP PL');
+INSERT INTO `Stocks` VALUES(176, 'EDP RENOVAVEIS SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'EDPR PL');
+INSERT INTO `Stocks` VALUES(177, 'COCA-COLA HELLENIC BOTTLING', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'EEEK GA');
+INSERT INTO `Stocks` VALUES(178, 'ESSILOR INTERNATIONAL', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'EI FP');
+INSERT INTO `Stocks` VALUES(179, 'ELEKTA AB-B SHS', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'EKTAB SS');
+INSERT INTO `Stocks` VALUES(180, 'ENDESA SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'ELE SQ');
+INSERT INTO `Stocks` VALUES(181, 'ELISA OYJ', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'ELI1V FH');
+INSERT INTO `Stocks` VALUES(182, 'ELAN CORP PLC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'ELN ID');
+INSERT INTO `Stocks` VALUES(183, 'ELECTROLUX AB-SER B', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'ELUXB SS');
+INSERT INTO `Stocks` VALUES(184, 'MAN GROUP PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'EMG LN');
+INSERT INTO `Stocks` VALUES(185, 'BOUYGUES SA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'EN FP');
+INSERT INTO `Stocks` VALUES(186, 'ENEL SPA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'ENEL IM');
+INSERT INTO `Stocks` VALUES(187, 'ENAGAS', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'ENG SQ');
+INSERT INTO `Stocks` VALUES(188, 'ENI SPA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'ENI IM');
+INSERT INTO `Stocks` VALUES(189, 'EURASIAN NATURAL RESOURCES', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'ENRC LN');
+INSERT INTO `Stocks` VALUES(190, 'E.ON AG', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'EOAN GY');
+INSERT INTO `Stocks` VALUES(191, 'ERAMET', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'ERA FP');
+INSERT INTO `Stocks` VALUES(192, 'ERICSSON LM-B SHS', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ERICB SS');
+INSERT INTO `Stocks` VALUES(193, 'ESSAR ENERGY PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'ESSR LN');
+INSERT INTO `Stocks` VALUES(194, 'NATIONAL BANK OF GREECE', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'ETE GA');
+INSERT INTO `Stocks` VALUES(195, 'EUTELSAT COMMUNICATIONS', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'ETL FP');
+INSERT INTO `Stocks` VALUES(196, 'EFG EUROBANK ERGASIAS', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'EUROB GA');
+INSERT INTO `Stocks` VALUES(197, 'EXPERIAN PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'EXPN LN');
+INSERT INTO `Stocks` VALUES(198, 'FIAT SPA', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'F IM');
+INSERT INTO `Stocks` VALUES(199, 'FOMENTO DE CONSTRUC Y CONTRA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'FCC SQ');
+INSERT INTO `Stocks` VALUES(200, 'FONCIERE DES REGIONS', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'FDR FP');
+INSERT INTO `Stocks` VALUES(201, 'FERROVIAL SA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'FER SQ');
+INSERT INTO `Stocks` VALUES(202, 'FIRSTGROUP PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'FGP LN');
+INSERT INTO `Stocks` VALUES(203, 'EIFFAGE', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'FGR FP');
+INSERT INTO `Stocks` VALUES(204, 'FISCHER (GEORG)-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'FI/N SE');
+INSERT INTO `Stocks` VALUES(205, 'FLSMIDTH & CO A/S', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'FLS DC');
+INSERT INTO `Stocks` VALUES(206, 'FRESENIUS MEDICAL CARE AG &', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'FME GY');
+INSERT INTO `Stocks` VALUES(207, 'FINMECCANICA SPA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'FNC IM');
+INSERT INTO `Stocks` VALUES(208, 'TOTAL SA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'FP FP');
+INSERT INTO `Stocks` VALUES(209, 'VALEO SA', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'FR FP');
+INSERT INTO `Stocks` VALUES(210, 'FRAPORT AG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'FRA GY');
+INSERT INTO `Stocks` VALUES(211, 'FRESENIUS SE-PREF', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'FRE3 GY');
+INSERT INTO `Stocks` VALUES(212, 'FRESNILLO PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'FRES LN');
+INSERT INTO `Stocks` VALUES(213, 'FRANCE TELECOM SA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'FTE FP');
+INSERT INTO `Stocks` VALUES(214, 'FORTUM OYJ', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'FUM1V FH');
+INSERT INTO `Stocks` VALUES(215, 'FUGRO NV-CVA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'FUR NA');
+INSERT INTO `Stocks` VALUES(216, 'ASSICURAZIONI GENERALI', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'G IM');
+INSERT INTO `Stocks` VALUES(217, 'GEA GROUP AG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'G1A GY');
+INSERT INTO `Stocks` VALUES(218, 'CIE GENERALE DE GEOPHYSIQUE', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'GA FP');
+INSERT INTO `Stocks` VALUES(219, 'GALENICA AG-REG', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'GALN SE');
+INSERT INTO `Stocks` VALUES(220, 'GALP ENERGIA SGPS SA-B SHRS', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'GALP PL');
+INSERT INTO `Stocks` VALUES(221, 'GAM HOLDING AG', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'GAM SE');
+INSERT INTO `Stocks` VALUES(222, 'GAMESA CORP TECNOLOGICA SA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'GAM SQ');
+INSERT INTO `Stocks` VALUES(223, 'GAS NATURAL SDG SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'GAS SQ');
+INSERT INTO `Stocks` VALUES(224, 'BOURBON SA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'GBB FP');
+INSERT INTO `Stocks` VALUES(225, 'BILFINGER BERGER SE', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'GBF GY');
+INSERT INTO `Stocks` VALUES(226, 'GROUPE BRUXELLES LAMBERT SA', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'GBLB BB');
+INSERT INTO `Stocks` VALUES(227, 'C&C GROUP PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'GCC ID');
+INSERT INTO `Stocks` VALUES(228, 'GEBERIT AG-REG', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'GEBN VX');
+INSERT INTO `Stocks` VALUES(229, 'GROUPE EUROTUNNEL SA - REGR', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'GET FP');
+INSERT INTO `Stocks` VALUES(230, 'GETINGE AB-B SHS', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'GETIB SS');
+INSERT INTO `Stocks` VALUES(231, 'GECINA SA', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'GFC FP');
+INSERT INTO `Stocks` VALUES(232, 'G4S PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'GFS LN');
+INSERT INTO `Stocks` VALUES(233, 'GIVAUDAN-REG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'GIVN VX');
+INSERT INTO `Stocks` VALUES(234, 'GKN PLC', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'GKN LN');
+INSERT INTO `Stocks` VALUES(235, 'SOCIETE GENERALE', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'GLE FP');
+INSERT INTO `Stocks` VALUES(236, 'GN STORE NORD A/S', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'GN DC');
+INSERT INTO `Stocks` VALUES(237, 'GREENE KING PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'GNK LN');
+INSERT INTO `Stocks` VALUES(238, 'GRIFOLS SA', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'GRF SQ');
+INSERT INTO `Stocks` VALUES(239, 'GLAXOSMITHKLINE PLC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'GSK LN');
+INSERT INTO `Stocks` VALUES(240, 'GDF SUEZ', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'GSZ FP');
+INSERT INTO `Stocks` VALUES(241, 'GEMALTO', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'GTO FP');
+INSERT INTO `Stocks` VALUES(242, 'HAYS PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'HAS LN');
+INSERT INTO `Stocks` VALUES(243, 'HEIDELBERGCEMENT AG', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'HEI GY');
+INSERT INTO `Stocks` VALUES(244, 'HEINEKEN NV', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'HEIA NA');
+INSERT INTO `Stocks` VALUES(245, 'HEINEKEN HOLDING NV', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'HEIO NA');
+INSERT INTO `Stocks` VALUES(246, 'HELVETIA HOLDING AG-REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'HELN SE');
+INSERT INTO `Stocks` VALUES(247, 'HENKEL AG & CO KGAA VORZUG', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'HEN3 GY');
+INSERT INTO `Stocks` VALUES(248, 'HEXAGON AB-B SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'HEXAB SS');
+INSERT INTO `Stocks` VALUES(249, 'HALFORDS GROUP PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'HFD LN');
+INSERT INTO `Stocks` VALUES(250, 'HENDERSON GROUP PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'HGG LN');
+INSERT INTO `Stocks` VALUES(251, 'HIKMA PHARMACEUTICALS PLC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'HIK LN');
+INSERT INTO `Stocks` VALUES(252, 'HALMA PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'HLMA LN');
+INSERT INTO `Stocks` VALUES(253, 'HENNES & MAURITZ AB-B SHS', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'HMB SS');
+INSERT INTO `Stocks` VALUES(254, 'HAMMERSON PLC', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'HMSO LN');
+INSERT INTO `Stocks` VALUES(255, 'HANNOVER RUECKVERSICHERU-REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'HNR1 GY');
+INSERT INTO `Stocks` VALUES(256, 'THALES SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'HO FP');
+INSERT INTO `Stocks` VALUES(257, 'HOLMEN AB-B SHARES', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'HOLMB SS');
+INSERT INTO `Stocks` VALUES(258, 'HOLCIM LTD-REG', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'HOLN VX');
+INSERT INTO `Stocks` VALUES(259, 'HOME RETAIL GROUP', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'HOME LN');
+INSERT INTO `Stocks` VALUES(260, 'HOCHTIEF AG', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'HOT GY');
+INSERT INTO `Stocks` VALUES(261, 'HSBC HOLDINGS PLC', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'HSBA LN');
+INSERT INTO `Stocks` VALUES(262, 'HOMESERVE PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'HSV LN');
+INSERT INTO `Stocks` VALUES(263, 'HELLENIC TELECOMMUN ORGANIZA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'HTO GA');
+INSERT INTO `Stocks` VALUES(264, 'HUSQVARNA AB-B SHS', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'HUSQB SS');
+INSERT INTO `Stocks` VALUES(265, 'ICAP PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'IAP LN');
+INSERT INTO `Stocks` VALUES(266, 'IBERDROLA SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'IBE SQ');
+INSERT INTO `Stocks` VALUES(267, 'IBERIA LINEAS AER DE ESPANA', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'IBLA SQ');
+INSERT INTO `Stocks` VALUES(268, 'IBERDROLA RENOVABLES SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'IBR SQ');
+INSERT INTO `Stocks` VALUES(269, 'ICADE', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'ICAD FP');
+INSERT INTO `Stocks` VALUES(270, 'INTERMEDIATE CAPITAL GROUP', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'ICP LN');
+INSERT INTO `Stocks` VALUES(271, 'INDRA SISTEMAS SA', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'IDR SQ');
+INSERT INTO `Stocks` VALUES(272, 'INFINEON TECHNOLOGIES AG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'IFX GY');
+INSERT INTO `Stocks` VALUES(273, 'IG GROUP HOLDINGS PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'IGG LN');
+INSERT INTO `Stocks` VALUES(274, 'INTERCONTINENTAL HOTELS GROU', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'IHG LN');
+INSERT INTO `Stocks` VALUES(275, 'IMMOFINANZ AG', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'IIA AV');
+INSERT INTO `Stocks` VALUES(276, '3I GROUP PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'III LN');
+INSERT INTO `Stocks` VALUES(277, 'ILIAD SA', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ILD FP');
+INSERT INTO `Stocks` VALUES(278, 'IMTECH NV', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'IM NA');
+INSERT INTO `Stocks` VALUES(279, 'IMI PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'IMI LN');
+INSERT INTO `Stocks` VALUES(280, 'IMPERIAL TOBACCO GROUP PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'IMT LN');
+INSERT INTO `Stocks` VALUES(281, 'INCHCAPE PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'INCH LN');
+INSERT INTO `Stocks` VALUES(282, 'INDUSTRIVARDEN AB-A SHS', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'INDUA SS');
+INSERT INTO `Stocks` VALUES(283, 'INFORMA PLC', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'INF LN');
+INSERT INTO `Stocks` VALUES(284, 'ING GROEP NV-CVA', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'INGA NA');
+INSERT INTO `Stocks` VALUES(285, 'INVESTOR AB-B SHS', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'INVEB SS');
+INSERT INTO `Stocks` VALUES(286, 'INVESTEC PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'INVP LN');
+INSERT INTO `Stocks` VALUES(287, 'INTERNATIONAL POWER PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'IPR LN');
+INSERT INTO `Stocks` VALUES(288, 'INMARSAT PLC', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'ISAT LN');
+INSERT INTO `Stocks` VALUES(289, 'INTESA SANPAOLO', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'ISP IM');
+INSERT INTO `Stocks` VALUES(290, 'INVENSYS PLC', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'ISYS LN');
+INSERT INTO `Stocks` VALUES(291, 'INTERTEK GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ITRK LN');
+INSERT INTO `Stocks` VALUES(292, 'ITV PLC', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'ITV LN');
+INSERT INTO `Stocks` VALUES(293, 'INDITEX', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'ITX SQ');
+INSERT INTO `Stocks` VALUES(294, 'JARDINE LLOYD THOMPSON GROUP', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'JLT LN');
+INSERT INTO `Stocks` VALUES(295, 'JOHNSON MATTHEY PLC', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'JMAT LN');
+INSERT INTO `Stocks` VALUES(296, 'JERONIMO MARTINS', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'JMT PL');
+INSERT INTO `Stocks` VALUES(297, 'JYSKE BANK-REG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'JYSK DC');
+INSERT INTO `Stocks` VALUES(298, 'KAZAKHMYS PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'KAZ LN');
+INSERT INTO `Stocks` VALUES(299, 'KBC GROEP NV', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'KBC BB');
+INSERT INTO `Stocks` VALUES(300, 'KLOECKNER & CO SE', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'KCO GY');
+INSERT INTO `Stocks` VALUES(301, 'KONECRANES OYJ', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'KCR1V FH');
+INSERT INTO `Stocks` VALUES(302, 'KESKO OYJ-B SHS', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'KESBV FH');
+INSERT INTO `Stocks` VALUES(303, 'KINGFISHER PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'KGF LN');
+INSERT INTO `Stocks` VALUES(304, 'KINNEVIK INVESTMENT AB-B', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'KINVB SS');
+INSERT INTO `Stocks` VALUES(305, 'NATIXIS', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'KN FP');
+INSERT INTO `Stocks` VALUES(306, 'KONE OYJ-B', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'KNEBV FH');
+INSERT INTO `Stocks` VALUES(307, 'KUEHNE & NAGEL INTL AG-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'KNIN VX');
+INSERT INTO `Stocks` VALUES(308, 'KONINKLIJKE KPN NV', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'KPN NA');
+INSERT INTO `Stocks` VALUES(309, 'KEMIRA OYJ', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'KRA1V FH');
+INSERT INTO `Stocks` VALUES(310, 'KERRY GROUP PLC-A', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'KYG ID');
+INSERT INTO `Stocks` VALUES(311, 'LADBROKES PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'LAD LN');
+INSERT INTO `Stocks` VALUES(312, 'LAND SECURITIES GROUP PLC', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'LAND LN');
+INSERT INTO `Stocks` VALUES(313, 'LAFARGE SA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'LG FP');
+INSERT INTO `Stocks` VALUES(314, 'LEGAL & GENERAL GROUP PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'LGEN LN');
+INSERT INTO `Stocks` VALUES(315, 'DEUTSCHE LUFTHANSA-REG', 19, 0, '', '', '', '', 1, '', '', '', '', '', 'LHA GY');
+INSERT INTO `Stocks` VALUES(316, 'KLEPIERRE', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'LI FP');
+INSERT INTO `Stocks` VALUES(317, 'LINDE AG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'LIN GY');
+INSERT INTO `Stocks` VALUES(318, 'LINDT & SPRUENGLI AG-REG', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'LISN SE');
+INSERT INTO `Stocks` VALUES(319, 'LLOYDS BANKING GROUP PLC', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'LLOY LN');
+INSERT INTO `Stocks` VALUES(320, 'LONMIN PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'LMI LN');
+INSERT INTO `Stocks` VALUES(321, 'LOGICA PLC', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'LOG LN');
+INSERT INTO `Stocks` VALUES(322, 'LOGITECH INTERNATIONAL-REG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'LOGN VX');
+INSERT INTO `Stocks` VALUES(323, 'LONZA GROUP AG-REG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'LONN VX');
+INSERT INTO `Stocks` VALUES(324, 'LEGRAND SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'LR FP');
+INSERT INTO `Stocks` VALUES(325, 'LONDON STOCK EXCHANGE GROUP', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'LSE LN');
+INSERT INTO `Stocks` VALUES(326, 'LUNDIN PETROLEUM AB', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'LUPE SS');
+INSERT INTO `Stocks` VALUES(327, 'LUXOTTICA GROUP SPA', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'LUX IM');
+INSERT INTO `Stocks` VALUES(328, 'LANXESS AG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'LXS GY');
+INSERT INTO `Stocks` VALUES(329, 'MITCHELLS & BUTLERS PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'MAB LN');
+INSERT INTO `Stocks` VALUES(330, 'A P MOLLER - MAERSK A/S - B', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MAERSKB DC');
+INSERT INTO `Stocks` VALUES(331, 'MAN SE', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MAN GY');
+INSERT INTO `Stocks` VALUES(332, 'MAPFRE SA', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'MAP SQ');
+INSERT INTO `Stocks` VALUES(333, 'MEDIOBANCA SPA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'MB IM');
+INSERT INTO `Stocks` VALUES(334, 'LVMH MOET HENNESSY LOUIS VUI', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'MC FP');
+INSERT INTO `Stocks` VALUES(335, 'MICRO FOCUS INTERNATIONAL', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'MCRO LN');
+INSERT INTO `Stocks` VALUES(336, 'MEDA AB-A SHS', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'MEDAA SS');
+INSERT INTO `Stocks` VALUES(337, 'METRO AG', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'MEO GY');
+INSERT INTO `Stocks` VALUES(338, 'METSO OYJ', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MEO1V FH');
+INSERT INTO `Stocks` VALUES(339, 'WENDEL', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'MF FP');
+INSERT INTO `Stocks` VALUES(340, 'MEGGITT PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MGGT LN');
+INSERT INTO `Stocks` VALUES(341, 'MARINE HARVEST', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'MHG NO');
+INSERT INTO `Stocks` VALUES(342, 'MARKS & SPENCER GROUP PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'MKS LN');
+INSERT INTO `Stocks` VALUES(343, 'MICHELIN (CGDE)-B', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'ML FP');
+INSERT INTO `Stocks` VALUES(344, 'LAGARDERE S.C.A.', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'MMB FP');
+INSERT INTO `Stocks` VALUES(345, 'M6-METROPOLE TELEVISION', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'MMT FP');
+INSERT INTO `Stocks` VALUES(346, 'MONDI PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'MNDI LN');
+INSERT INTO `Stocks` VALUES(347, 'MOBISTAR SA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'MOBB BB');
+INSERT INTO `Stocks` VALUES(348, 'MICHAEL PAGE INTERNATIONAL', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MPI LN');
+INSERT INTO `Stocks` VALUES(349, 'MERCK KGAA', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'MRK GY');
+INSERT INTO `Stocks` VALUES(350, 'WM MORRISON SUPERMARKETS', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'MRW LN');
+INSERT INTO `Stocks` VALUES(351, 'MEDIASET SPA', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'MS IM');
+INSERT INTO `Stocks` VALUES(352, 'MISYS PLC', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'MSY LN');
+INSERT INTO `Stocks` VALUES(353, 'ARCELORMITTAL', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'MT NA');
+INSERT INTO `Stocks` VALUES(354, 'MODERN TIMES GROUP-B SHS', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'MTGB SS');
+INSERT INTO `Stocks` VALUES(355, 'MITIE GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MTO LN');
+INSERT INTO `Stocks` VALUES(356, 'MTU AERO ENGINES HOLDING AG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'MTX GY');
+INSERT INTO `Stocks` VALUES(357, 'MUENCHENER RUECKVER AG-REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'MUV2 GY');
+INSERT INTO `Stocks` VALUES(358, 'CNP -CIE NATL A PORTEFEUILLE', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'NAT BB');
+INSERT INTO `Stocks` VALUES(359, 'AURUBIS AG', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'NDA GY');
+INSERT INTO `Stocks` VALUES(360, 'NORDEA BANK AB', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'NDA SS');
+INSERT INTO `Stocks` VALUES(361, 'NEOPOST SA', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'NEO FP');
+INSERT INTO `Stocks` VALUES(362, 'NESTE OIL OYJ', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'NES1V FH');
+INSERT INTO `Stocks` VALUES(363, 'NESTLE SA-REG', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'NESN VX');
+INSERT INTO `Stocks` VALUES(364, 'NEXANS SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'NEX FP');
+INSERT INTO `Stocks` VALUES(365, 'NATIONAL EXPRESS GROUP PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'NEX LN');
+INSERT INTO `Stocks` VALUES(366, 'NATIONAL GRID PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'NG/ LN');
+INSERT INTO `Stocks` VALUES(367, 'NORSK HYDRO ASA', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'NHY NO');
+INSERT INTO `Stocks` VALUES(368, 'IMERYS SA', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'NK FP');
+INSERT INTO `Stocks` VALUES(369, 'NOBEL BIOCARE HOLDING AG-REG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'NOBN VX');
+INSERT INTO `Stocks` VALUES(370, 'NOKIA OYJ', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'NOK1V FH');
+INSERT INTO `Stocks` VALUES(371, 'NOVARTIS AG-REG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'NOVN VX');
+INSERT INTO `Stocks` VALUES(372, 'NOVO NORDISK A/S-B', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'NOVOB DC');
+INSERT INTO `Stocks` VALUES(373, 'NOKIAN RENKAAT OYJ', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'NRE1V FH');
+INSERT INTO `Stocks` VALUES(374, 'NUTRECO NV', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'NUO NA');
+INSERT INTO `Stocks` VALUES(375, 'NORTHUMBRIAN WATER GROUP PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'NWG LN');
+INSERT INTO `Stocks` VALUES(376, 'NEXT PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'NXT LN');
+INSERT INTO `Stocks` VALUES(377, 'NOVOZYMES A/S-B SHARES', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'NZYMB DC');
+INSERT INTO `Stocks` VALUES(378, 'OLD MUTUAL PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'OML LN');
+INSERT INTO `Stocks` VALUES(379, 'OMV AG', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'OMV AV');
+INSERT INTO `Stocks` VALUES(380, 'OPAP SA', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'OPAP GA');
+INSERT INTO `Stocks` VALUES(381, 'L''OREAL', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'OR FP');
+INSERT INTO `Stocks` VALUES(382, 'ORIFLAME COSMETICS SA-SDR', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'ORI SS');
+INSERT INTO `Stocks` VALUES(383, 'ORKLA ASA', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'ORK NO');
+INSERT INTO `Stocks` VALUES(384, 'ORION OYJ-CLASS B', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'ORNBV FH');
+INSERT INTO `Stocks` VALUES(385, 'OUTOTEC OYJ', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'OTE1V FH');
+INSERT INTO `Stocks` VALUES(386, 'OUTOKUMPU OYJ', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'OUT1V FH');
+INSERT INTO `Stocks` VALUES(387, 'PORSCHE AUTOMOBIL HLDG-PFD', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'PAH3 GY');
+INSERT INTO `Stocks` VALUES(388, 'PAGESJAUNES GROUPE', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'PAJ FP');
+INSERT INTO `Stocks` VALUES(389, 'PARGESA HOLDING SA-BR', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'PARG SE');
+INSERT INTO `Stocks` VALUES(390, 'PIRELLI & C.', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'PC IM');
+INSERT INTO `Stocks` VALUES(391, 'PETROFAC LTD', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'PFC LN');
+INSERT INTO `Stocks` VALUES(392, 'PROVIDENT FINANCIAL PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'PFG LN');
+INSERT INTO `Stocks` VALUES(393, 'PARTNERS GROUP HOLDING AG', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'PGHN SE');
+INSERT INTO `Stocks` VALUES(394, 'PETROLEUM GEO-SERVICES', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'PGS NO');
+INSERT INTO `Stocks` VALUES(395, 'KONINKLIJKE PHILIPS ELECTRON', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'PHIA NA');
+INSERT INTO `Stocks` VALUES(396, 'PARMALAT SPA', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'PLT IM');
+INSERT INTO `Stocks` VALUES(397, 'BANCA POPOLARE DI MILANO', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'PMI IM');
+INSERT INTO `Stocks` VALUES(398, 'PREMIER OIL PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'PMO LN');
+INSERT INTO `Stocks` VALUES(399, 'PENNON GROUP PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'PNN LN');
+INSERT INTO `Stocks` VALUES(400, 'PETROPAVLOVSK PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'POG LN');
+INSERT INTO `Stocks` VALUES(401, 'POHJOLA BANK PLC', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'POH1S FH');
+INSERT INTO `Stocks` VALUES(402, 'BANCO POPULAR ESPANOL', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'POP SQ');
+INSERT INTO `Stocks` VALUES(403, 'PPR', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'PP FP');
+INSERT INTO `Stocks` VALUES(404, 'PUBLIC POWER CORP', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'PPC GA');
+INSERT INTO `Stocks` VALUES(405, 'PETROPLUS HOLDINGS AG', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'PPHN VX');
+INSERT INTO `Stocks` VALUES(406, 'PRUDENTIAL PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'PRU LN');
+INSERT INTO `Stocks` VALUES(407, 'PRYSMIAN SPA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'PRY IM');
+INSERT INTO `Stocks` VALUES(408, 'PROSIEBEN SAT.1 MEDIA AG-PFD', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'PSM GY');
+INSERT INTO `Stocks` VALUES(409, 'PERSIMMON PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'PSN LN');
+INSERT INTO `Stocks` VALUES(410, 'PEARSON PLC', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'PSON LN');
+INSERT INTO `Stocks` VALUES(411, 'PSP SWISS PROPERTY AG-REG', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'PSPN SE');
+INSERT INTO `Stocks` VALUES(412, 'PORTUGAL TELECOM SGPS SA-REG', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'PTC PL');
+INSERT INTO `Stocks` VALUES(413, 'PUBLICIS GROUPE', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'PUB FP');
+INSERT INTO `Stocks` VALUES(414, 'PUMA AG', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'PUM GY');
+INSERT INTO `Stocks` VALUES(415, 'PADDY POWER PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'PWL ID');
+INSERT INTO `Stocks` VALUES(416, 'QIAGEN N.V.', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'QIA GY');
+INSERT INTO `Stocks` VALUES(417, 'QINETIQ GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'QQ/ LN');
+INSERT INTO `Stocks` VALUES(418, 'RANDSTAD HOLDING NV', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'RAND NA');
+INSERT INTO `Stocks` VALUES(419, 'RATOS AB-B SHS', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'RATOB SS');
+INSERT INTO `Stocks` VALUES(420, 'RECKITT BENCKISER GROUP PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'RB/ LN');
+INSERT INTO `Stocks` VALUES(421, 'RAIFFEISEN BANK INTERNATIONA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'RBI AV');
+INSERT INTO `Stocks` VALUES(422, 'ROYAL BANK OF SCOTLAND GROUP', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'RBS LN');
+INSERT INTO `Stocks` VALUES(423, 'TELEPERFORMANCE', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'RCF FP');
+INSERT INTO `Stocks` VALUES(424, 'ROYAL DUTCH SHELL PLC-A SHS', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'RDSA NA');
+INSERT INTO `Stocks` VALUES(425, 'RENEWABLE ENERGY CORP ASA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'REC NO');
+INSERT INTO `Stocks` VALUES(426, 'RED ELECTRICA CORPORACION SA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'REE SQ');
+INSERT INTO `Stocks` VALUES(427, 'REED ELSEVIER PLC', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'REL LN');
+INSERT INTO `Stocks` VALUES(428, 'REED ELSEVIER NV', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'REN NA');
+INSERT INTO `Stocks` VALUES(429, 'REPSOL YPF SA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'REP SQ');
+INSERT INTO `Stocks` VALUES(430, 'REXAM PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'REX LN');
+INSERT INTO `Stocks` VALUES(431, 'EURAZEO', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'RF FP');
+INSERT INTO `Stocks` VALUES(432, 'RHODIA SA', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'RHA FP');
+INSERT INTO `Stocks` VALUES(433, 'RHOEN-KLINIKUM AG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'RHK GY');
+INSERT INTO `Stocks` VALUES(434, 'RHEINMETALL AG', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'RHM GY');
+INSERT INTO `Stocks` VALUES(435, 'PERNOD-RICARD SA', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'RI FP');
+INSERT INTO `Stocks` VALUES(436, 'RIO TINTO PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'RIO LN');
+INSERT INTO `Stocks` VALUES(437, 'HERMES INTERNATIONAL', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'RMS FP');
+INSERT INTO `Stocks` VALUES(438, 'RENAULT SA', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'RNO FP');
+INSERT INTO `Stocks` VALUES(439, 'ROCHE HOLDING AG-GENUSSCHEIN', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'ROG VX');
+INSERT INTO `Stocks` VALUES(440, 'ROTORK PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ROR LN');
+INSERT INTO `Stocks` VALUES(441, 'ROLLS-ROYCE GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'RR/ LN');
+INSERT INTO `Stocks` VALUES(442, 'RANDGOLD RESOURCES LTD', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'RRS LN');
+INSERT INTO `Stocks` VALUES(443, 'RSA INSURANCE GROUP PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'RSA LN');
+INSERT INTO `Stocks` VALUES(444, 'RENTOKIL INITIAL PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'RTO LN');
+INSERT INTO `Stocks` VALUES(445, 'RAUTARUUKKI OYJ', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'RTRKS FH');
+INSERT INTO `Stocks` VALUES(446, 'SWISS REINSURANCE CO LTD-REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'RUKN VX');
+INSERT INTO `Stocks` VALUES(447, 'RWE AG', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'RWE GY');
+INSERT INTO `Stocks` VALUES(448, 'RYANAIR HOLDINGS PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'RYA ID');
+INSERT INTO `Stocks` VALUES(449, 'SANOMA OYJ', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'SAA1V FH');
+INSERT INTO `Stocks` VALUES(450, 'SABMILLER PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'SAB LN');
+INSERT INTO `Stocks` VALUES(451, 'BANCO DE SABADELL SA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'SAB SQ');
+INSERT INTO `Stocks` VALUES(452, 'SAFRAN SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SAF FP');
+INSERT INTO `Stocks` VALUES(453, 'SAMPO OYJ-A SHS', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'SAMAS FH');
+INSERT INTO `Stocks` VALUES(454, 'SANOFI-AVENTIS', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'SAN FP');
+INSERT INTO `Stocks` VALUES(455, 'BANCO SANTANDER SA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'SAN SQ');
+INSERT INTO `Stocks` VALUES(456, 'SANDVIK AB', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SAND SS');
+INSERT INTO `Stocks` VALUES(457, 'SAP AG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'SAP GY');
+INSERT INTO `Stocks` VALUES(458, 'STADA ARZNEIMITTEL AG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'SAZ GY');
+INSERT INTO `Stocks` VALUES(459, 'SBM OFFSHORE NV', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'SBMO NA');
+INSERT INTO `Stocks` VALUES(460, 'SAINSBURY (J) PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'SBRY LN');
+INSERT INTO `Stocks` VALUES(461, 'SVENSKA CELLULOSA AB-B SHS', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'SCAB SS');
+INSERT INTO `Stocks` VALUES(462, 'SCHIBSTED ASA', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'SCH NO');
+INSERT INTO `Stocks` VALUES(463, 'SCHINDLER HOLDING-PART CERT', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SCHP SE');
+INSERT INTO `Stocks` VALUES(464, 'SWISSCOM AG-REG', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'SCMN VX');
+INSERT INTO `Stocks` VALUES(465, 'SCOR SE', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'SCR FP');
+INSERT INTO `Stocks` VALUES(466, 'SCANIA AB-B SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SCVB SS');
+INSERT INTO `Stocks` VALUES(467, 'K+S AG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'SDF GY');
+INSERT INTO `Stocks` VALUES(468, 'SCHRODERS PLC', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'SDR LN');
+INSERT INTO `Stocks` VALUES(469, 'SEADRILL LTD', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'SDRL NO');
+INSERT INTO `Stocks` VALUES(470, 'SKANDINAVISKA ENSKILDA BAN-A', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'SEBA SS');
+INSERT INTO `Stocks` VALUES(471, 'SECURITAS AB-B SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SECUB SS');
+INSERT INTO `Stocks` VALUES(472, 'SES', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'SESG FP');
+INSERT INTO `Stocks` VALUES(473, 'SUEZ ENVIRONNEMENT CO', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'SEV FP');
+INSERT INTO `Stocks` VALUES(474, 'STAGECOACH GROUP PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'SGC LN');
+INSERT INTO `Stocks` VALUES(475, 'SAGE GROUP PLC/THE', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'SGE LN');
+INSERT INTO `Stocks` VALUES(476, 'SGL CARBON SE', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SGL GY');
+INSERT INTO `Stocks` VALUES(477, 'COMPAGNIE DE SAINT-GOBAIN', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'SGO FP');
+INSERT INTO `Stocks` VALUES(478, 'SEGRO PLC', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'SGRO LN');
+INSERT INTO `Stocks` VALUES(479, 'SGS SA-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SGSN VX');
+INSERT INTO `Stocks` VALUES(480, 'SVENSKA HANDELSBANKEN-A SHS', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'SHBA SS');
+INSERT INTO `Stocks` VALUES(481, 'SHIRE PLC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'SHP LN');
+INSERT INTO `Stocks` VALUES(482, 'SOCO INTERNATIONAL PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'SIA LN');
+INSERT INTO `Stocks` VALUES(483, 'SIEMENS AG-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SIE GY');
+INSERT INTO `Stocks` VALUES(484, 'SIKA AG-BR', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'SIK SE');
+INSERT INTO `Stocks` VALUES(485, 'SEB SA', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'SK FP');
+INSERT INTO `Stocks` VALUES(486, 'SKANSKA AB-B SHS', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'SKAB SS');
+INSERT INTO `Stocks` VALUES(487, 'SKF AB-B SHARES', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SKFB SS');
+INSERT INTO `Stocks` VALUES(488, 'STANDARD LIFE PLC', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'SL/ LN');
+INSERT INTO `Stocks` VALUES(489, 'SWISS LIFE HOLDING AG-REG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'SLHN VX');
+INSERT INTO `Stocks` VALUES(490, 'SMITHS GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SMIN LN');
+INSERT INTO `Stocks` VALUES(491, 'SMITH & NEPHEW PLC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'SN/ LN');
+INSERT INTO `Stocks` VALUES(492, 'SOFINA', 7, 0, '', '', '', '', 0, '', '', '', '', '', 'SOF BB');
+INSERT INTO `Stocks` VALUES(493, 'SOLVAY SA', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'SOLB BB');
+INSERT INTO `Stocks` VALUES(494, 'SONOVA HOLDING AG-REG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'SOON VX');
+INSERT INTO `Stocks` VALUES(495, 'SOFTWARE AG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'SOW GY');
+INSERT INTO `Stocks` VALUES(496, 'SAIPEM SPA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'SPM IM');
+INSERT INTO `Stocks` VALUES(497, 'SWISS PRIME SITE-REG', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'SPSN SE');
+INSERT INTO `Stocks` VALUES(498, 'SPIRAX-SARCO ENGINEERING PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SPX LN');
+INSERT INTO `Stocks` VALUES(499, 'SNAM RETE GAS', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'SRG IM');
+INSERT INTO `Stocks` VALUES(500, 'SERCO GROUP PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SRP LN');
+INSERT INTO `Stocks` VALUES(501, 'SSAB AB-A SHARES', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'SSABA SS');
+INSERT INTO `Stocks` VALUES(502, 'SCOTTISH & SOUTHERN ENERGY', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'SSE LN');
+INSERT INTO `Stocks` VALUES(503, 'SSL INTERNATIONAL PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'SSL LN');
+INSERT INTO `Stocks` VALUES(504, 'STANDARD CHARTERED PLC', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'STAN LN');
+INSERT INTO `Stocks` VALUES(505, 'STOREBRAND ASA', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'STB NO');
+INSERT INTO `Stocks` VALUES(506, 'STORA ENSO OYJ-R SHS', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'STERV FH');
+INSERT INTO `Stocks` VALUES(507, 'STATOIL ASA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'STL NO');
+INSERT INTO `Stocks` VALUES(508, 'STMICROELECTRONICS NV', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'STM IM');
+INSERT INTO `Stocks` VALUES(509, 'STRAUMANN HOLDING AG-REG', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'STMN SE');
+INSERT INTO `Stocks` VALUES(510, 'SCHNEIDER ELECTRIC SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SU FP');
+INSERT INTO `Stocks` VALUES(511, 'SULZER AG-REG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SUN SE');
+INSERT INTO `Stocks` VALUES(512, 'SEVERN TRENT PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'SVT LN');
+INSERT INTO `Stocks` VALUES(513, 'SODEXO', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'SW FP');
+INSERT INTO `Stocks` VALUES(514, 'SWEDBANK AB - A SHARES', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'SWEDA SS');
+INSERT INTO `Stocks` VALUES(515, 'SWEDISH MATCH AB', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'SWMA SS');
+INSERT INTO `Stocks` VALUES(516, 'SOLARWORLD AG', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'SWV GY');
+INSERT INTO `Stocks` VALUES(517, 'SPECTRIS PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'SXS LN');
+INSERT INTO `Stocks` VALUES(518, 'SYMRISE AG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'SY1 GY');
+INSERT INTO `Stocks` VALUES(519, 'SYDBANK A/S', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'SYDB DC');
+INSERT INTO `Stocks` VALUES(520, 'SYNGENTA AG-REG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'SYNN VX');
+INSERT INTO `Stocks` VALUES(521, 'SYNTHES INC', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'SYST VX');
+INSERT INTO `Stocks` VALUES(522, 'SALZGITTER AG', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'SZG GY');
+INSERT INTO `Stocks` VALUES(523, 'SUEDZUCKER AG', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'SZU GY');
+INSERT INTO `Stocks` VALUES(524, 'TATE & LYLE PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'TATE LN');
+INSERT INTO `Stocks` VALUES(525, 'THOMAS COOK GROUP PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'TCG LN');
+INSERT INTO `Stocks` VALUES(526, 'TECHNIP SA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'TEC FP');
+INSERT INTO `Stocks` VALUES(527, 'TELEFONICA SA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'TEF SQ');
+INSERT INTO `Stocks` VALUES(528, 'TELENOR ASA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'TEL NO');
+INSERT INTO `Stocks` VALUES(529, 'TELE2 AB-B SHS', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'TEL2B SS');
+INSERT INTO `Stocks` VALUES(530, 'TEMENOS GROUP AG-REG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'TEMN SE');
+INSERT INTO `Stocks` VALUES(531, 'TENARIS SA', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'TEN IM');
+INSERT INTO `Stocks` VALUES(532, 'TELEVISION FRANCAISE (T.F.1)', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'TFI FP');
+INSERT INTO `Stocks` VALUES(533, 'TOGNUM AG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'TGM GY');
+INSERT INTO `Stocks` VALUES(534, 'TGS NOPEC GEOPHYSICAL CO ASA', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'TGS NO');
+INSERT INTO `Stocks` VALUES(535, 'TELECOM ITALIA SPA', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'TIT IM');
+INSERT INTO `Stocks` VALUES(536, 'TITAN CEMENT CO. S.A.', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'TITK GA');
+INSERT INTO `Stocks` VALUES(537, 'TELEKOM AUSTRIA AG', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'TKA AV');
+INSERT INTO `Stocks` VALUES(538, 'THYSSENKRUPP AG', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'TKA GY');
+INSERT INTO `Stocks` VALUES(539, 'GESTEVISION TELECINCO SA', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'TL5 SQ');
+INSERT INTO `Stocks` VALUES(540, 'TELIASONERA AB', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'TLSN SS');
+INSERT INTO `Stocks` VALUES(541, 'TULLOW OIL PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'TLW LN');
+INSERT INTO `Stocks` VALUES(542, 'TELENET GROUP HOLDING NV', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'TNET BB');
+INSERT INTO `Stocks` VALUES(543, 'TNT NV', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'TNT NA');
+INSERT INTO `Stocks` VALUES(544, 'TOPDANMARK A/S', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'TOP DC');
+INSERT INTO `Stocks` VALUES(545, 'PIRAEUS BANK S.A.', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'TPEIR GA');
+INSERT INTO `Stocks` VALUES(546, 'TRAVIS PERKINS PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'TPK LN');
+INSERT INTO `Stocks` VALUES(547, 'TECNICAS REUNIDAS SA', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'TRE SQ');
+INSERT INTO `Stocks` VALUES(548, 'TRELLEBORG AB-B SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'TRELB SS');
+INSERT INTO `Stocks` VALUES(549, 'TERNA SPA', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'TRN IM');
+INSERT INTO `Stocks` VALUES(550, 'TRYG A/S', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'TRYG DC');
+INSERT INTO `Stocks` VALUES(551, 'TESCO PLC', 16, 0, '', '', '', '', 0, '', '', '', '', '', 'TSCO LN');
+INSERT INTO `Stocks` VALUES(552, 'TUI TRAVEL PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'TT/ LN');
+INSERT INTO `Stocks` VALUES(553, 'TAYLOR WIMPEY PLC', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'TW/ LN');
+INSERT INTO `Stocks` VALUES(554, 'UBI BANCA SCPA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'UBI IM');
+INSERT INTO `Stocks` VALUES(555, 'UNITED BUSINESS MEDIA LTD', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'UBM LN');
+INSERT INTO `Stocks` VALUES(556, 'UBS AG-REG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'UBSN VX');
+INSERT INTO `Stocks` VALUES(557, 'UCB SA', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'UCB BB');
+INSERT INTO `Stocks` VALUES(558, 'UNICREDIT SPA', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'UCG IM');
+INSERT INTO `Stocks` VALUES(559, 'PEUGEOT SA', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'UG FP');
+INSERT INTO `Stocks` VALUES(560, 'SWATCH GROUP AG/THE-BR', 14, 0, '', '', '', '', 0, '', '', '', '', '', 'UHR VX');
+INSERT INTO `Stocks` VALUES(561, 'UNIBAIL-RODAMCO SE', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'UL FP');
+INSERT INTO `Stocks` VALUES(562, 'ULTRA ELECTRONICS HLDGS PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ULE LN');
+INSERT INTO `Stocks` VALUES(563, 'UNILEVER PLC', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'ULVR LN');
+INSERT INTO `Stocks` VALUES(564, 'UMICORE', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'UMI BB');
+INSERT INTO `Stocks` VALUES(565, 'UNILEVER NV-CVA', 8, 0, '', '', '', '', 0, '', '', '', '', '', 'UNA NA');
+INSERT INTO `Stocks` VALUES(566, 'UPM-KYMMENE OYJ', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'UPM1V FH');
+INSERT INTO `Stocks` VALUES(567, 'UNITED INTERNET AG-REG SHARE', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'UTDI GY');
+INSERT INTO `Stocks` VALUES(568, 'UNITED UTILITIES GROUP PLC', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'UU/ LN');
+INSERT INTO `Stocks` VALUES(569, 'VALIANT HOLDING AG-REG', 3, 0, '', '', '', '', 0, '', '', '', '', '', 'VATN SE');
+INSERT INTO `Stocks` VALUES(570, 'VICTREX PLC', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'VCT LN');
+INSERT INTO `Stocks` VALUES(571, 'VEDANTA RESOURCES PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'VED LN');
+INSERT INTO `Stocks` VALUES(572, 'VERBUND AG', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'VER AV');
+INSERT INTO `Stocks` VALUES(573, 'VEOLIA ENVIRONNEMENT', 20, 0, '', '', '', '', 0, '', '', '', '', '', 'VIE FP');
+INSERT INTO `Stocks` VALUES(574, 'VIENNA INSURANCE GROUP AG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'VIG AV');
+INSERT INTO `Stocks` VALUES(575, 'VIVENDI', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'VIV FP');
+INSERT INTO `Stocks` VALUES(576, 'VALLOUREC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'VK FP');
+INSERT INTO `Stocks` VALUES(577, 'VODAFONE GROUP PLC', 18, 0, '', '', '', '', 0, '', '', '', '', '', 'VOD LN');
+INSERT INTO `Stocks` VALUES(578, 'VOESTALPINE AG', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'VOE AV');
+INSERT INTO `Stocks` VALUES(579, 'VOLVO AB-B SHS', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'VOLVB SS');
+INSERT INTO `Stocks` VALUES(580, 'VOLKSWAGEN AG-PFD', 2, 0, '', '', '', '', 0, '', '', '', '', '', 'VOW3 GY');
+INSERT INTO `Stocks` VALUES(581, 'VOPAK', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'VPK NA');
+INSERT INTO `Stocks` VALUES(582, 'VESTAS WIND SYSTEMS A/S', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'VWS DC');
+INSERT INTO `Stocks` VALUES(583, 'WACKER CHEMIE AG', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'WCH GY');
+INSERT INTO `Stocks` VALUES(584, 'WILLIAM DEMANT HOLDING', 9, 0, '', '', '', '', 0, '', '', '', '', '', 'WDH DC');
+INSERT INTO `Stocks` VALUES(585, 'WEIR GROUP PLC/THE', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'WEIR LN');
+INSERT INTO `Stocks` VALUES(586, 'WOOD GROUP (JOHN) PLC', 13, 0, '', '', '', '', 0, '', '', '', '', '', 'WG/ LN');
+INSERT INTO `Stocks` VALUES(587, 'WERELDHAVE NV', 15, 0, '', '', '', '', 0, '', '', '', '', '', 'WHA NA');
+INSERT INTO `Stocks` VALUES(588, 'WIENERBERGER AG', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'WIE AV');
+INSERT INTO `Stocks` VALUES(589, 'WINCOR NIXDORF AG', 17, 0, '', '', '', '', 0, '', '', '', '', '', 'WIN GY');
+INSERT INTO `Stocks` VALUES(590, 'WOLTERS KLUWER', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'WKL NA');
+INSERT INTO `Stocks` VALUES(591, 'WILLIAM HILL PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'WMH LN');
+INSERT INTO `Stocks` VALUES(592, 'WOLSELEY PLC', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'WOS LN');
+INSERT INTO `Stocks` VALUES(593, 'WPP PLC', 12, 0, '', '', '', '', 0, '', '', '', '', '', 'WPP LN');
+INSERT INTO `Stocks` VALUES(594, 'WARTSILA OYJ', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'WRT1V FH');
+INSERT INTO `Stocks` VALUES(595, 'WHITBREAD PLC', 19, 0, '', '', '', '', 0, '', '', '', '', '', 'WTB LN');
+INSERT INTO `Stocks` VALUES(596, 'XSTRATA PLC', 4, 0, '', '', '', '', 0, '', '', '', '', '', 'XTA LN');
+INSERT INTO `Stocks` VALUES(597, 'YARA INTERNATIONAL ASA', 5, 0, '', '', '', '', 0, '', '', '', '', '', 'YAR NO');
+INSERT INTO `Stocks` VALUES(598, 'YIT OYJ', 6, 0, '', '', '', '', 0, '', '', '', '', '', 'YTY1V FH');
+INSERT INTO `Stocks` VALUES(599, 'ZODIAC AEROSPACE', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ZC FP');
+INSERT INTO `Stocks` VALUES(600, 'ZARDOYA OTIS SA', 10, 0, '', '', '', '', 0, '', '', '', '', '', 'ZOT SQ');
+INSERT INTO `Stocks` VALUES(601, 'ZURICH FINANCIAL SERVICES AG', 11, 0, '', '', '', '', 0, '', '', '', '', '', 'ZURN VX');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Users`
+--
+
+CREATE TABLE `Users` (
+  `Id` int(8) NOT NULL AUTO_INCREMENT,
+  `Nom` varchar(60) NOT NULL,
+  `Email` varchar(60) NOT NULL,
+  `Initiales` varchar(10) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `Users`
+--
+
+INSERT INTO `Users` VALUES(1, 'Thibault Poisson', 'thibault.poisson@raidecp.net', 'TP');
