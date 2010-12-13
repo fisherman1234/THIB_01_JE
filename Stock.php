@@ -396,13 +396,21 @@ $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
 	});
 	</script> 
-</head>
+<style type="text/css">
+<!--
+back-button {
+	text-decoration: underline;
+	padding-bottom: 10px;
+}
+-->
+</style></head>
 
 <body class="twoColElsLtHdr">
 
 <div id="container">
   <div id="header">
     <h1>Stock : <?php echo $row_Sector['Stock_Name']; ?> - Sector : <?php echo $row_Sector['Sector_Name']; ?></h1>
+    <p><a onClick="history.go(-1);return true;"><u>&lt;&lt;back</u></a></p>
   <!-- end #header --></div>
   <div id="mainContent-full">
     <div id="TabbedPanels1" class="TabbedPanels">
