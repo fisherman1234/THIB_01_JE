@@ -1,4 +1,4 @@
-<?php require_once('Connections/localhost.php'); ?>
+<?php require_once('../Connections/localhost.php'); ?>
 
 <?php
 if (!function_exists("GetSQLValueString")) {
@@ -148,7 +148,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form2")) {
   mysql_select_db($database_localhost, $localhost);
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 
-  $updateGoTo = "Stock.php";
+  $updateGoTo = "../Stock.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -370,7 +370,9 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- TemplateBeginEditable name="doctitle" -->
 <title>Stock</title>
+<!-- TemplateEndEditable -->
 <!--[if IE]>
 <style type="text/css"> 
 /* place css fixes for all versions of IE in this conditional comment */
@@ -379,23 +381,25 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 /* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
 </style>
 <![endif]-->
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
-<script src="SpryAssets/SpryCollapsiblePanel.js" type="text/javascript"></script>
-<script src="SpryAssets/SpryAccordion.js" type="text/javascript"></script>
-<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-<link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
-<link href="SpryAssets/SpryCollapsiblePanel.css" rel="stylesheet" type="text/css" />
-<link href="SpryAssets/SpryAccordion.css" rel="stylesheet" type="text/css" />
-<link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
-<link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<script src="../SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
+<script src="../SpryAssets/SpryCollapsiblePanel.js" type="text/javascript"></script>
+<script src="../SpryAssets/SpryAccordion.js" type="text/javascript"></script>
+<script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+<link href="../SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
+<link href="../SpryAssets/SpryCollapsiblePanel.css" rel="stylesheet" type="text/css" />
+<link href="../SpryAssets/SpryAccordion.css" rel="stylesheet" type="text/css" />
+<link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
+<link type="text/css" href="../css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="../js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui-1.8.7.custom.min.js"></script>
 <script> 
 $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
 	});
-	</script> 
+	</script>
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
 </head>
 
 <body class="twoColElsLtHdr">
