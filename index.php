@@ -23,7 +23,7 @@ $(function() {
 			
 			 $("#sector").autocomplete({
                 source: "Sectors_Search.php",
-                minLength: 2,
+                minLength: 1,
                 select: function(event, ui) {
                     $('#stock_id').val(ui.item.id);
 					location.href = 'Sector.php?Sector_ID='+ui.item.id;
