@@ -379,7 +379,7 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 /* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
 </style>
 <![endif]-->
-<link href="stylesheet/main.css" rel="stylesheet" type="text/css" />
+<link href="css/main.css" rel="stylesheet" type="text/css" />
 <script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
 <script src="SpryAssets/SpryCollapsiblePanel.js" type="text/javascript"></script>
 <script src="SpryAssets/SpryAccordion.js" type="text/javascript"></script>
@@ -388,6 +388,9 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 <link href="SpryAssets/SpryCollapsiblePanel.css" rel="stylesheet" type="text/css" />
 <link href="SpryAssets/SpryAccordion.css" rel="stylesheet" type="text/css" />
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
 </head>
 
 <body class="twoColElsLtHdr">
