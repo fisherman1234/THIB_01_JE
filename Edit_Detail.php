@@ -68,11 +68,14 @@ $totalRows_Current_Detail = mysql_num_rows($Current_Detail);
 <script type="text/javascript" src="/js/jquery-ui-1.8.7.custom.min.js"></script>
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
-<script> 
+<script>
 $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
 	});
-	</script>
+function MM_callJS(jsStr) { //v2.0
+  return eval(jsStr)
+}
+</script>
 <style type="text/css">
 <!--
 .oneColElsCtrHdr #container #mainContent #form1 table tr td {
@@ -92,7 +95,6 @@ $(function() {
     
   <!-- end #header --></div>
   <div id="mainContent">
-    <h1>Edit entry    </h1>
     <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
       <table width="100%" align="center">
         <tr valign="baseline">
@@ -111,7 +113,7 @@ $(function() {
         </tr>
         <tr valign="baseline">
           <td nowrap="nowrap" align="right">&nbsp;</td>
-          <td><input type="submit" value="Update analysis" /></td>
+          <td><input type="submit" value="Update analysis" /><input name="Button" type="button" onclick="MM_callJS('self.close ()')" value="Close" /></td>
         </tr>
       </table>
       <input type="hidden" name="Detail_ID" value="<?php echo $row_Current_Detail['Detail_ID']; ?>" />

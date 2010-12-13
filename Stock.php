@@ -1,6 +1,37 @@
 <?php require_once('Connections/localhost.php'); ?>
-
+<?php require_once('Connections/localhost.php'); ?>
 <?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -341,11 +372,11 @@ $row_Sectors = mysql_fetch_assoc($Sectors);
 $totalRows_Sectors = mysql_num_rows($Sectors);
 
 $colname_Detail = "-1";
-if (isset($_POST['Stock_ID'])) {
-  $colname_Detail = $_POST['Stock_ID'];
+if (isset($_GET['Stock_ID'])) {
+  $colname_Detail = $_GET['Stock_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Detail = sprintf("SELECT * FROM Details, Stocks WHERE Details.Sector_ID=Stocks.Sector_ID AND Stocks.Sector_ID=%s", GetSQLValueString($colname_Detail, "int"));
+$query_Detail = sprintf("SELECT * FROM Details, Stocks WHERE Details.Sector_ID=Stocks.Sector_ID AND Stocks.Stock_ID=%s", GetSQLValueString($colname_Detail, "int"));
 $Detail = mysql_query($query_Detail, $localhost) or die(mysql_error());
 $row_Detail = mysql_fetch_assoc($Detail);
 $totalRows_Detail = mysql_num_rows($Detail);
@@ -391,11 +422,14 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
-<script> 
+<script>
 $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
 	});
-	</script> 
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script> 
 <style type="text/css">
 <!--
 back-button {
@@ -410,7 +444,7 @@ back-button {
 <div id="container">
   <div id="header">
     <h1>Stock : <?php echo $row_Sector['Stock_Name']; ?> - Sector : <?php echo $row_Sector['Sector_Name']; ?></h1>
-    <p><a onClick="history.go(-1);return true;"><u>&lt;&lt;back</u></a></p>
+    <p><a onClick="history.go(-1);return true;"><u>Back</u></a>	<u>New search</u></p>
   <!-- end #header --></div>
   <div id="mainContent-full">
     <div id="TabbedPanels1" class="TabbedPanels">
@@ -465,17 +499,16 @@ do {
               </form>
               <p>&nbsp;</p></td>
               <td align="right" valign="top">&nbsp;</td>
-              <td valign="top">&nbsp;Available analysis :
-                <table width="100%" border="1" align="center">
+              <td valign="top"><p>&nbsp;Available analysis :                </p><table width="100%" border="1" align="center">
+                <tr>
+                  <td width="100%">Title</td>
+                </tr>
+                <?php do { ?>
                   <tr>
-                    <td width="100%" valign="top">Sector_Analysis_Title</td>
-                  </tr>
-                  <?php do { ?>
-                  <tr>
-                    <td valign="top"><?php echo $row_Detail['Sector_Analysis_Title']; ?>&nbsp;</td>
+                    <td><a href="#" onclick="MM_openBrWindow('Edit_Detail.php?Detail_ID=<?php echo $row_Detail['Detail_ID']; ?>','','scrollbars=yes,resizable=yes,width=800,height=500')"> <?php echo $row_Detail['Sector_Analysis_Title']; ?></a></td>
                   </tr>
                   <?php } while ($row_Detail = mysql_fetch_assoc($Detail)); ?>
-                </table></td>
+              </table></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
@@ -940,7 +973,6 @@ do {
     <p>BDL Capital Management - 2010</p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
-
 <script type="text/javascript">
 <!--
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
