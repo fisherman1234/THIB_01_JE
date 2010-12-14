@@ -102,3 +102,15 @@ body  {
 .twoColElsLtHdr #container #mainContent-full #TabbedPanels1 .TabbedPanelsContentGroup .TabbedPanelsContent.TabbedPanelsContentVisible table tr td {
 	font-size: 10pt;
 }
+MyStocks {
+	font-size: 100px;
+}
+.oneColElsCtrHdr #container #mainContent table tr td .small {
+	font-size: 90%;
+}
+.Small_text {
+	font-size: 10pt;
+}
+.oneColElsCtrHdr #container #mainContent table tr td #Small_text table {
+	font-size: 10pt;
+}

@@ -14,11 +14,14 @@ body {
 3. If font sizing is changed in differing amounts on each div instead of on the overall design (ie: #sidebar1 is given a 70% font size and #mainContent is given an 85% font size), this will proportionately change each of the divs overall size. You may want to adjust based on your final font sizing.
 */
 .oneColElsCtrHdr #container {
-	width: 46em;  /* this width will create a container that will fit in an 800px browser window if text is left at browser default font sizes */
-	background: #FFFFFF;
-	margin: 0 auto; /* the auto margins (in conjunction with a width) center the page */
+	width: 80%;  /* this width will create a container that will fit in an 800px browser window if text is left at browser default font sizes */
+	background: #FFFFFF; /* the auto margins (in conjunction with a width) center the page */
 	border: 1px solid #000000;
 	text-align: left; /* this overrides the text-align: center on the body element. */
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
 }
 .oneColElsCtrHdr #header { 
 	background: #DDDDDD; 
@@ -31,6 +34,7 @@ body {
 .oneColElsCtrHdr #mainContent {
 	padding: 0 20px; /* remember that padding is the space inside the div box and margin is the space outside the div box */
 	background: #FFFFFF;
+	font-size: 10pt;
 }
 .oneColElsCtrHdr #footer { 
 	padding: 0 10px; /* this padding matches the left alignment of the elements in the divs that appear above it. */

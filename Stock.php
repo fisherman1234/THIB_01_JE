@@ -252,6 +252,42 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form17")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Environment=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Environment'], "text"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form2")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Business_Description=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Business_Description'], "text"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form13")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Competition=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Competition'], "text"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form14")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Management=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Management'], "text"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form13")) {
   $insertSQL = sprintf("INSERT INTO Details (Stock_ID, Last_Entry_Date, Sector_Analysis_Title, Sector_Analysis_Text) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "int"),
@@ -326,7 +362,7 @@ if (isset($_GET['Stock_ID'])) {
   $colname_Discussions = $_GET['Stock_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Discussions = sprintf("SELECT * FROM BDL_Discussions WHERE Stock_ID = %s", GetSQLValueString($colname_Discussions, "text"));
+$query_Discussions = sprintf("SELECT * FROM BDL_Discussions WHERE Stock_ID = %s ORDER BY BDL_Discussions.Discussion_Date", GetSQLValueString($colname_Discussions, "text"));
 $query_limit_Discussions = sprintf("%s LIMIT %d, %d", $query_Discussions, $startRow_Discussions, $maxRows_Discussions);
 $Discussions = mysql_query($query_limit_Discussions, $localhost) or die(mysql_error());
 $row_Discussions = mysql_fetch_assoc($Discussions);
@@ -344,7 +380,7 @@ if (isset($_GET['Stock_ID'])) {
   $colname_Meetins_Results = $_GET['Stock_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Meetins_Results = sprintf("SELECT * FROM Meetings_Results WHERE Stock_ID = %s", GetSQLValueString($colname_Meetins_Results, "int"));
+$query_Meetins_Results = sprintf("SELECT * FROM Meetings_Results, Users WHERE Stock_ID = %s AND Meetings_Results.BDL_Contact=Users.Id ORDER BY Meetings_Results.Meeting_Date", GetSQLValueString($colname_Meetins_Results, "int"));
 $Meetins_Results = mysql_query($query_Meetins_Results, $localhost) or die(mysql_error());
 $row_Meetins_Results = mysql_fetch_assoc($Meetins_Results);
 $totalRows_Meetins_Results = mysql_num_rows($Meetins_Results);
@@ -380,6 +416,12 @@ $query_Detail = sprintf("SELECT * FROM Details, Stocks WHERE Details.Sector_ID=S
 $Detail = mysql_query($query_Detail, $localhost) or die(mysql_error());
 $row_Detail = mysql_fetch_assoc($Detail);
 $totalRows_Detail = mysql_num_rows($Detail);
+
+mysql_select_db($database_localhost, $localhost);
+$query_All_Users = "SELECT * FROM Users";
+$All_Users = mysql_query($query_All_Users, $localhost) or die(mysql_error());
+$row_All_Users = mysql_fetch_assoc($All_Users);
+$totalRows_All_Users = mysql_num_rows($All_Users);
 
 $queryString_Discussions = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -534,45 +576,86 @@ do {
           <p>&nbsp;</p>
         </div>
         <div class="TabbedPanelsContent">
-          <form id="form1" name="form1" method="post" action="">
-          </form>
-          <form action="<?php echo $editFormAction; ?>" method="post" name="form2" id="form2">
-            <table width="100%" align="center">
-              <tr valign="baseline">
-                <td width="10%" align="right" valign="top" nowrap="nowrap">Environment</td>
-                <td width="36%"><textarea name="Environment" cols="40" rows="8"><?php echo htmlentities($row_Sector['Environment'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
-                <td width="10%" align="right" valign="top" nowrap="nowrap">Competition</td>
-                <td width="38%"><textarea name="Competition" cols="40" rows="8"><?php echo htmlentities($row_Sector['Competition'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
-              </tr>
-              <tr valign="baseline">
-                <td width="10%" align="right" valign="top" nowrap="nowrap">&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr valign="baseline">
-                <td width="10%" align="right" valign="top" nowrap="nowrap">Business description</td>
-                <td><textarea name="Business_Description" cols="40" rows="8"><?php echo htmlentities($row_Sector['Business_Description'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
-                <td nowrap="nowrap" align="right" valign="top">Management</td>
-                <td><textarea name="Management" cols="40" rows="8"><?php echo htmlentities($row_Sector['Management'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
-              </tr>
-              <tr valign="baseline">
-                <td width="10%" align="right" valign="top" nowrap="nowrap">&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr valign="baseline">
-                <td width="10%" align="right" nowrap="nowrap">&nbsp;</td>
-                <td><input type="submit" value="Update Analysis" /></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-            </table>
-            <input type="hidden" name="MM_update" value="form2" />
-            <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-          </form>
-          
+          <div id="TabbedPanels3" class="TabbedPanels">
+            <ul class="TabbedPanelsTabGroup">
+              <li class="TabbedPanelsTab" tabindex="0">Environment</li>
+              <li class="TabbedPanelsTab" tabindex="0">Business description</li>
+              <li class="TabbedPanelsTab" tabindex="0">Competition</li>
+              <li class="TabbedPanelsTab" tabindex="0">Management</li>
+            </ul>
+            <div class="TabbedPanelsContentGroup">
+              <div class="TabbedPanelsContent">
+                <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="20%" align="right" valign="top">Environment</td>
+                      <td width="82%"><textarea name="Environment" cols="80" rows="25"><?php echo htmlentities($row_Sector['Environment'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td width="20%" align="right">&nbsp;</td>
+                      <td><input type="submit" value="Update environment" /></td>
+                    </tr>
+                  </table>
+                  <input type="hidden" name="MM_update" value="form1" />
+                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                </form>
+              </div>
+              <div class="TabbedPanelsContent">
+                <form action="<?php echo $editFormAction; ?>" method="post" name="form2" id="form2">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="20%" align="right" valign="top">Business description</td>
+                      <td width="79%"><textarea name="Business_Description" cols="80" rows="20"><?php echo htmlentities($row_Sector['Business_Description'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td nowrap="nowrap" align="right">&nbsp;</td>
+                      <td><input type="submit" value="Update business description" /></td>
+                    </tr>
+                  </table>
+                  <input type="hidden" name="MM_update" value="form2" />
+                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                </form>
+                
+              </div>
+              <div class="TabbedPanelsContent">
+               
+                <form action="<?php echo $editFormAction; ?>" method="post" name="form13" id="form13">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="20%" align="right" valign="top">Competition</td>
+                      <td width="83%"><textarea name="Competition" cols="80" rows="20"><?php echo htmlentities($row_Sector['Competition'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td nowrap="nowrap" align="right">&nbsp;</td>
+                      <td><input type="submit" value="Update competition" /></td>
+                    </tr>
+                  </table>
+                  <input type="hidden" name="MM_update" value="form13" />
+                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                </form>
+                
+              </div>
+              <div class="TabbedPanelsContent">
+                
+                <form action="<?php echo $editFormAction; ?>" method="post" name="form14" id="form14">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="20%" align="right" valign="top">Management</td>
+                      <td width="82%"><textarea name="Management" cols="80" rows="20"><?php echo htmlentities($row_Sector['Management'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td nowrap="nowrap" align="right">&nbsp;</td>
+                      <td><input type="submit" value="Update record" /></td>
+                    </tr>
+                  </table>
+                  <input type="hidden" name="MM_update" value="form14" />
+                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                </form>
+                <p>&nbsp;</p>
+</div>
+            </div>
+          </div>
+          <p>&nbsp;</p>
         </div>
         <div class="TabbedPanelsContent">
           <form id="form3" name="form3" method="post" action="">
@@ -623,29 +706,34 @@ do {
           <p>&nbsp;</p>
         </div>
         <div class="TabbedPanelsContent">
-          <form action="<?php echo $editFormAction; ?>" method="post" name="form7" id="form7">
-            <table align="center">
-              <tr valign="baseline">
-                <td nowrap="nowrap" align="right" valign="top">Investment Case :</td>
-                <td><textarea name="Investment_Case" cols="50" rows="5"><?php echo htmlentities($row_Sector['Investment_Case'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
-                <td align="center" valign="middle"><input type="submit" value="Update investment case" /></td>
-                
-              </tr>
-            </table>
-            <p>
-              <input type="hidden" name="MM_update" value="form7" />
-              <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-            </p>
-            <p>&nbsp;</p>
-          </form>
-
           <div id="TabbedPanels4" class="TabbedPanels">
             <ul class="TabbedPanelsTabGroup">
+              <li class="TabbedPanelsTab" tabindex="0">Investment case</li>
               <li class="TabbedPanelsTab" tabindex="0">BDL Discussions</li>
-              <li class="TabbedPanelsTab" tabindex="0">Investment risks</li>
+<li class="TabbedPanelsTab" tabindex="0">Investment risks</li>
               <li class="TabbedPanelsTab" tabindex="0">Rating</li>
 </ul>
             <div class="TabbedPanelsContentGroup">
+              <div class="TabbedPanelsContent">
+                <form action="<?php echo $editFormAction; ?>" method="post" name="form7" id="form7">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="18%" align="right" valign="top" nowrap="nowrap">Investment Case :</td>
+                      <td width="56%"><textarea name="Investment_Case" cols="80" rows="20"><?php echo htmlentities($row_Sector['Investment_Case'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                    </tr>
+                    <tr>
+                    	<td>&nbsp;</td>
+                        <td><input type="submit" value="Update investment case" /></td>
+                     </tr>
+                  </table>
+                  <p>
+                    <input type="hidden" name="MM_update" value="form7" />
+                    <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                  </p>
+             
+                </form>
+              
+              </div>
               <div class="TabbedPanelsContent">
                 <table width="100%" border="1" align="center">
                   <tr>
@@ -678,21 +766,11 @@ do {
                           <td><span id="sprytextfield2">
                             <input type="text" name="Discussion_Date" class="datepicker" value="" size="32" />
                             <span class="textfieldInvalidFormatMsg">Invalid format (should be : yyyy-mm-dd)</span></span></td>
-</tr>
+                        </tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">BDL View</td>
                           <td><input type="text" name="View_BDL" value="" size="32" /></td>
                         </tr>
-                        <tr valign="baseline">
-                          <td nowrap="nowrap" align="right">Alert </td>
-                          <td><input type="checkbox" name="Alert_BDL" value="" /></td>
-                        </tr>
-                        <tr valign="baseline">
-                          <td nowrap="nowrap" align="right">Alert date</td>
-                          <td><span id="sprytextfield1">
-                            <input type="text" name="Alert_Date" class="datepicker" value="" size="32" />
-                            <span class="textfieldInvalidFormatMsg">Invalid format  (should be : yyyy-mm-dd)</span></span></td>
-</tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">Stock price</td>
                           <td><input type="text" name="Stock_Price" value="" size="32" /></td>
@@ -713,7 +791,7 @@ do {
                       <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
                       <input type="hidden" name="MM_insert" value="form8" />
                     </form>
-</div>
+                  </div>
                   <div class="CollapsiblePanelContent">
                     <form action="<?php echo $editFormAction; ?>" method="post" name="form8">
                       <table align="center">
@@ -725,16 +803,16 @@ do {
                 </div>
                 <p>&nbsp;</p>
               </div>
-              <div class="TabbedPanelsContent">
+<div class="TabbedPanelsContent">
                 <form action="<?php echo $editFormAction; ?>" method="post" name="form10" id="form10">
-                  <table align="center">
+                  <table width="100%" align="center">
                     <tr valign="baseline">
-                      <td nowrap="nowrap" align="right" valign="top">Investment risks : Macro</td>
-                      <td><textarea name="Investment_Risks_Macro" cols="50" rows="5"><?php echo htmlentities($row_Sector['Investment_Risks_Macro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="30%" align="right" valign="top" nowrap="nowrap">Investment risks : Macro</td>
+                      <td width="70%"><textarea name="Investment_Risks_Macro" cols="80" rows="10"><?php echo htmlentities($row_Sector['Investment_Risks_Macro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right" valign="top">Investment risks : Micro</td>
-                      <td><textarea name="Investment_Risks_Micro" cols="50" rows="5"><?php echo htmlentities($row_Sector['Investment_Risks_Micro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td><textarea name="Investment_Risks_Micro" cols="80" rows="10"><?php echo htmlentities($row_Sector['Investment_Risks_Micro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -804,7 +882,7 @@ do {
                           <td><?php echo $row_Meetins_Results['Meeting_Type']; ?>&nbsp;</td>
                           <td><?php echo $row_Meetins_Results['Meeting_Date']; ?>&nbsp; </td>
                           <td><?php echo $row_Meetins_Results['Meeting_Contact']; ?>&nbsp; </td>
-                          <td><?php echo $row_Meetins_Results['BDL_Contact']; ?>&nbsp; </td>
+                          <td><?php echo $row_Meetins_Results['Initiales']; ?>&nbsp; </td>
                           <td><?php echo $row_Meetins_Results['Meeting_Notes']; ?>&nbsp; </td>
                           <td><?php echo $row_Meetins_Results['Meeting_Conclusions']; ?>&nbsp; </td>
                         </tr>
@@ -816,10 +894,10 @@ do {
                     <div class="AccordionPanelTab">New</div>
                     <div class="AccordionPanelContent">
                       <form action="<?php echo $editFormAction; ?>" method="post" name="form9" id="form9">
-                        <table align="center">
+                        <table width="100%" align="center">
                           <tr valign="baseline">
-                            <td nowrap="nowrap" align="right">Meeting type</td>
-                            <td valign="baseline"><table>
+                            <td width="27%" align="right" nowrap="nowrap">Meeting type</td>
+                            <td width="73%" valign="baseline"><table>
                               <tr>
                                 <td><input type="radio" name="Meeting_Type" value="Management meeting" />
                                   Management meeting</td>
@@ -856,18 +934,18 @@ do {
 ?>
                               <option value="<?php echo $row_Users['Id']?>" ><?php echo $row_Users['Initiales']?></option>
                               <?php
-} while ($row_Users = mysql_fetch_assoc($Users));
+} while ($row_Users = mysql_fetch_assoc($All_Users));
 ?>
                             </select></td>
                           </tr>
                           <tr> </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right" valign="top">Meeting notes:</td>
-                            <td><textarea name="Meeting_Notes" cols="50" rows="5"></textarea></td>
+                            <td><textarea name="Meeting_Notes" cols="80" rows="10"></textarea></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right" valign="top">Meeting conclusions:</td>
-                            <td><textarea name="Meeting_Conclusions" cols="50" rows="5"></textarea></td>
+                            <td><textarea name="Meeting_Conclusions" cols="80" rows="10"></textarea></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -978,14 +1056,14 @@ do {
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
 var TabbedPanels4 = new Spry.Widget.TabbedPanels("TabbedPanels4");
 var CollapsiblePanel2 = new Spry.Widget.CollapsiblePanel("CollapsiblePanel2", {contentIsOpen:false});
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"], useCharacterMasking:true, hint:"yyyy-mm-dd"});
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {format:"yyyy-mm-dd", validateOn:["blur"], isRequired:false, hint:"yyyy-mm-dd", useCharacterMasking:true});
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"]});
 var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
 var Accordion1 = new Spry.Widget.Accordion("Accordion1");
 var Accordion2 = new Spry.Widget.Accordion("Accordion2");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email", {isRequired:false});
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "custom", {pattern:"+00.0.00.00.00.00", hint:"+00.0.00.00.00.00", useCharacterMasking:true});
-var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", hint:"yyyy-mm-dd", useCharacterMasking:true, isRequired:false, validateOn:["blur"]});
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"]});
+var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3");
 //-->
 </script>
 </body>
@@ -1004,4 +1082,6 @@ mysql_free_result($Users);
 mysql_free_result($Contacts);
 
 mysql_free_result($Detail);
+
+mysql_free_result($All_Users);
 ?>
