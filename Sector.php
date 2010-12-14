@@ -64,7 +64,7 @@ if (isset($_GET['Sector_ID'])) {
   $colname_Available_Stocks = $_GET['Sector_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Available_Stocks = sprintf("SELECT * FROM Stocks WHERE Sector_ID = %s", GetSQLValueString($colname_Available_Stocks, "int"));
+$query_Available_Stocks = sprintf("SELECT * FROM Stocks WHERE Stocks.Sector_ID = %s ORDER BY Stocks.Stock_Name ASC", GetSQLValueString($colname_Available_Stocks, "int"));
 $Available_Stocks = mysql_query($query_Available_Stocks, $localhost) or die(mysql_error());
 $row_Available_Stocks = mysql_fetch_assoc($Available_Stocks);
 $totalRows_Available_Stocks = mysql_num_rows($Available_Stocks);
@@ -92,9 +92,9 @@ $totalRows_Details = mysql_num_rows($Details);
 /* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
 </style>
 <![endif]-->
-<link href="/css/main.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui-1.8.7.custom.min.js"></script>
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
 <script src="SpryAssets/SpryAccordion.js" type="text/javascript"></script>
@@ -137,7 +137,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
           <?php do { ?>
             <tr>
               <td><a href="Stock.php?Stock_ID=<?php echo $row_Available_Stocks['Stock_ID']; ?>"> <?php echo $row_Available_Stocks['Stock_Name']; ?>&nbsp; </a></td>
-              <td><?php echo $row_Available_Stocks['In_Charge']; ?>&nbsp; </td>
+              <td><?php echo $row_Available_Stocks['Initiales']; ?>&nbsp; </td>
               <td><?php echo $row_Available_Stocks['Is_In_Portfolio']; ?>&nbsp; </td>
               <td><?php echo $row_Available_Stocks['Rating']; ?>&nbsp; </td>
             </tr>
@@ -221,7 +221,6 @@ var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date
 <?php
 mysql_free_result($Sector);
 
-mysql_free_result($Sector);
 
 mysql_free_result($Available_Stocks);
 

@@ -5,8 +5,8 @@
 <title>Home</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script>
 $(function() {

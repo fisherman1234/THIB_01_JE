@@ -86,8 +86,8 @@ $totalRows_Sectors = mysql_num_rows($Sectors);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Administration</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
 <script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
 <script src="SpryAssets/SpryAccordion.js" type="text/javascript"></script>
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
