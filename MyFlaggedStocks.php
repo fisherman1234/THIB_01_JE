@@ -1,5 +1,29 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
+function check_in_range($user_date)
+{
+  // check if flag will occur in the next 7 days
+  if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
+
+  {
+	return '<span style="background-color: orange;">'.$user_date.'</span>';
+  }
+  // show past flags
+  else if ($user_date < date('Y-m-d'))
+  {
+	  return '<span style="background-color: red;">'.$user_date.'</span>';
+  }
+  else
+  {
+	  return '<span style="background-color: lime;">'.$user_date.'</span>';
+  }
+
+  
+}
+?>
+
+
+<?php
 if (!isset($_SESSION)) {
   session_start();
 }
@@ -135,7 +159,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
     <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
-    <p>
+    <p>Color code : <span style="background-color: red;">Overdue flag</span> // <span style="background-color: orange;">Flag coming in the next 7 days</span> // <span style="background-color: lime;">Coming in more than 7 days</span>
     <table width="100%" border="1" align="center">
       <tr>
         <td width="40%">Stock name</td>
@@ -147,7 +171,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
       <?php do { ?>
         <tr>
           <td width="40%"><a href="Stock.php?Stock_ID=<?php echo $row_MyFlaggedStocks['Stock_ID']; ?>"> <?php echo $row_MyFlaggedStocks['Stock_Name']; ?>&nbsp; </a></td>
-          <td><?php echo $row_MyFlaggedStocks['Flag_Date']; ?></td>
+          <td><?php echo check_in_range($row_MyFlaggedStocks['Flag_Date']); ?></td>
           <td><?php echo $row_MyFlaggedStocks['Is_In_Portfolio']; ?>&nbsp; </td>
           <td><?php echo $row_MyFlaggedStocks['Rating']; ?>&nbsp; </td>
           <td width="30%"><?php echo $row_MyFlaggedStocks['Sector_Name']; ?>&nbsp; </td>

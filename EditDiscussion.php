@@ -67,17 +67,20 @@ $totalRows_current_discussion = mysql_num_rows($current_discussion);
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
-<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript">
-tinyMCE.init({
+<script language="javascript" type="text/javascript" src="ajaxfilemanager/jscripts/tiny_mce/tiny_mce.js"></script>
 
-		// General options
 
-		mode : "textareas",
+	<script language="javascript" type="text/javascript">
 
-		theme : "advanced",
+		tinyMCE.init({
 
-		plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,autosave",
+			mode : "textareas",
+
+			elements : "ajaxfilemanager",
+
+			theme : "advanced",
+
+			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,autosave",
 
 
 
@@ -100,61 +103,102 @@ tinyMCE.init({
 		theme_advanced_resizing : true,
 
 
+			file_browser_callback : "ajaxfilemanager",
 
-		// Example content CSS (should be your site CSS)
+			paste_use_dialog : false,
 
-		content_css : "css/content.css",
+			
 
-
-
-		// Drop lists for link/image/media/template dialogs
-
-		template_external_list_url : "lists/template_list.js",
-
-		external_link_list_url : "lists/link_list.js",
-
-		external_image_list_url : "lists/image_list.js",
-
-		media_external_list_url : "lists/media_list.js",
+		});
 
 
 
-		// Style formats
+		function ajaxfilemanager(field_name, url, type, win) {
 
-		style_formats : [
+			var ajaxfilemanagerurl = "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
 
-			{title : 'Bold text', inline : 'b'},
+			switch (type) {
 
-			{title : 'Red text', inline : 'span', styles : {color : '#ff0000'}},
+				case "image":
 
-			{title : 'Red header', block : 'h1', styles : {color : '#ff0000'}},
+					break;
 
-			{title : 'Example 1', inline : 'span', classes : 'example1'},
+				case "media":
 
-			{title : 'Example 2', inline : 'span', classes : 'example2'},
+					break;
 
-			{title : 'Table styles'},
+				case "flash": 
 
-			{title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}
+					break;
 
-		],
+				case "file":
 
+					break;
 
+				default:
 
-		// Replace values for the template plugin
+					return false;
 
-		template_replace_values : {
+			}
 
-			username : "Some User",
+            tinyMCE.activeEditor.windowManager.open({
 
-			staffid : "991234"
+                url: "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
+
+                width: 782,
+
+                height: 440,
+
+                inline : "yes",
+
+                close_previous : "no"
+
+            },{
+
+                window : win,
+
+                input : field_name
+
+            });
+
+            
+
+/*            return false;			
+
+			var fileBrowserWindow = new Array();
+
+			fileBrowserWindow["file"] = ajaxfilemanagerurl;
+
+			fileBrowserWindow["title"] = "Ajax File Manager";
+
+			fileBrowserWindow["width"] = "782";
+
+			fileBrowserWindow["height"] = "440";
+
+			fileBrowserWindow["close_previous"] = "no";
+
+			tinyMCE.openWindow(fileBrowserWindow, {
+
+			  window : win,
+
+			  input : field_name,
+
+			  resizable : "yes",
+
+			  inline : "yes",
+
+			  editor_id : tinyMCE.getWindowArg("editor_id")
+
+			});
+
+			
+
+			return false;*/
 
 		}
 
-	});
+	</script>
 
-
-</script>
 <script>
 $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
