@@ -50,6 +50,7 @@ $totalRows_all_contacts = mysql_num_rows($all_contacts);
 <div id="container">
   <div id="header">
     <h1>Contacts</h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <p>&nbsp;</p>
@@ -66,7 +67,7 @@ $totalRows_all_contacts = mysql_num_rows($all_contacts);
         <tr>
           <td><a href="Stock.php?Stock_ID=<?php echo $row_all_contacts['Stock_ID']; ?>"><?php echo $row_all_contacts['Stock_Name']; ?></a></td>
           <td> <?php echo $row_all_contacts['Job_Title']; ?>&nbsp;</td>
-          <td><?php echo $row_all_contacts['Name']; ?>&nbsp; </td>
+          <td><a href="EditContact.php?Contact_ID=<?php echo $row_all_contacts['Contact_ID']; ?>"><?php echo $row_all_contacts['Name']; ?></a></td>
           <td><?php echo $row_all_contacts['Title']; ?>&nbsp; </td>
           <td><?php echo $row_all_contacts['Email']; ?>&nbsp; </td>
           <td><?php echo $row_all_contacts['Telephone']; ?>&nbsp; </td>

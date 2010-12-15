@@ -361,6 +361,21 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form17")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form18")) {
+  $insertSQL = sprintf("INSERT INTO Meetings_Results (Meeting_ID, Stock_ID, Meeting_Type, Meeting_Date, Meeting_Contact, BDL_Contact, Meeting_Notes, Meeting_Conclusions) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($_POST['Meeting_ID'], "int"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"),
+                       GetSQLValueString($_POST['Meeting_Type'], "text"),
+                       GetSQLValueString($_POST['Meeting_Date'], "date"),
+                       GetSQLValueString($_POST['Meeting_Contact'], "text"),
+                       GetSQLValueString($_POST['BDL_Contact'], "int"),
+                       GetSQLValueString($_POST['Meeting_Notes'], "text"),
+                       GetSQLValueString($_POST['Meeting_Conclusions'], "text"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($insertSQL, $localhost) or die(mysql_error());
+}
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form13")) {
   $insertSQL = sprintf("INSERT INTO Details (Stock_ID, Last_Entry_Date, Sector_Analysis_Title, Sector_Analysis_Text) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "int"),
@@ -496,6 +511,12 @@ $All_Users = mysql_query($query_All_Users, $localhost) or die(mysql_error());
 $row_All_Users = mysql_fetch_assoc($All_Users);
 $totalRows_All_Users = mysql_num_rows($All_Users);
 
+mysql_select_db($database_localhost, $localhost);
+$query_All_Users2 = "SELECT * FROM Users";
+$All_Users2 = mysql_query($query_All_Users2, $localhost) or die(mysql_error());
+$row_All_Users2 = mysql_fetch_assoc($All_Users2);
+$totalRows_All_Users2 = mysql_num_rows($All_Users2);
+
 $queryString_Discussions = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);
@@ -557,13 +578,11 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 
 		// Theme options
 
-		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+		theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
 
-		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,bullets,numbest,|,link,unlink,anchor,image,cleanup,|,forecolor,backcolor,|,print,fullscreen, code",
 
-		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-
-		theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak,restoredraft",
+		theme_advanced_buttons3 : "",
 
 		theme_advanced_toolbar_location : "top",
 
@@ -824,7 +843,7 @@ do {
                   <table width="100%" align="center">
                     <tr valign="baseline">
                       <td width="20%" align="right" valign="top">Environment</td>
-                      <td width="82%"><textarea name="Environment" cols="80" rows="25"><?php echo htmlentities($row_Sector['Environment'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="82%"><textarea name="Environment" cols="80" rows="40"><?php echo htmlentities($row_Sector['Environment'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td width="20%" align="right">&nbsp;</td>
@@ -840,7 +859,7 @@ do {
                   <table width="100%" align="center">
                     <tr valign="baseline">
                       <td width="20%" align="right" valign="top">Business description</td>
-                      <td width="79%"><textarea name="Business_Description" cols="80" rows="20"><?php echo htmlentities($row_Sector['Business_Description'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="79%"><textarea name="Business_Description" cols="80" rows="40"><?php echo htmlentities($row_Sector['Business_Description'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -858,7 +877,7 @@ do {
                   <table width="100%" align="center">
                     <tr valign="baseline">
                       <td width="20%" align="right" valign="top">Competition</td>
-                      <td width="83%"><textarea name="Competition" cols="80" rows="20"><?php echo htmlentities($row_Sector['Competition'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="83%"><textarea name="Competition" cols="80" rows="40"><?php echo htmlentities($row_Sector['Competition'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -876,7 +895,7 @@ do {
                   <table width="100%" align="center">
                     <tr valign="baseline">
                       <td width="20%" align="right" valign="top">Management</td>
-                      <td width="82%"><textarea name="Management" cols="80" rows="20"><?php echo htmlentities($row_Sector['Management'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="82%"><textarea name="Management" cols="80" rows="40"><?php echo htmlentities($row_Sector['Management'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -958,7 +977,7 @@ do {
                   <table width="100%" align="center">
                     <tr valign="baseline">
                       <td width="18%" align="right" valign="top" nowrap="nowrap">Investment Case :</td>
-                      <td width="56%"><textarea name="Investment_Case" cols="80" rows="20"><?php echo htmlentities($row_Sector['Investment_Case'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="56%"><textarea name="Investment_Case" cols="80" rows="40"><?php echo htmlentities($row_Sector['Investment_Case'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr>
                     	<td>&nbsp;</td>
@@ -1004,7 +1023,7 @@ do {
                         </tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">BDL View</td>
-                          <td><textarea name="View_BDL" cols="80" rows="10"></textarea></td>
+                          <td><textarea name="View_BDL" cols="80" rows="20"></textarea></td>
                         </tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">Stock price</td>
@@ -1043,11 +1062,11 @@ do {
                   <table width="100%" align="center">
                     <tr valign="baseline">
                       <td width="30%" align="right" valign="top" nowrap="nowrap">Investment risks : Macro</td>
-                      <td width="70%"><textarea name="Investment_Risks_Macro" cols="80" rows="10"><?php echo htmlentities($row_Sector['Investment_Risks_Macro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td width="70%"><textarea name="Investment_Risks_Macro" cols="80" rows="20"><?php echo htmlentities($row_Sector['Investment_Risks_Macro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right" valign="top">Investment risks : Micro</td>
-                      <td><textarea name="Investment_Risks_Micro" cols="80" rows="10"><?php echo htmlentities($row_Sector['Investment_Risks_Micro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+                      <td><textarea name="Investment_Risks_Micro" cols="80" rows="20"><?php echo htmlentities($row_Sector['Investment_Risks_Micro'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
                     </tr>
                     <tr valign="baseline">
                       <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -1169,18 +1188,18 @@ do {
 ?>
                               <option value="<?php echo $row_Users['Id']?>" ><?php echo $row_Users['Initiales']?></option>
                               <?php
-} while ($row_Users = mysql_fetch_assoc($All_Users));
+} while ($row_Users = mysql_fetch_assoc($All_Users2));
 ?>
                             </select></td>
                           </tr>
                           <tr> </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right" valign="top">Meeting notes</td>
-                            <td><textarea name="Meeting_Notes" cols="80" rows="10"></textarea></td>
+                            <td><textarea name="Meeting_Notes" cols="80" rows="20"></textarea></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right" valign="top">Meeting conclusions<br /><br /><input type="submit" value="Insert meeting" /></td>
-                            <td><textarea name="Meeting_Conclusions" cols="80" rows="10"></textarea></td>
+                            <td><textarea name="Meeting_Conclusions" cols="80" rows="20"></textarea></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -1237,6 +1256,10 @@ do {
                                 <td><input type="radio" name="Job_Title" value="Sell side analyst" />
                                   Sell side analyst</td>
                               </tr>
+                              <tr>
+                                <td><input type="radio" name="Job_Title" value="Manager contact" />
+                                  Manager contact</td>
+                              </tr>
                             </table></td>
                           </tr>
                           <tr valign="baseline">
@@ -1259,7 +1282,7 @@ do {
                             <td nowrap="nowrap" align="right">Telephone</td>
                             <td><span id="sprytextfield4">
                               <input type="text" name="Telephone" value="" size="32" />
-                              <span class="textfieldRequiredMsg">A value is required.</span><span class="textfieldInvalidFormatMsg">Invalid format.</span></span></td>
+</span></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -1297,7 +1320,7 @@ var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
 var Accordion1 = new Spry.Widget.Accordion("Accordion1");
 var Accordion2 = new Spry.Widget.Accordion("Accordion2");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email", {isRequired:false});
-var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "custom", {pattern:"+00.0.00.00.00.00", hint:"+00.0.00.00.00.00", useCharacterMasking:true});
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "none", {hint:"+00.0.00.00.00.00", isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", validateOn:["blur"]});
 var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3");
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"yyyy-mm-dd"});
@@ -1322,4 +1345,6 @@ mysql_free_result($Contacts);
 mysql_free_result($Detail);
 
 mysql_free_result($All_Users);
+
+mysql_free_result($All_Users2);
 ?>

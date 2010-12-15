@@ -50,20 +50,21 @@ $totalRows_Studies = mysql_num_rows($Studies);
 <div id="container">
   <div id="header">
     <h1>Studies</h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <p>&nbsp;
       <table width="100%" border="1" align="center">
         <tr>
-          <td width="28%">Sector_Name</td>
-          <td width="32%">Last_Entry_Date</td>
-          <td width="50%">Sector_Analysis_Title</td>
+          <td width="28%">Sector</td>
+          <td width="32%">Date</td>
+          <td width="50%">Sector analysis title</td>
         </tr>
         <?php do { ?>
           <tr>
             <td><?php echo $row_Studies['Sector_Name']; ?>&nbsp; </td>
             <td><?php echo $row_Studies['Last_Entry_Date']; ?>&nbsp; </td>
-            <td width="50%"><a href="PrintDetail.php?Detail_ID=<?php echo $row_Studies['Detail_ID']; ?>"> <?php echo $row_Studies['Sector_Analysis_Title']; ?>&nbsp; </a></td>
+            <td width="50%"><a href="PrintDetail.php?Detail_ID=<?php echo $row_Studies['Detail_ID']; ?>"> <?php echo $row_Studies['Sector_Analysis_Title']; ?>&nbsp; </a><a href="Edit_Detail.php?Detail_ID=<?php echo $row_Studies['Detail_ID']; ?>">(edit)</a></td>
           </tr>
           <?php } while ($row_Studies = mysql_fetch_assoc($Studies)); ?>
       </table>

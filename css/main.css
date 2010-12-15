@@ -114,3 +114,7 @@ MyStocks {
 .oneColElsCtrHdr #container #mainContent table tr td #Small_text table {
 	font-size: 10pt;
 }
+
+.TabbedPanelsTab.normal{
+	font-size:10pt;
+}

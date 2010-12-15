@@ -49,6 +49,21 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
+if ((isset($_GET['Contact_ID'])) && ($_GET['Contact_ID'] != "")) {
+  $deleteSQL = sprintf("DELETE FROM Contacts WHERE Contact_ID=%s",
+                       GetSQLValueString($_GET['Contact_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($deleteSQL, $localhost) or die(mysql_error());
+
+  $deleteGoTo = "ItemRemoved.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
+    $deleteGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $deleteGoTo));
+}
+
 $colname_current_contact = "-1";
 if (isset($_GET['Contact_ID'])) {
   $colname_current_contact = $_GET['Contact_ID'];
@@ -85,12 +100,13 @@ tinyMCE.init({
 
 		// Theme options
 
-		theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
 
-		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,bullets,numbest,|,link,unlink,anchor,image,cleanup,|,forecolor,backcolor,|,print,fullscreen, code",
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
 
-		theme_advanced_buttons3 : "",
+		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
 
+		theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak,restoredraft",
 
 		theme_advanced_toolbar_location : "top",
 
@@ -194,12 +210,6 @@ function MM_callJS(jsStr) { //v2.0
               <td><input type="radio" name="Job_Title" value="Sell side analyst" <?php if (!(strcmp(htmlentities($row_current_contact['Job_Title'], ENT_COMPAT, 'UTF-8'),"Sell side analyst"))) {echo "checked=\"checked\"";} ?> />
                 Sell side analyst</td>
             </tr>
-            <tr>
-              <td><input type="radio" name="Job_Title" value="Manager contact" <?php if (!(strcmp(htmlentities($row_current_contact['Job_Title'], ENT_COMPAT, 'UTF-8'),"Manager contact"))) {echo "checked=\"checked\"";} ?> />
-                Sell side analyst</td>
-            </tr>
-            
-
           </table></td>
         </tr>
         <tr valign="baseline">
@@ -218,7 +228,7 @@ function MM_callJS(jsStr) { //v2.0
           <td nowrap="nowrap" align="right">Telephone</td>
           <td><span id="sprytextfield1">
           <input type="text" name="Telephone" value="<?php echo htmlentities($row_current_contact['Telephone'], ENT_COMPAT, 'UTF-8'); ?>" size="32" />
-</span></td>
+<span class="textfieldInvalidFormatMsg">Invalid format. Should be like +00.0.00.00.00.00.00</span></span></td>
         </tr>
         <tr valign="baseline">
           <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -229,7 +239,7 @@ function MM_callJS(jsStr) { //v2.0
       <input type="hidden" name="MM_update" value="form1" />
       <input type="hidden" name="Contact_ID" value="<?php echo $row_current_contact['Contact_ID']; ?>" />
     </form>
-    <p><a href="DeleteContact.php?Contact_ID=<?php echo $_GET[Contact_ID]; ?>">Delete contact (use with care, no confirmation)</a></p>
+    <p>&nbsp;</p>
 <!-- end #mainContent --></div>
   <div id="footer">
      <p style="font-size:12px;">BDL Capital Management - 2010</p>
@@ -237,7 +247,7 @@ function MM_callJS(jsStr) { //v2.0
 <!-- end #container --></div>
 <script type="text/javascript">
 <!--
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {hint:"+00.0.00.00.00.00", isRequired:false});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "custom", {pattern:"+00.0.00.00.00.00.00", hint:"+00.0.00.00.00.00.00", isRequired:false});
 //-->
 </script>
 </body>

@@ -46,6 +46,21 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
+if ((isset($_GET['Id'])) && ($_GET['Id'] != "")) {
+  $deleteSQL = sprintf("DELETE FROM Users WHERE Id=%s",
+                       GetSQLValueString($_GET['Id'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($deleteSQL, $localhost) or die(mysql_error());
+
+  $deleteGoTo = "ItemRemoved.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
+    $deleteGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $deleteGoTo));
+}
+
 $colname_DetailRS1 = "-1";
 if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
@@ -59,7 +74,7 @@ $totalRows_DetailRS1 = mysql_num_rows($DetailRS1);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Edit user</title>
+<title>DeleteUser</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
@@ -97,8 +112,8 @@ function MM_callJS(jsStr) { //v2.0
   </table>
   <input type="hidden" name="MM_update" value="form1" />
   <input type="hidden" name="Id" value="<?php echo $row_DetailRS1['Id']; ?>" />
-</form><br />
-<p><a href="DeleteUser.php?Id=<?php echo $_GET['recordID']; ?>">Delete user (use with care, no confirmation)</a></p>
+</form>
+<p>&nbsp;</p>
 </div>
 </div>
 </body>

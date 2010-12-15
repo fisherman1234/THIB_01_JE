@@ -128,9 +128,9 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
   </p>
     <div id="TabbedPanels1" class="TabbedPanels">
       <ul class="TabbedPanelsTabGroup">
-        <li class="TabbedPanelsTab" tabindex="0">Add user</li>
-        <li class="TabbedPanelsTab" tabindex="0">Add stock</li>
-        <li class="TabbedPanelsTab" tabindex="0">Add sector</li>
+        <li class="TabbedPanelsTab normal" tabindex="0">Add user</li>
+        <li class="TabbedPanelsTab normal" tabindex="0">Add stock</li>
+        <li class="TabbedPanelsTab normal" tabindex="0">Add sector</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
         <div class="TabbedPanelsContent">

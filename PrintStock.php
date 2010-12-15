@@ -77,6 +77,38 @@ $totalRows_Related_Discussions = mysql_num_rows($Related_Discussions);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Stock : <?php echo $row_Current_Stock['Stock_Name']; ?></title>
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#analysis').hide();
+  $('#investmentcase').hide();
+  $('#discussions').hide();
+  $('#meetingresults').hide();
+  $('#contacts').hide();
+  $("#analysis_button").click(function () {
+		$("#analysis").toggle();
+	});
+  $("#investmentcase_button").click(function () {
+		$("#investmentcase").toggle();
+	});
+  $("#discussions_button").click(function () {
+		$("#discussions").toggle();
+	});
+ $("#meetingresults_button").click(function () {
+		$("#meetingresults").toggle();
+	});
+  $("#contacts_button").click(function () {
+		$("#contacts").toggle();
+	});
+ 
+ 
+
+});
+
+
+</script>
 </head>
 
 <body>
@@ -84,7 +116,7 @@ $totalRows_Related_Discussions = mysql_num_rows($Related_Discussions);
  - Sector 
 <?php echo $row_Current_Stock['Sector_Name']; ?>
 </h1>
-<h3>Stock overview</h3>
+<h3>Stock overview</h3> 
 <table width="100%" border="1">
   <tr>
     <td width="15%">Ticker</td>
@@ -108,123 +140,144 @@ $totalRows_Related_Discussions = mysql_num_rows($Related_Discussions);
   </tr>
 </table>
 <h3>Analysis</h3>
+  <button id="analysis_button">Show/Hide</button>
+<div id="analysis">
 <table width="100%" border="1">
   <tr>
-    <td width="15%">Environment</td>
+    <td width="15%" valign="top">Environment</td>
     <td><?php echo $row_Current_Stock['Environment']; ?></td>
   </tr>
   <tr>
-    <td width="15%">Business description</td>
+    <td width="15%" valign="top">Business description</td>
     <td><?php echo $row_Current_Stock['Business_Description']; ?></td>
   </tr>
   <tr>
-    <td width="15%">Competition</td>
+    <td width="15%" valign="top">Competition</td>
     <td><?php echo $row_Current_Stock['Competition']; ?></td>
   </tr>
   <tr>
-    <td width="15%">Managemetn</td>
+    <td width="15%" valign="top">Management</td>
     <td><?php echo $row_Current_Stock['Management']; ?></td>
   </tr>
 </table>
+</div>
 <h3>Investment case</h3>
+<button id="investmentcase_button">Show/Hide</button>
+<div id="investmentcase">
 <table width="100%" border="1">
   <tr>
-    <td width="15%">Investment case</td>
+    <td width="15%" valign="top">Investment case</td>
     <td><?php echo $row_Current_Stock['Investment_Case']; ?></td>
   </tr>
   <tr>
-    <td width="15%">Investment risk macro</td>
+    <td width="15%" valign="top">Investment risk macro</td>
     <td><?php echo $row_Current_Stock['Investment_Risks_Macro']; ?></td>
   </tr>
   <tr>
-    <td width="15%">Investment risk micro</td>
+    <td width="15%" valign="top">Investment risk micro</td>
     <td><?php echo $row_Current_Stock['Investment_Risks_Micro']; ?></td>
   </tr>
   <tr>
-    <td width="15%">Rating</td>
+    <td width="15%" valign="top">Rating</td>
     <td><?php echo $row_Current_Stock['Rating']; ?></td>
   </tr>
 </table>
+</div>
 <h3>Discussions</h3>
-<?php do { ?>
-  
+<button id="discussions_button">Show/Hide</button>
+
+<div id="discussions">
+<div class="CollapsiblePanelContent">
+  <?php do { ?>
   <table width="100%" border="1">
     <tr>
-      <td width="15%">Discussion date</td>
+      <td width="15%" valign="top">Discussion date</td>
       <td><?php echo $row_Related_Discussions['Discussion_Date']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Stock price</td>
+      <td width="15%" valign="top">Stock price</td>
       <td><?php echo $row_Related_Discussions['Stock_Price']; ?></td>
     </tr>
     <tr>
-      <td width="15%">BDL position</td>
+      <td width="15%" valign="top">BDL position</td>
       <td><?php echo $row_Related_Discussions['Position_BDL']; ?></td>
     </tr>
     <tr>
-      <td width="15%">BDL view</td>
+      <td width="15%" valign="top">BDL view</td>
       <td><?php echo $row_Related_Discussions['View_BDL']; ?></td>
     </tr>
   </table>
   <p>&nbsp;</p>
   <?php } while ($row_Related_Discussions = mysql_fetch_assoc($Related_Discussions)); ?>
-  <h3>Meeting results</h3>
-<?php do { ?>
-  
+</div>
+</div>
+<h3>Meeting results</h3>
+<button id="meetingresults_button">Show/Hide</button>
+
+<div id="meetingresults">
+<div class="CollapsiblePanelContent">
+  <?php do { ?>
   <table width="100%" border="1">
     <tr>
-      <td width="15%">Type</td>
+      <td width="15%" valign="top">Type</td>
       <td><?php echo $row_Meeting_results['Meeting_Type']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Date</td>
+      <td width="15%" valign="top">Date</td>
       <td><?php echo $row_Meeting_results['Meeting_Date']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Meeting contact</td>
+      <td width="15%" valign="top">Meeting contact</td>
       <td><?php echo $row_Meeting_results['Meeting_Contact']; ?></td>
     </tr>
     <tr>
-      <td width="15%">BDL contact</td>
+      <td width="15%" valign="top">BDL contact</td>
       <td><?php echo $row_Meeting_results['Nom']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Notes</td>
+      <td width="15%" valign="top">Notes</td>
       <td><?php echo $row_Meeting_results['Meeting_Notes']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Conclusions</td>
+      <td width="15%" valign="top">Conclusions</td>
       <td><?php echo $row_Meeting_results['Meeting_Conclusions']; ?></td>
     </tr>
   </table>
-  <p>&nbsp;</p>
   <?php } while ($row_Meeting_results = mysql_fetch_assoc($Meeting_results)); ?>
+</div>
+</div>
 <h3>Contacts</h3>
-<?php do { ?>
+<button id="contacts_button">Show/Hide</button>
+<div id="contacts">
+<div class="CollapsiblePanelContent">
+  <?php do { ?>
   <table width="100%" border="1">
     <tr>
-      <td width="15%">Name</td>
+      <td width="15%" valign="top">Name</td>
       <td><?php echo $row_Contacts['Name']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Title</td>
+      <td width="15%" valign="top">Title</td>
       <td><?php echo $row_Contacts['Job_Title']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Position</td>
+      <td width="15%" valign="top">Position</td>
       <td><?php echo $row_Contacts['Title']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Email</td>
+      <td width="15%" valign="top">Email</td>
       <td><?php echo $row_Contacts['Email']; ?></td>
     </tr>
     <tr>
-      <td width="15%">Telephone</td>
+      <td width="15%" valign="top">Telephone</td>
       <td><?php echo $row_Contacts['Telephone']; ?></td>
     </tr>
   </table>
   <p>&nbsp;</p>
   <?php } while ($row_Contacts = mysql_fetch_assoc($Contacts)); ?>
+</div>
+</div>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 </body>

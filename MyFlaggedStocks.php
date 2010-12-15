@@ -1,29 +1,5 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
-function check_in_range($user_date)
-{
-  // check if flag will occur in the next 7 days
-  if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
-
-  {
-	return '<span style="background-color: orange;">'.$user_date.'</span>';
-  }
-  // show past flags
-  else if ($user_date < date('Y-m-d'))
-  {
-	  return '<span style="background-color: red;">'.$user_date.'</span>';
-  }
-  else
-  {
-	  return '<span style="background-color: lime;">'.$user_date.'</span>';
-  }
-
-  
-}
-?>
-
-
-<?php
 if (!isset($_SESSION)) {
   session_start();
 }
@@ -66,6 +42,28 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
   $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
   header("Location: ". $MM_restrictGoTo); 
   exit;
+}
+?>
+<?php
+function check_in_range($user_date)
+{
+  // check if flag will occur in the next 7 days
+  if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
+
+  {
+	return '<span style="background-color: orange;">'.$user_date.'</span>';
+  }
+  // show past flags
+  else if ($user_date < date('Y-m-d'))
+  {
+	  return '<span style="background-color: red;">'.$user_date.'</span>';
+  }
+  else
+  {
+	  return '<span style="background-color: lime;">'.$user_date.'</span>';
+  }
+
+  
 }
 ?>
 <?php
