@@ -172,8 +172,7 @@ $queryString_MyStocks = sprintf("&totalRows_MyStocks=%d%s", $totalRows_MyStocks,
 Records <?php echo ($startRow_MyStocks + 1) ?> to <?php echo min($startRow_MyStocks + $maxRows_MyStocks, $totalRows_MyStocks) ?> of <?php echo $totalRows_MyStocks ?> 
 	<!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
-  <!-- end #footer --></div>
+ <p style="font-size:12px;">BDL Capital Management - 2010</p>  <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>

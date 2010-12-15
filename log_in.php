@@ -125,8 +125,7 @@ do {
     <h1>&nbsp;</h1>
 	<!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
-  <!-- end #footer --></div>
+ <p style="font-size:12px;">BDL Capital Management - 2010</p>  <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>

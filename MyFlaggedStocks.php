@@ -200,8 +200,7 @@ Records <?php echo ($startRow_MyFlaggedStocks + 1) ?> to <?php echo min($startRo
     
   <!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
-  <!-- end #footer --></div>
+ <p style="font-size:12px;">BDL Capital Management - 2010</p>  <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>

@@ -103,8 +103,7 @@ $totalRows_Not_In_Portfolio = mysql_num_rows($Not_In_Portfolio);
   <!-- end #mainContent -->
 </p></div>
   <div id="footer">
-    <p>Footer</p>
-  <!-- end #footer --></div>
+ <p style="font-size:12px;">BDL Capital Management - 2010</p>  <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>

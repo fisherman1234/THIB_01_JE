@@ -174,8 +174,7 @@ Records <?php echo ($startRow_Rating + 1) ?> to <?php echo min($startRow_Rating 
     
   <!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
-  <!-- end #footer --></div>
+ <p style="font-size:12px;">BDL Capital Management - 2010</p>  <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>

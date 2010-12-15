@@ -32,16 +32,16 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 
 mysql_select_db($database_localhost, $localhost);
-$query_all_contacts = "SELECT * FROM Contacts, Stocks WHERE Stocks.Stock_ID=Contacts.Stock_ID";
-$all_contacts = mysql_query($query_all_contacts, $localhost) or die(mysql_error());
-$row_all_contacts = mysql_fetch_assoc($all_contacts);
-$totalRows_all_contacts = mysql_num_rows($all_contacts);
+$query_Studies = "SELECT * FROM Details, Sectors WHERE Sectors.Sector_ID=Details.Sector_ID ORDER BY Sectors.Sector_Name";
+$Studies = mysql_query($query_Studies, $localhost) or die(mysql_error());
+$row_Studies = mysql_fetch_assoc($Studies);
+$totalRows_Studies = mysql_num_rows($Studies);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Browse contacts</title>
+<title>Studies</title>
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -49,40 +49,32 @@ $totalRows_all_contacts = mysql_num_rows($all_contacts);
 
 <div id="container">
   <div id="header">
-    <h1>Contacts</h1>
+    <h1>Studies</h1>
   <!-- end #header --></div>
   <div id="mainContent">
-    <p>&nbsp;</p>
-    <table width="100%" border="1" align="center">
-      <tr>
-        <td width="19%">Stock</td>
-        <td width="17%">Job title</td>
-        <td width="14%">Name</td>
-        <td width="14%">Title</td>
-        <td width="14%">Email</td>
-        <td width="22%">Telephone</td>
-      </tr>
-      <?php do { ?>
+    <p>&nbsp;
+      <table width="100%" border="1" align="center">
         <tr>
-          <td><a href="Stock.php?Stock_ID=<?php echo $row_all_contacts['Stock_ID']; ?>"><?php echo $row_all_contacts['Stock_Name']; ?></a></td>
-          <td> <?php echo $row_all_contacts['Job_Title']; ?>&nbsp;</td>
-          <td><?php echo $row_all_contacts['Name']; ?>&nbsp; </td>
-          <td><?php echo $row_all_contacts['Title']; ?>&nbsp; </td>
-          <td><?php echo $row_all_contacts['Email']; ?>&nbsp; </td>
-          <td><?php echo $row_all_contacts['Telephone']; ?>&nbsp; </td>
+          <td width="28%">Sector_Name</td>
+          <td width="32%">Last_Entry_Date</td>
+          <td width="50%">Sector_Analysis_Title</td>
         </tr>
-        <?php } while ($row_all_contacts = mysql_fetch_assoc($all_contacts)); ?>
-    </table>
-    <br />
-    <?php echo $totalRows_all_contacts ?> Records Total
-
-    <!-- end #mainContent --></div>
+        <?php do { ?>
+          <tr>
+            <td><?php echo $row_Studies['Sector_Name']; ?>&nbsp; </td>
+            <td><?php echo $row_Studies['Last_Entry_Date']; ?>&nbsp; </td>
+            <td width="50%"><a href="PrintDetail.php?Detail_ID=<?php echo $row_Studies['Detail_ID']; ?>"> <?php echo $row_Studies['Sector_Analysis_Title']; ?>&nbsp; </a></td>
+          </tr>
+          <?php } while ($row_Studies = mysql_fetch_assoc($Studies)); ?>
+      </table>
+      <br />
+      <?php echo $totalRows_Studies ?> Records Total </p>
+	<!-- end #mainContent --></div>
   <div id="footer">
-     <p style="font-size:12px;">BDL Capital Management - 2010</p>
-  <!-- end #footer --></div>
+ <p style="font-size:12px;">BDL Capital Management - 2010</p>  <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>
 <?php
-mysql_free_result($all_contacts);
+mysql_free_result($Studies);
 ?>

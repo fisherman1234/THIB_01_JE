@@ -227,7 +227,7 @@ function MM_callJS(jsStr) { //v2.0
     <p>&nbsp;</p>
 <!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
+     <p style="font-size:12px;">BDL Capital Management - 2010</p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
 <script type="text/javascript">

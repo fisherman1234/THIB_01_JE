@@ -115,7 +115,7 @@ $totalRows_current_discussion = mysql_num_rows($current_discussion);
 
 		function ajaxfilemanager(field_name, url, type, win) {
 
-			var ajaxfilemanagerurl = "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
+			var ajaxfilemanagerurl = "ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
 
 			switch (type) {
 
@@ -143,7 +143,7 @@ $totalRows_current_discussion = mysql_num_rows($current_discussion);
 
             tinyMCE.activeEditor.windowManager.open({
 
-                url: "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
+                url: "ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
 
                 width: 782,
 
@@ -257,7 +257,7 @@ function MM_callJS(jsStr) { //v2.0
     <p>&nbsp;</p>
 <!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
+     <p style="font-size:12px;">BDL Capital Management - 2010</p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>

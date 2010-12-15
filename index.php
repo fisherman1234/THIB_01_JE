@@ -247,7 +247,8 @@ $(function() {
             <li>Flagged stocks : <a href="Flagged.php?flagged=1">Yes</a> // <a href="Flagged.php?Flagged=0">No</a></li>
             <li>BDL Position : <a href="Position.php?Position_BDL=Neutral">Neutral</a> // <a href="Position.php?Position_BDL=Long">Long</a> // <a href="Position.php?Position_BDL=Short">Short</a></li>
             <li>Ratings: <a href="Ratings.php?Rating=Good business">Good business</a> // <a href="Ratings.php?Rating=Bad%20business">Bad business</a> // <a href="Ratings.php?Rating=Neutral">Neutral</a></li>
-            <li><a href="All_contacts.php">Phonebook</a></li>
+            <li><a href="All_contacts.php">Contacts list</a></li>
+            <li><a href="Studies.php">Studies</a></li>
           </ul>
         <p>&nbsp;</p></td>
       </tr>
@@ -256,11 +257,9 @@ $(function() {
         <td valign="top">&nbsp;</td>
       </tr>
     </table>
-    <h2>&nbsp;</h2>
-<p>&nbsp;</p>
 	<!-- end #mainContent --></div>
   <div id="footer">
-    <p>&nbsp;</p>
+    <p style="font-size:12px;">BDL Capital Management - 2010</p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>

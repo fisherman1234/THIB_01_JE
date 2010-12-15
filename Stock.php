@@ -586,7 +586,7 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 
 		function ajaxfilemanager(field_name, url, type, win) {
 
-			var ajaxfilemanagerurl = "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
+			var ajaxfilemanagerurl = "ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
 
 			switch (type) {
 
@@ -614,7 +614,7 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 
             tinyMCE.activeEditor.windowManager.open({
 
-                url: "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
+                url: "ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
 
                 width: 782,
 

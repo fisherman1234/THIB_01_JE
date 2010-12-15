@@ -250,7 +250,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 <div id="container">
   <div id="header">
     <h1>Sector : <?php echo $row_Sector['Sector_Name']; ?></h1>
-    <p><a onclick="history.go(-1);return true;"><u>Back</u></a> <a href="index.php">Home</a></p>
+    <p><a onclick="history.go(-1);return true;"><u>Back</u></a> <a href="index.php">Home</a> <a href="PrintSector.php?Sector_ID=<?php echo $_GET[Sector_ID]; ?>">Print</a></p>
   <!-- end #header --></div>
   <div id="mainContent-full"> 
   <div id="TabbedPanels1" class="TabbedPanels">

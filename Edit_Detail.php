@@ -116,7 +116,7 @@ $totalRows_Current_Detail = mysql_num_rows($Current_Detail);
 
 		function ajaxfilemanager(field_name, url, type, win) {
 
-			var ajaxfilemanagerurl = "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
+			var ajaxfilemanagerurl = "ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
 
 			switch (type) {
 
@@ -144,7 +144,7 @@ $totalRows_Current_Detail = mysql_num_rows($Current_Detail);
 
             tinyMCE.activeEditor.windowManager.open({
 
-                url: "/ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
+                url: "ajaxfilemanager/jscripts/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php",
 
                 width: 782,
 
