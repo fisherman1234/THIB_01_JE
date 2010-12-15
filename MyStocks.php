@@ -132,6 +132,7 @@ $queryString_MyStocks = sprintf("&totalRows_MyStocks=%d%s", $totalRows_MyStocks,
 <div id="container">
   <div id="header">
     <h1>My stocks</h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <br />
@@ -148,7 +149,7 @@ $queryString_MyStocks = sprintf("&totalRows_MyStocks=%d%s", $totalRows_MyStocks,
             <td><?php echo $row_MyStocks['Is_In_Portfolio']; ?>&nbsp; </td>
             <td><?php echo $row_MyStocks['Rating']; ?>&nbsp; </td>
             <td width="30%"><?php echo $row_MyStocks['Sector_Name']; ?>&nbsp; </td>
-          </tr>
+        </tr>
           <?php } while ($row_MyStocks = mysql_fetch_assoc($MyStocks)); ?>
       </table>
       <br />

@@ -120,8 +120,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 <div id="container">
   <div id="header">
     <h1>Administration</h1>
-    
-  <!-- end #header --></div>
+    <a href="index.php">Home</a>
+<!-- end #header --></div>
   <div id="mainContent">
     <p>
       <!-- end #mainContent -->

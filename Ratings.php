@@ -132,6 +132,7 @@ $queryString_Rating = sprintf("&totalRows_Rating=%d%s", $totalRows_Rating, $quer
 <div id="container">
   <div id="header">
     <h1>Ratings : <?php echo $_GET['Rating']; ?></h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <p>

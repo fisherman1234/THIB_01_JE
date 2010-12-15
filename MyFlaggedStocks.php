@@ -90,7 +90,7 @@ if (isset($_SESSION['MM_UserID'])) {
   $colname_MyFlaggedStocks = $_SESSION['MM_UserID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_MyFlaggedStocks = sprintf("SELECT * FROM Stocks, Sectors WHERE Stocks.In_Charge = %s AND Stocks.Flagged = 1 AND Sectors.Sector_ID =Stocks.Stock_Name  ORDER BY Stock_Name ASC", GetSQLValueString($colname_MyFlaggedStocks, "int"));
+$query_MyFlaggedStocks = sprintf("SELECT * FROM Stocks, Sectors WHERE Stocks.In_Charge = %s AND Stocks.Flagged = 1 AND Sectors.Sector_ID =Stocks.Sector_ID ORDER BY Stock_Name ASC", GetSQLValueString($colname_MyFlaggedStocks, "int"));
 $query_limit_MyFlaggedStocks = sprintf("%s LIMIT %d, %d", $query_MyFlaggedStocks, $startRow_MyFlaggedStocks, $maxRows_MyFlaggedStocks);
 $MyFlaggedStocks = mysql_query($query_limit_MyFlaggedStocks, $localhost) or die(mysql_error());
 $row_MyFlaggedStocks = mysql_fetch_assoc($MyFlaggedStocks);
@@ -131,7 +131,8 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
 
 <div id="container">
   <div id="header">
-    <h1>My flagged stocks</h1>
+    <h1>My flagged stocks </h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <p>

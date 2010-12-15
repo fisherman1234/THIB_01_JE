@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><info>	<infoitem key="UD_current_discussion" value="name:Discussion_ID;datatype:int,name:Discussion_Date;datatype:date,name:Stock_ID;datatype:int,name:View_BDL;datatype:blob,name:Alert_BDL;datatype:int,name:Alert_Date;datatype:date,name:Stock_Price;datatype:blob,name:Position_BDL;datatype:string" /></info>

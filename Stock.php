@@ -288,6 +288,18 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form14")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Sector_ID=%s, In_Charge=%s, Flagged=%s, Flag_Date=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Sector_ID'], "int"),
+                       GetSQLValueString($_POST['In_Charge'], "int"),
+                       GetSQLValueString(isset($_POST['Flagged']) ? "true" : "", "defined","1","0"),
+                       GetSQLValueString($_POST['Flag_Date'], "date"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form13")) {
   $insertSQL = sprintf("INSERT INTO Details (Stock_ID, Last_Entry_Date, Sector_Analysis_Title, Sector_Analysis_Text) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "int"),
@@ -464,6 +476,94 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
+tinyMCE.init({
+
+		// General options
+
+		mode : "textareas",
+
+		theme : "advanced",
+
+		plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,autosave",
+
+
+
+		// Theme options
+
+		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+
+		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+
+		theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak,restoredraft",
+
+		theme_advanced_toolbar_location : "top",
+
+		theme_advanced_toolbar_align : "left",
+
+		theme_advanced_statusbar_location : "bottom",
+
+		theme_advanced_resizing : true,
+
+
+
+		// Example content CSS (should be your site CSS)
+
+		content_css : "css/content.css",
+
+
+
+		// Drop lists for link/image/media/template dialogs
+
+		template_external_list_url : "lists/template_list.js",
+
+		external_link_list_url : "lists/link_list.js",
+
+		external_image_list_url : "lists/image_list.js",
+
+		media_external_list_url : "lists/media_list.js",
+
+
+
+		// Style formats
+
+		style_formats : [
+
+			{title : 'Bold text', inline : 'b'},
+
+			{title : 'Red text', inline : 'span', styles : {color : '#ff0000'}},
+
+			{title : 'Red header', block : 'h1', styles : {color : '#ff0000'}},
+
+			{title : 'Example 1', inline : 'span', classes : 'example1'},
+
+			{title : 'Example 2', inline : 'span', classes : 'example2'},
+
+			{title : 'Table styles'},
+
+			{title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}
+
+		],
+
+
+
+		// Replace values for the template plugin
+
+		template_replace_values : {
+
+			username : "Some User",
+
+			staffid : "991234"
+
+		}
+
+	});
+
+
+</script>
 <script>
 $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
@@ -486,7 +586,7 @@ back-button {
 <div id="container">
   <div id="header">
     <h1>Stock : <?php echo $row_Sector['Stock_Name']; ?> - Sector : <?php echo $row_Sector['Sector_Name']; ?></h1>
-    <p><a onClick="history.go(-1);return true;"><u>Back</u></a>	<u>New search</u></p>
+    <p><a onClick="history.go(-1);return true;"><u>Back</u></a>	<u><a href="index.php">New search</a></u></p>
   <!-- end #header --></div>
   <div id="mainContent-full">
     <div id="TabbedPanels1" class="TabbedPanels">
@@ -502,12 +602,11 @@ back-button {
         <div class="TabbedPanelsContent">
           <table width="100%" border="0">
             <tr>
-              <td colspan="2">
-              <form action="<?php echo $editFormAction; ?>" method="post" name="form17" id="form17">
+              <td colspan="2"><form action="<?php echo $editFormAction; ?>" method="post" name="form16" id="form16">
                 <table width="100%" align="center">
                   <tr valign="baseline">
-                    <td width="37%" align="right" nowrap="nowrap">Sector</td>
-                    <td width="63%"><select name="Sector_ID">
+                    <td width="23%" align="right" nowrap="nowrap">Sector</td>
+                    <td width="77%"><select name="Sector_ID">
                       <?php 
 do {  
 ?>
@@ -524,22 +623,31 @@ do {
                       <?php 
 do {  
 ?>
-                      <option value="<?php echo $row_Users['Id']?>" <?php if (!(strcmp($row_Users['Id'], htmlentities($row_Sector['In_Charge'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_Users['Initiales']?></option>
+                      <option value="<?php echo $row_All_Users['Id']?>" <?php if (!(strcmp($row_All_Users['Id'], htmlentities($row_Sector['In_Charge'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_All_Users['Nom']?></option>
                       <?php
-} while ($row_Users = mysql_fetch_assoc($Users));
+} while ($row_All_Users = mysql_fetch_assoc($All_Users));
 ?>
                     </select></td>
                   </tr>
                   <tr> </tr>
                   <tr valign="baseline">
+                    <td nowrap="nowrap" align="right">Flagged</td>
+                    <td><input type="checkbox" name="Flagged" value=""  <?php if (!(strcmp(htmlentities($row_Sector['Flagged'], ENT_COMPAT, 'UTF-8'),1))) {echo "checked=\"checked\"";} ?> /></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td nowrap="nowrap" align="right"><p>Flag date</p></td>
+                    <td><span id="sprytextfield1">
+                    <input type="text" class="datepicker" name="Flag_Date" value="<?php echo htmlentities($row_Sector['Flag_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" />
+<span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span></span></td>
+                  </tr>
+                  <tr valign="baseline">
                     <td nowrap="nowrap" align="right">&nbsp;</td>
                     <td><input type="submit" value="Update record" /></td>
                   </tr>
                 </table>
-                <input type="hidden" name="MM_update" value="form17" />
+                <input type="hidden" name="MM_update" value="form16" />
                 <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-              </form>
-              <p>&nbsp;</p></td>
+              </form>                <p>&nbsp;</p></td>
               <td align="right" valign="top">&nbsp;</td>
               <td valign="top"><p>&nbsp;Available analysis :                </p><table width="100%" border="1" align="center">
                 <tr>
@@ -573,6 +681,7 @@ do {
           </table>
           <p>&nbsp;</p>
           <p>&nbsp;</p>
+<p>&nbsp;</p>
           <p>&nbsp;</p>
         </div>
         <div class="TabbedPanelsContent">
@@ -692,13 +801,17 @@ do {
           <form action="<?php echo $editFormAction; ?>" method="post" name="form6" id="form6">
             <table align="center">
               <tr valign="baseline">
-                <td nowrap="nowrap" align="right">Link to valorisation file</td>
+                <td nowrap="nowrap" align="right">Valorisation filename</td>
                 <td><input type="text" name="Valorisation" value="<?php echo htmlentities($row_Sector['Valorisation'], ENT_COMPAT, 'UTF-8'); ?>" size="80" /></td>
               </tr>
               <tr valign="baseline">
                 <td nowrap="nowrap" align="right">&nbsp;</td>
-                <td><input type="submit" value="Update link" /></td>
+                <td><input type="submit" value="Update filename" /></td>
               </tr>
+              <tr>
+              	<td>Link  file</td>
+                <td><a href="file:///Applications/MAMP/htdocs/Stock.php">lien</a></td>
+               </tr>
             </table>
             <input type="hidden" name="MM_update" value="form6" />
             <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
@@ -737,20 +850,16 @@ do {
               <div class="TabbedPanelsContent">
                 <table width="100%" border="1" align="center">
                   <tr>
-                    <td width="19%">Discussion date</td>
-                    <td width="15%">BDL View</td>
-                    <td width="15%">BDL Alert</td>
-                    <td width="16%">Stock price</td>
-                    <td width="15%">Alert date</td>
-                    <td width="20%">BDL Position</td>
+                    <td>Discussion date</td>
+                    <td width="60%">BDL View</td>
+                    <td>Stock price</td>
+                    <td>BDL Position</td>
                   </tr>
                   <?php do { ?>
                   <tr>
-                    <td><?php echo $row_Discussions['Discussion_Date']; ?>&nbsp; </td>
-                    <td><?php echo $row_Discussions['View_BDL']; ?>&nbsp; </td>
-                    <td><?php echo $row_Discussions['Alert_BDL']; ?>&nbsp; </td>
+                    <td><a href="#" onclick="MM_openBrWindow('EditDiscussion.php?Discussion_ID=<?php echo $row_Discussions['Discussion_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Discussions['Discussion_Date']; ?></a></td>
+                    <td width="60%"><?php echo $row_Discussions['View_BDL']; ?>&nbsp; </td>
                     <td><?php echo $row_Discussions['Stock_Price']; ?>&nbsp; </td>
-                    <td><?php echo $row_Discussions['Alert_Date']; ?>&nbsp; </td>
                     <td><?php echo $row_Discussions['Position_BDL']; ?>&nbsp; </td>
                   </tr>
                   <?php } while ($row_Discussions = mysql_fetch_assoc($Discussions)); ?>
@@ -760,16 +869,16 @@ do {
                   <div class="CollapsiblePanelTab" tabindex="0">Add a new discussion</div>
                   <div class="CollapsiblePanelContent">
                     <form action="<?php echo $editFormAction; ?>" method="post" name="form8" id="form15">
-                      <table align="center">
+                      <table width="100%" align="center">
                         <tr valign="baseline">
-                          <td nowrap="nowrap" align="right">Discussion date</td>
-                          <td><span id="sprytextfield2">
+                          <td width="30%" align="right" nowrap="nowrap">Discussion date</td>
+                          <td width="70%"><span id="sprytextfield2">
                             <input type="text" name="Discussion_Date" class="datepicker" value="" size="32" />
                             <span class="textfieldInvalidFormatMsg">Invalid format (should be : yyyy-mm-dd)</span></span></td>
                         </tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">BDL View</td>
-                          <td><input type="text" name="View_BDL" value="" size="32" /></td>
+                          <td><textarea name="View_BDL" cols="80" rows="10"></textarea></td>
                         </tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">Stock price</td>
@@ -896,7 +1005,7 @@ do {
                       <form action="<?php echo $editFormAction; ?>" method="post" name="form9" id="form9">
                         <table width="100%" align="center">
                           <tr valign="baseline">
-                            <td width="27%" align="right" nowrap="nowrap">Meeting type</td>
+                            <td width="27%" align="right" >Meeting type</td>
                             <td width="73%" valign="baseline"><table>
                               <tr>
                                 <td><input type="radio" name="Meeting_Type" value="Management meeting" />
@@ -940,16 +1049,16 @@ do {
                           </tr>
                           <tr> </tr>
                           <tr valign="baseline">
-                            <td nowrap="nowrap" align="right" valign="top">Meeting notes:</td>
+                            <td nowrap="nowrap" align="right" valign="top">Meeting notes</td>
                             <td><textarea name="Meeting_Notes" cols="80" rows="10"></textarea></td>
                           </tr>
                           <tr valign="baseline">
-                            <td nowrap="nowrap" align="right" valign="top">Meeting conclusions:</td>
+                            <td nowrap="nowrap" align="right" valign="top">Meeting conclusions<br /><br /><input type="submit" value="Insert meeting" /></td>
                             <td><textarea name="Meeting_Conclusions" cols="80" rows="10"></textarea></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">&nbsp;</td>
-                            <td><input type="submit" value="Insert meeting" /></td>
+                            <td> </td>
                           </tr>
                         </table>
                         <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
@@ -1064,6 +1173,7 @@ var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "emai
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "custom", {pattern:"+00.0.00.00.00.00", hint:"+00.0.00.00.00.00", useCharacterMasking:true});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"]});
 var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3");
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"yyyy-mm-dd"});
 //-->
 </script>
 </body>

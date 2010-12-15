@@ -132,6 +132,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
 <div id="container">
   <div id="header">
     <h1>Flagged stocks </h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <p>

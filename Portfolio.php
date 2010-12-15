@@ -56,6 +56,7 @@ $totalRows_Not_In_Portfolio = mysql_num_rows($Not_In_Portfolio);
 <div id="container">
   <div id="header">
     <h1>Portfolio</h1>
+    <p><a href="index.php">Home</a></p>
   <!-- end #header --></div>
   <div id="mainContent">
     <h1>In portfolio&nbsp;    </h1>

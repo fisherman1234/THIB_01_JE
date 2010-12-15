@@ -44,3 +44,7 @@ body {
 	margin: 0; /* zeroing the margins of the first element in the footer will avoid the possibility of margin collapse - a space between divs */
 	padding: 10px 0; /* padding on this element will create space, just as the the margin would have, without the margin collapse issue */
 }
+.full {
+		width: 100%;  /* this width will create a container that will fit in an 800px browser window if text is left at browser default font sizes */
+		text-align:left;
+}
