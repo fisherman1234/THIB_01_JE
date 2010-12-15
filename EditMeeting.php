@@ -48,26 +48,47 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
-$colname_current_discussion = "-1";
-if (isset($_GET['Discussion_ID'])) {
-  $colname_current_discussion = $_GET['Discussion_ID'];
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+  $updateSQL = sprintf("UPDATE Meetings_Results SET Meeting_Type=%s, Meeting_Date=%s, Meeting_Contact=%s, BDL_Contact=%s, Meeting_Notes=%s, Meeting_Conclusions=%s WHERE Meeting_ID=%s",
+                       GetSQLValueString($_POST['Meeting_Type'], "text"),
+                       GetSQLValueString($_POST['Meeting_Date'], "date"),
+                       GetSQLValueString($_POST['Meeting_Contact'], "text"),
+                       GetSQLValueString($_POST['BDL_Contact'], "int"),
+                       GetSQLValueString($_POST['Meeting_Notes'], "text"),
+                       GetSQLValueString($_POST['Meeting_Conclusions'], "text"),
+                       GetSQLValueString($_POST['Meeting_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
+$colname_current_meeting = "-1";
+if (isset($_GET['Meeting_ID'])) {
+  $colname_current_meeting = $_GET['Meeting_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_current_discussion = sprintf("SELECT * FROM BDL_Discussions WHERE Discussion_ID = %s", GetSQLValueString($colname_current_discussion, "int"));
-$current_discussion = mysql_query($query_current_discussion, $localhost) or die(mysql_error());
-$row_current_discussion = mysql_fetch_assoc($current_discussion);
-$totalRows_current_discussion = mysql_num_rows($current_discussion);
+$query_current_meeting = sprintf("SELECT * FROM Meetings_Results WHERE Meeting_ID = %s", GetSQLValueString($colname_current_meeting, "int"));
+$current_meeting = mysql_query($query_current_meeting, $localhost) or die(mysql_error());
+$row_current_meeting = mysql_fetch_assoc($current_meeting);
+$totalRows_current_meeting = mysql_num_rows($current_meeting);
+
+mysql_select_db($database_localhost, $localhost);
+$query_All_Users = "SELECT * FROM Users";
+$All_Users = mysql_query($query_All_Users, $localhost) or die(mysql_error());
+$row_All_Users = mysql_fetch_assoc($All_Users);
+$totalRows_All_Users = mysql_num_rows($All_Users);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Update discussion</title>
+<title>Update meeting</title>
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
 <script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <script type="text/javascript">
 tinyMCE.init({
 
@@ -168,56 +189,98 @@ function MM_callJS(jsStr) { //v2.0
 }
 //-->
 </script>
+<link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="oneColElsCtrHdr">
 
 <div class="full">
   <div id="header">
-    <h1>Edit discussion</h1>
+    <h1>Edit meeting</h1>
     
   <!-- end #header --></div>
   <div id="mainContent">
-  <p><a href="PrintDiscussion.php?Discussion_ID=<?php echo $_GET[Discussion_ID]; ?>">Print</a></p>
-  
+    <p><a href="PrintMeeting.php?Meeting_ID=<?php echo $_GET[Meeting_ID]; ?>">Print</a></p>
     <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
       <table width="100%" align="center">
         <tr valign="baseline">
-          <td width="21%" align="right" nowrap="nowrap">Discussion date</td>
-          <td width="79%"><input type="text" name="Discussion_Date" value="<?php echo htmlentities($row_current_discussion['Discussion_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
+          <td width="27%" align="right" nowrap="nowrap">Meeting type</td>
+          <td width="73%" valign="baseline"><table>
+            <tr>
+              <td><input type="radio" name="Meeting_Type" value="Management meeting" <?php if (!(strcmp(htmlentities($row_current_meeting['Meeting_Type'], ENT_COMPAT, 'UTF-8'),"Management meeting"))) {echo "checked=\"checked\"";} ?> />
+                Management meeting</td>
+            </tr>
+            <tr>
+              <td><input type="radio" name="Meeting_Type" value="Analyst meeting" <?php if (!(strcmp(htmlentities($row_current_meeting['Meeting_Type'], ENT_COMPAT, 'UTF-8'),"Analyst meeting"))) {echo "checked=\"checked\"";} ?> />
+                Analyst meeting</td>
+            </tr>
+            <tr>
+              <td><input type="radio" name="Meeting_Type" value="Expert meeting" <?php if (!(strcmp(htmlentities($row_current_meeting['Meeting_Type'], ENT_COMPAT, 'UTF-8'),"Expert meeting"))) {echo "checked=\"checked\"";} ?> />
+                Expert meeting</td>
+            </tr>
+            <tr>
+              <td><input type="radio" name="Meeting_Type" value="Results" <?php if (!(strcmp(htmlentities($row_current_meeting['Meeting_Type'], ENT_COMPAT, 'UTF-8'),"Results"))) {echo "checked=\"checked\"";} ?> />
+                Results</td>
+            </tr>
+          </table></td>
         </tr>
         <tr valign="baseline">
-          <td nowrap="nowrap" align="right" valign="top">BDL View</td>
-          <td><textarea name="View_BDL" cols="60" rows="10"><?php echo htmlentities($row_current_discussion['View_BDL'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+          <td nowrap="nowrap" align="right">Meeting date</td>
+          <td><span id="sprytextfield1">
+          <input type="text" name="Meeting_Date" class="datepicker" value="<?php echo htmlentities($row_current_meeting['Meeting_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" />
+<span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span></span></td>
         </tr>
         <tr valign="baseline">
-          <td nowrap="nowrap" align="right">Stock price</td>
-          <td><input type="text" name="Stock_Price" value="<?php echo htmlentities($row_current_discussion['Stock_Price'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
+          <td nowrap="nowrap" align="right">Meeting contact</td>
+          <td><input type="text" name="Meeting_Contact" value="<?php echo htmlentities($row_current_meeting['Meeting_Contact'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
         </tr>
         <tr valign="baseline">
-          <td nowrap="nowrap" align="right">BDL position</td>
-          <td><select name="Position_BDL">
-            <option value="Long" <?php if (!(strcmp("Long", htmlentities($row_current_discussion['Position_BDL'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>>Long</option>
-            <option value="Short" <?php if (!(strcmp("Short", htmlentities($row_current_discussion['Position_BDL'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>>Short</option>
-            <option value="Normal" <?php if (!(strcmp("Neutral", htmlentities($row_current_discussion['Position_BDL'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>>Neutral</option>
+          <td nowrap="nowrap" align="right">BDL contact</td>
+          <td><select name="BDL_Contact">
+            <?php 
+do {  
+?>
+            <option value="<?php echo $row_All_Users['Id']?>" <?php if (!(strcmp($row_All_Users['Id'], htmlentities($row_current_meeting['BDL_Contact'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_All_Users['Initiales']?></option>
+            <?php
+} while ($row_All_Users = mysql_fetch_assoc($All_Users));
+?>
           </select></td>
         </tr>
+        <tr> </tr>
         <tr valign="baseline">
-          <td nowrap="nowrap" align="left"><a href="PrintDiscussion.php?Discussion_ID=<?php echo $_GET[Discussion_ID]; ?>"></a></td>
-          <td><input type="submit" value="Update record" /><input type="submit" onclick="MM_callJS('self.close();')" value="Close" /></td>
+          <td nowrap="nowrap" align="right" valign="top">Meeting notes</td>
+          <td><textarea name="Meeting_Notes" cols="80" rows="10"><?php echo htmlentities($row_current_meeting['Meeting_Notes'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+        </tr>
+        <tr valign="baseline">
+          <td nowrap="nowrap" align="right" valign="top">Meeting conclusions</td>
+          <td><textarea name="Meeting_Conclusions" cols="80" rows="10"><?php echo htmlentities($row_current_meeting['Meeting_Conclusions'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
+        </tr>
+        <tr valign="baseline">
+          <td nowrap="nowrap" align="left"><a href="PrintMeeting.php?Meeting_ID=<?php echo $_GET[Meeting_ID]; ?>"></a></td>
+          <td><input type="submit" value="Update record" />
+          <input name="Submit" type="submit" onclick="MM_callJS('self.close()')" value="Close" /></td>
         </tr>
       </table>
       <input type="hidden" name="MM_update" value="form1" />
-      <input type="hidden" name="Discussion_ID" value="<?php echo $row_current_discussion['Discussion_ID']; ?>" />
+      <input type="hidden" name="Meeting_ID" value="<?php echo $row_current_meeting['Meeting_ID']; ?>" />
     </form>
+    <p>&nbsp;</p>
+<p>&nbsp;</p>
     <p>&nbsp;</p>
 <!-- end #mainContent --></div>
   <div id="footer">
     <p>Footer</p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
+<script type="text/javascript">
+<!--
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {format:"yyyy-mm-dd", isRequired:false});
+//-->
+</script>
 </body>
 </html>
 <?php
-mysql_free_result($current_discussion);
+mysql_free_result($current_meeting);
+
+mysql_free_result($All_Users);
 ?>

@@ -62,12 +62,100 @@ $totalRows_Current_Detail = mysql_num_rows($Current_Detail);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+<title>Edit detail</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
+tinyMCE.init({
+
+		// General options
+
+		mode : "textareas",
+
+		theme : "advanced",
+
+		plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,autosave",
+
+
+
+		// Theme options
+
+		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+
+		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+
+		theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak,restoredraft",
+
+		theme_advanced_toolbar_location : "top",
+
+		theme_advanced_toolbar_align : "left",
+
+		theme_advanced_statusbar_location : "bottom",
+
+		theme_advanced_resizing : true,
+
+
+
+		// Example content CSS (should be your site CSS)
+
+		content_css : "css/content.css",
+
+
+
+		// Drop lists for link/image/media/template dialogs
+
+		template_external_list_url : "lists/template_list.js",
+
+		external_link_list_url : "lists/link_list.js",
+
+		external_image_list_url : "lists/image_list.js",
+
+		media_external_list_url : "lists/media_list.js",
+
+
+
+		// Style formats
+
+		style_formats : [
+
+			{title : 'Bold text', inline : 'b'},
+
+			{title : 'Red text', inline : 'span', styles : {color : '#ff0000'}},
+
+			{title : 'Red header', block : 'h1', styles : {color : '#ff0000'}},
+
+			{title : 'Example 1', inline : 'span', classes : 'example1'},
+
+			{title : 'Example 2', inline : 'span', classes : 'example2'},
+
+			{title : 'Table styles'},
+
+			{title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}
+
+		],
+
+
+
+		// Replace values for the template plugin
+
+		template_replace_values : {
+
+			username : "Some User",
+
+			staffid : "991234"
+
+		}
+
+	});
+
+
+</script>
 <script>
 $(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
@@ -89,12 +177,13 @@ function MM_callJS(jsStr) { //v2.0
 
 <body class="oneColElsCtrHdr">
 
-<div id="container">
+<div class="full">
   <div id="header">
     <h1><?php echo $row_Current_Detail['Sector_Analysis_Title']; ?></h1>
     
   <!-- end #header --></div>
-  <div id="mainContent">
+  <div id="mainContent" >
+  <a href="PrintDetail.php?Detail_ID=<?php echo $_GET[Detail_ID]; ?>">Print</a>
     <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
       <table width="100%" align="center">
         <tr valign="baseline">
@@ -112,7 +201,7 @@ function MM_callJS(jsStr) { //v2.0
           <td><textarea name="Sector_Analysis_Text" cols="70" rows="15"><?php echo htmlentities($row_Current_Detail['Sector_Analysis_Text'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
         </tr>
         <tr valign="baseline">
-          <td nowrap="nowrap" align="right">&nbsp;</td>
+          <td nowrap="nowrap" align="left"></td>
           <td><input type="submit" value="Update analysis" /><input name="Button" type="button" onclick="MM_callJS('self.close ()')" value="Close" /></td>
         </tr>
       </table>

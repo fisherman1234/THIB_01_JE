@@ -247,6 +247,7 @@ $(function() {
             <li>Flagged stocks : <a href="Flagged.php?flagged=1">Yes</a> // <a href="Flagged.php?Flagged=0">No</a></li>
             <li>BDL Position : <a href="Position.php?Position_BDL=Neutral">Neutral</a> // <a href="Position.php?Position_BDL=Long">Long</a> // <a href="Position.php?Position_BDL=Short">Short</a></li>
             <li>Ratings: <a href="Ratings.php?Rating=Good business">Good business</a> // <a href="Ratings.php?Rating=Bad%20business">Bad business</a> // <a href="Ratings.php?Rating=Neutral">Neutral</a></li>
+            <li><a href="All_contacts.php">Phonebook</a></li>
           </ul>
         <p>&nbsp;</p></td>
       </tr>

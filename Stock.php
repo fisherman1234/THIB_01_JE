@@ -1,5 +1,56 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php require_once('Connections/localhost.php'); ?>
+<?php 
+
+  // Original PHP code by Chirp Internet: www.chirp.com.au
+  // Please acknowledge use of this code by including this header.
+
+  function restoreTags($input)
+  {
+    $opened = array();
+
+    // loop through opened and closed tags in order
+    if(preg_match_all("/<(\/?[a-z]+)>?/i", $input, $matches)) {
+      foreach($matches[1] as $tag) {
+        if(preg_match("/^[a-z]+$/i", $tag, $regs)) {
+          // a tag has been opened
+          if(strtolower($regs[0]) != 'br') $opened[] = $regs[0];
+        } elseif(preg_match("/^\/([a-z]+)$/i", $tag, $regs)) {
+          // a tag has been closed
+          unset($opened[array_pop(array_keys($opened, $regs[1]))]);
+        }
+      }
+    }
+
+    // close tags that are still open
+    if($opened) {
+      $tagstoclose = array_reverse($opened);
+      foreach($tagstoclose as $tag) $input .= "</$tag>";
+    }
+
+    return $input;
+  }
+
+function myTruncate($string, $limit=80, $break=".", $pad="...")
+{
+  // return with no change if string is shorter than $limit
+  if(strlen($string) <= $limit) return $string;
+
+  // is $break present between $limit and the end of the string?
+  if(false !== ($breakpoint = strpos($string, $break, $limit))) {
+    if($breakpoint < strlen($string) - 1) {
+      $string = substr($string, 0, $breakpoint) . $pad;
+    }
+  }
+    
+  return restoreTags($string);
+}
+
+
+
+
+?>
+
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -289,11 +340,21 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form14")) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
-  $updateSQL = sprintf("UPDATE Stocks SET Sector_ID=%s, In_Charge=%s, Flagged=%s, Flag_Date=%s WHERE Stock_ID=%s",
-                       GetSQLValueString($_POST['Sector_ID'], "int"),
+  $updateSQL = sprintf("UPDATE Stocks SET In_Charge=%s, Flagged=%s, Flag_Date=%s WHERE Stock_ID=%s",
                        GetSQLValueString($_POST['In_Charge'], "int"),
                        GetSQLValueString(isset($_POST['Flagged']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString($_POST['Flag_Date'], "date"),
+                       GetSQLValueString($_POST['Stock_ID'], "int"));
+
+  mysql_select_db($database_localhost, $localhost);
+  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form17")) {
+  $updateSQL = sprintf("UPDATE Stocks SET Sector_ID=%s, Stock_Name=%s, Ticker=%s WHERE Stock_ID=%s",
+                       GetSQLValueString($_POST['Sector_ID'], "int"),
+                       GetSQLValueString($_POST['Stock_Name'], "text"),
+                       GetSQLValueString($_POST['Ticker'], "text"),
                        GetSQLValueString($_POST['Stock_ID'], "int"));
 
   mysql_select_db($database_localhost, $localhost);
@@ -455,7 +516,7 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Stock</title>
+<title>Stock : <?php echo $row_Sector['Stock_Name']; ?></title>
 <!--[if IE]>
 <style type="text/css"> 
 /* place css fixes for all versions of IE in this conditional comment */
@@ -586,7 +647,7 @@ back-button {
 <div id="container">
   <div id="header">
     <h1>Stock : <?php echo $row_Sector['Stock_Name']; ?> - Sector : <?php echo $row_Sector['Sector_Name']; ?></h1>
-    <p><a onClick="history.go(-1);return true;"><u>Back</u></a>	<u><a href="index.php">New search</a></u></p>
+    <p><a onClick="history.go(-1);return true;"><u>Back</u></a>	<u><a href="index.php">Home</a></u> <a href="PrintStock.php?Stock_ID=<?php echo $_GET[Stock_ID]; ?>">Print</a></p>
   <!-- end #header --></div>
   <div id="mainContent-full">
     <div id="TabbedPanels1" class="TabbedPanels">
@@ -605,21 +666,8 @@ back-button {
               <td colspan="2"><form action="<?php echo $editFormAction; ?>" method="post" name="form16" id="form16">
                 <table width="100%" align="center">
                   <tr valign="baseline">
-                    <td width="23%" align="right" nowrap="nowrap">Sector</td>
-                    <td width="77%"><select name="Sector_ID">
-                      <?php 
-do {  
-?>
-                      <option value="<?php echo $row_Sectors['Sector_ID']?>" <?php if (!(strcmp($row_Sectors['Sector_ID'], htmlentities($row_Sector['Sector_ID'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_Sectors['Sector_Name']?></option>
-                      <?php
-} while ($row_Sectors = mysql_fetch_assoc($Sectors));
-?>
-                    </select></td>
-                  </tr>
-                  <tr> </tr>
-                  <tr valign="baseline">
-                    <td nowrap="nowrap" align="right">In charge</td>
-                    <td><select name="In_Charge">
+                    <td width="23%" align="right" nowrap="nowrap">In charge</td>
+                    <td width="77%"><select name="In_Charge">
                       <?php 
 do {  
 ?>
@@ -627,9 +675,8 @@ do {
                       <?php
 } while ($row_All_Users = mysql_fetch_assoc($All_Users));
 ?>
-                    </select></td>
+                      </select></td>
                   </tr>
-                  <tr> </tr>
                   <tr valign="baseline">
                     <td nowrap="nowrap" align="right">Flagged</td>
                     <td><input type="checkbox" name="Flagged" value=""  <?php if (!(strcmp(htmlentities($row_Sector['Flagged'], ENT_COMPAT, 'UTF-8'),1))) {echo "checked=\"checked\"";} ?> /></td>
@@ -649,7 +696,8 @@ do {
                 <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
               </form>                <p>&nbsp;</p></td>
               <td align="right" valign="top">&nbsp;</td>
-              <td valign="top"><p>&nbsp;Available analysis :                </p><table width="100%" border="1" align="center">
+              <td valign="top"><h4>&nbsp;Available analysis </h4>
+                <table width="100%" border="1" align="center">
                 <tr>
                   <td width="100%">Title</td>
                 </tr>
@@ -661,8 +709,40 @@ do {
               </table></td>
             </tr>
             <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td colspan="2"><h4>&nbsp;Stock properties
+              </h4>
+                <form action="<?php echo $editFormAction; ?>" method="post" name="form17" id="form17">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="25%" align="right" nowrap="nowrap">Sector</td>
+                      <td width="75%"><select name="Sector_ID">
+                        <?php 
+do {  
+?>
+                        <option value="<?php echo $row_Sectors['Sector_ID']?>" <?php if (!(strcmp($row_Sectors['Sector_ID'], htmlentities($row_Sector['Sector_ID'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} ?>><?php echo $row_Sectors['Sector_Name']?></option>
+                        <?php
+} while ($row_Sectors = mysql_fetch_assoc($Sectors));
+?>
+                      </select></td>
+                    </tr>
+                    <tr> </tr>
+                    <tr valign="baseline">
+                      <td nowrap="nowrap" align="right">Stock name</td>
+                      <td><input type="text" name="Stock_Name" value="<?php echo htmlentities($row_Sector['Stock_Name'], ENT_COMPAT, 'UTF-8'); ?>" size="45" /></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td nowrap="nowrap" align="right">Ticker</td>
+                      <td><input type="text" name="Ticker" value="<?php echo htmlentities($row_Sector['Ticker'], ENT_COMPAT, 'UTF-8'); ?>" size="45" /></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td nowrap="nowrap" align="right">&nbsp;</td>
+                      <td><input type="submit" value="Update record" /></td>
+                    </tr>
+                  </table>
+                  <input type="hidden" name="MM_update" value="form17" />
+                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                </form>
+              <p>&nbsp;</p></td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
             </tr>
@@ -858,7 +938,7 @@ do {
                   <?php do { ?>
                   <tr>
                     <td><a href="#" onclick="MM_openBrWindow('EditDiscussion.php?Discussion_ID=<?php echo $row_Discussions['Discussion_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Discussions['Discussion_Date']; ?></a></td>
-                    <td width="60%"><?php echo $row_Discussions['View_BDL']; ?>&nbsp; </td>
+                    <td width="60%"><?php echo substr(strip_tags($row_Discussions['View_BDL']),0,200); ?>&nbsp; </td>
                     <td><?php echo $row_Discussions['Stock_Price']; ?>&nbsp; </td>
                     <td><?php echo $row_Discussions['Position_BDL']; ?>&nbsp; </td>
                   </tr>
@@ -989,11 +1069,11 @@ do {
                         <?php do { ?>
                         <tr>
                           <td><?php echo $row_Meetins_Results['Meeting_Type']; ?>&nbsp;</td>
-                          <td><?php echo $row_Meetins_Results['Meeting_Date']; ?>&nbsp; </td>
+                          <td><a href="#" onclick="MM_openBrWindow('EditMeeting.php?Meeting_ID=<?php echo $row_Meetins_Results['Meeting_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Meetins_Results['Meeting_Date']; ?></a></td>
                           <td><?php echo $row_Meetins_Results['Meeting_Contact']; ?>&nbsp; </td>
                           <td><?php echo $row_Meetins_Results['Initiales']; ?>&nbsp; </td>
-                          <td><?php echo $row_Meetins_Results['Meeting_Notes']; ?>&nbsp; </td>
-                          <td><?php echo $row_Meetins_Results['Meeting_Conclusions']; ?>&nbsp; </td>
+                          <td><?php echo substr(strip_tags($row_Meetins_Results['Meeting_Notes']),0,200); ?></td>
+                          <td><?php echo substr(strip_tags($row_Meetins_Results['Meeting_Conclusions']),0,200); ?>&nbsp; </td>
                         </tr>
                         <?php } while ($row_Meetins_Results = mysql_fetch_assoc($Meetins_Results)); ?>
                       </table>
@@ -1028,8 +1108,8 @@ do {
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">Meeting date:</td>
                             <td><span id="sprytextfield5">
-                              <input type="text" name="Meeting_Date" class="datepicker" value="" size="32" />
-                              <span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span></span></td>
+                            <input type="text" name="Meeting_Date" class="datepicker" value="" size="32" />
+                            <span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span><span class="textfieldRequiredMsg">A value is required.</span></span></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">Meeting contact:</td>
@@ -1074,19 +1154,18 @@ do {
                   <div class="AccordionPanel">
                     <div class="AccordionPanelTab">Contact list</div>
                     <div class="AccordionPanelContent">
-                      <p>&nbsp;</p>
                       <table width="100%" border="1" align="center">
                         <tr>
-                          <td width="21%">Job_Title</td>
+                          <td width="21%">Job title</td>
                           <td width="18%">Name</td>
-                          <td width="17%">Title</td>
+                          <td width="17%">Position</td>
                           <td width="18%">Email</td>
                           <td width="26%">Telephone</td>
                         </tr>
                         <?php do { ?>
                         <tr>
                           <td><?php echo $row_Contacts['Job_Title']; ?>&nbsp;</td>
-                          <td><?php echo $row_Contacts['Name']; ?>&nbsp; </td>
+                          <td><a href="#" onclick="MM_openBrWindow('EditContact.php?Contact_ID=<?php echo $row_Contacts['Contact_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Contacts['Name']; ?></a></td>
                           <td><?php echo $row_Contacts['Title']; ?>&nbsp; </td>
                           <td><?php echo $row_Contacts['Email']; ?>&nbsp; </td>
                           <td><?php echo $row_Contacts['Telephone']; ?>&nbsp; </td>
@@ -1116,10 +1195,12 @@ do {
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">Name</td>
-                            <td><input type="text" name="Name" value="" size="32" /></td>
+                            <td><span id="sprytextfield6">
+                              <input type="text" name="Name" value="" size="32" />
+                            <span class="textfieldRequiredMsg">A value is required.</span></span></td>
                           </tr>
                           <tr valign="baseline">
-                            <td nowrap="nowrap" align="right">Title</td>
+                            <td nowrap="nowrap" align="right">Position</td>
                             <td><input type="text" name="Title" value="" size="32" /></td>
                           </tr>
                           <tr valign="baseline">
@@ -1171,9 +1252,10 @@ var Accordion1 = new Spry.Widget.Accordion("Accordion1");
 var Accordion2 = new Spry.Widget.Accordion("Accordion2");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email", {isRequired:false});
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "custom", {pattern:"+00.0.00.00.00.00", hint:"+00.0.00.00.00.00", useCharacterMasking:true});
-var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"]});
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", validateOn:["blur"]});
 var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3");
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"yyyy-mm-dd"});
+var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
 //-->
 </script>
 </body>

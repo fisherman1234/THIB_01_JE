@@ -90,7 +90,7 @@ if (isset($_SESSION['MM_UserID'])) {
   $colname_MyFlaggedStocks = $_SESSION['MM_UserID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_MyFlaggedStocks = sprintf("SELECT * FROM Stocks, Sectors WHERE Stocks.In_Charge = %s AND Stocks.Flagged = 1 AND Sectors.Sector_ID =Stocks.Sector_ID ORDER BY Stock_Name ASC", GetSQLValueString($colname_MyFlaggedStocks, "int"));
+$query_MyFlaggedStocks = sprintf("SELECT * FROM Stocks, Sectors WHERE Stocks.In_Charge = %s AND Stocks.Flagged = 1 AND Sectors.Sector_ID =Stocks.Sector_ID ORDER BY Stocks.Flag_Date DESC, Stock_Name ASC", GetSQLValueString($colname_MyFlaggedStocks, "int"));
 $query_limit_MyFlaggedStocks = sprintf("%s LIMIT %d, %d", $query_MyFlaggedStocks, $startRow_MyFlaggedStocks, $maxRows_MyFlaggedStocks);
 $MyFlaggedStocks = mysql_query($query_limit_MyFlaggedStocks, $localhost) or die(mysql_error());
 $row_MyFlaggedStocks = mysql_fetch_assoc($MyFlaggedStocks);
@@ -139,6 +139,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
     <table width="100%" border="1" align="center">
       <tr>
         <td width="40%">Stock name</td>
+        <td>Flag date</td>
         <td>In portfolio</td>
         <td>Rating</td>
         <td width="30%">Sector </td>
@@ -146,6 +147,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
       <?php do { ?>
         <tr>
           <td width="40%"><a href="Stock.php?Stock_ID=<?php echo $row_MyFlaggedStocks['Stock_ID']; ?>"> <?php echo $row_MyFlaggedStocks['Stock_Name']; ?>&nbsp; </a></td>
+          <td><?php echo $row_MyFlaggedStocks['Flag_Date']; ?></td>
           <td><?php echo $row_MyFlaggedStocks['Is_In_Portfolio']; ?>&nbsp; </td>
           <td><?php echo $row_MyFlaggedStocks['Rating']; ?>&nbsp; </td>
           <td width="30%"><?php echo $row_MyFlaggedStocks['Sector_Name']; ?>&nbsp; </td>

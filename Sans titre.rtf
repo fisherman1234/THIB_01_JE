@@ -17,4 +17,26 @@ Je cherche un long quels sont les stocks qui sont longs\
 Ratings\
 \
 export en excel des requ\'eates\
-}
+Lien fichier\
+\
+SELECT *\
+FROM Stocks\
+LEFT JOIN (Select * From BDL_Discussions\
+ORDER BY BDL_Discussions.Stock_ID ASC, BDL_Discussions.Discussion_Date DESC) AS a\
+ON Stocks.Stock_ID=a.Stock_ID;\
+\
+SELECT *\
+FROM Stocks\
+RIGHT JOIN (Select *, max(Discussion_Date) \
+From BDL_Discussions\
+group by Stock_ID) AS a\
+ON Stocks.Stock_ID=a.Stock_ID;\
+\
+\
+SELECT * FROM (SELECT *\
+FROM Stocks\
+RIGHT JOIN (Select Stock_ID AS Stock_ID2, Position_BDL, max(Discussion_Date) \
+From BDL_Discussions\
+group by Stock_ID) AS a\
+ON Stocks.Stock_ID=a.Stock_ID2) AS b, \
+WHERE Position_BDL='Neutral';}
