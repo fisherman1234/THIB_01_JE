@@ -196,11 +196,11 @@ function MM_callJS(jsStr) { //v2.0
             </tr>
             <tr>
               <td><input type="radio" name="Job_Title" value="Manager contact" <?php if (!(strcmp(htmlentities($row_current_contact['Job_Title'], ENT_COMPAT, 'UTF-8'),"Manager contact"))) {echo "checked=\"checked\"";} ?> />
-                Sell side analyst</td>
+                Manager contact</td>
             </tr>
             <tr>
               <td><input type="radio" name="Job_Title" value="Expert" <?php if (!(strcmp(htmlentities($row_current_contact['Job_Title'], ENT_COMPAT, 'UTF-8'),"Expert"))) {echo "checked=\"checked\"";} ?> />
-                Sell side analyst</td>
+                Expert</td>
             </tr>
 
           </table></td>
