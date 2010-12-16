@@ -1260,6 +1260,10 @@ do {
                                 <td><input type="radio" name="Job_Title" value="Manager contact" />
                                   Manager contact</td>
                               </tr>
+                              <tr>
+                                <td><input type="radio" name="Job_Title" value="Expert" />
+                                  Expert</td>
+                              </tr>
                             </table></td>
                           </tr>
                           <tr valign="baseline">
