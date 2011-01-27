@@ -720,9 +720,7 @@ back-button {
       <ul class="TabbedPanelsTabGroup">
         <li class="TabbedPanelsTab" tabindex="0">Overview</li>
         <li class="TabbedPanelsTab" tabindex="0">Analysis</li>
-        <li class="TabbedPanelsTab" tabindex="0">Portfolio</li>
-        <li class="TabbedPanelsTab" tabindex="0">Valorisation</li>
-        <li class="TabbedPanelsTab" tabindex="0">Investment case</li>
+<li class="TabbedPanelsTab" tabindex="0">Investment case</li>
         <li class="TabbedPanelsTab" tabindex="0">Contact</li>
 </ul>
       <div class="TabbedPanelsContentGroup">
@@ -744,7 +742,7 @@ do {
                       </select></td>
                   </tr>
                   <tr valign="baseline">
-                    <td height="45" align="right" nowrap="nowrap">In portfolio</td>
+                    <td height="30" align="right" nowrap="nowrap">In portfolio</td>
                     <td><input type="checkbox" name="Is_In_Portfolio" value=""  <?php if (!(strcmp(htmlentities($row_Sector['Is_In_Portfolio'], ENT_COMPAT, 'UTF-8'),1))) {echo "checked=\"checked\"";} ?> /></td>
                   </tr>
                   <tr valign="baseline">
@@ -764,7 +762,7 @@ do {
                 </table>
                 <input type="hidden" name="MM_update" value="form16" />
                 <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-              </form>                <p>&nbsp;</p></td>
+              </form></td>
               <td align="right" valign="top">&nbsp;</td>
               <td valign="top"><h4>&nbsp;Available analysis </h4>
                 <table width="100%" border="1" align="center">
@@ -916,59 +914,7 @@ do {
           </div>
           <p>&nbsp;</p>
         </div>
-        <div class="TabbedPanelsContent">
-          <form id="form3" name="form3" method="post" action="">
-          </form>
-          <form action="<?php echo $editFormAction; ?>" method="post" name="form4" id="form4">
-            <table align="center">
-              <tr valign="baseline">
-                <td nowrap="nowrap" align="right">Stock in portfolio</td>
-                <td valign="baseline"><table>
-                  <tr>
-                    <td><input type="radio" name="Is_In_Portfolio" value="1" <?php if (!(strcmp(htmlentities($row_Sector['Is_In_Portfolio'], ENT_COMPAT, 'UTF-8'),1))) {echo "checked=\"checked\"";} ?> />
-                      Yes</td>
-                  </tr>
-                  <tr>
-                    <td><input type="radio" name="Is_In_Portfolio" value="0" <?php if (!(strcmp(htmlentities($row_Sector['Is_In_Portfolio'], ENT_COMPAT, 'UTF-8'),0))) {echo "checked=\"checked\"";} ?> />
-                      No</td>
-                  </tr>
-                </table></td>
-              </tr>
-              <tr valign="baseline">
-                <td nowrap="nowrap" align="right">&nbsp;</td>
-                <td><input type="submit" value="Update portfolio" /></td>
-              </tr>
-            </table>
-            <input type="hidden" name="MM_update" value="form4" />
-            <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-          </form>
-          <p>&nbsp;</p>
-        </div>
-        <div class="TabbedPanelsContent">
-          <form id="form5" name="form5" method="post" action="">
-            <p>&nbsp;</p>
-          </form>
-          <form action="<?php echo $editFormAction; ?>" method="post" name="form6" id="form6">
-            <table align="center">
-              <tr valign="baseline">
-                <td nowrap="nowrap" align="right">Valorisation filename</td>
-                <td><input type="text" name="Valorisation" value="<?php echo htmlentities($row_Sector['Valorisation'], ENT_COMPAT, 'UTF-8'); ?>" size="80" /></td>
-              </tr>
-              <tr valign="baseline">
-                <td nowrap="nowrap" align="right">&nbsp;</td>
-                <td><input type="submit" value="Update filename" /></td>
-              </tr>
-              <tr>
-              	<td>Link  file</td>
-                <td><a href="file:///Applications/MAMP/htdocs/Stock.php">lien</a></td>
-               </tr>
-            </table>
-            <input type="hidden" name="MM_update" value="form6" />
-            <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-          </form>
-          <p>&nbsp;</p>
-        </div>
-        <div class="TabbedPanelsContent">
+<div class="TabbedPanelsContent">
           <div id="TabbedPanels4" class="TabbedPanels">
             <ul class="TabbedPanelsTabGroup">
               <li class="TabbedPanelsTab" tabindex="0">Investment case</li>
