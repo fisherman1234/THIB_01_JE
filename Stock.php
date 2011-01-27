@@ -501,7 +501,7 @@ if (isset($_GET['Stock_ID'])) {
   $colname_Detail = $_GET['Stock_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Detail = sprintf("SELECT * FROM Details, Stocks WHERE Details.Sector_ID=Stocks.Sector_ID AND Stocks.Stock_ID=%s", GetSQLValueString($colname_Detail, "int"));
+$query_Detail = sprintf("SELECT * FROM Details, Stocks WHERE Details.Sector_ID=Stocks.Sector_ID AND Stocks.Stock_ID=%s ORDER BY Details.Last_Entry_Date DESC", GetSQLValueString($colname_Detail, "int"));
 $Detail = mysql_query($query_Detail, $localhost) or die(mysql_error());
 $row_Detail = mysql_fetch_assoc($Detail);
 $totalRows_Detail = mysql_num_rows($Detail);
@@ -767,10 +767,12 @@ do {
               <td width="45%" valign="top"><h4>&nbsp;Available analysis </h4>
                 <table width="100%" border="1" align="center">
                 <tr>
-                  <td width="100%">Title</td>
+                  <td width="33%">Date</td>
+                  <td>Title</td>
                 </tr>
                 <?php do { ?>
                   <tr>
+                    <td width="33%"><?php echo $row_Detail['Last_Entry_Date']; ?></td>
                     <td><a href="#" onclick="MM_openBrWindow('Edit_Detail.php?Detail_ID=<?php echo $row_Detail['Detail_ID']; ?>','','scrollbars=yes,resizable=yes,width=800,height=500')"> <?php echo $row_Detail['Sector_Analysis_Title']; ?></a></td>
                   </tr>
                   <?php } while ($row_Detail = mysql_fetch_assoc($Detail)); ?>
