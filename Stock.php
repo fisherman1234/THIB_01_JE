@@ -764,7 +764,7 @@ do {
                 <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
               </form></td>
               <td align="right" valign="top">&nbsp;</td>
-              <td valign="top"><h4>&nbsp;Available analysis </h4>
+              <td width="45%" valign="top"><h4>&nbsp;Available analysis </h4>
                 <table width="100%" border="1" align="center">
                 <tr>
                   <td width="100%">Title</td>
@@ -812,19 +812,47 @@ do {
                 </form>
               <p>&nbsp;</p></td>
               <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td width="45%" valign="top">
+              <h4>Rating
+              </h4>
+              <form action="<?php echo $editFormAction; ?>" method="post" name="form12" id="form12">
+                  <table width="100%" align="center">
+                    <tr valign="baseline">
+                      <td width="83%" valign="baseline"><table>
+                        <tr>
+                          <td><input type="radio" name="Rating" value="Good business" <?php if (!(strcmp(htmlentities($row_Sector['Rating'], ENT_COMPAT, 'UTF-8'),"Good business"))) {echo "checked=\"checked\"";} ?> />
+                            Good business</td>
+                          </tr>
+                        <tr>
+                          <td><input type="radio" name="Rating" value="Bad business" <?php if (!(strcmp(htmlentities($row_Sector['Rating'], ENT_COMPAT, 'UTF-8'),"Bad business"))) {echo "checked=\"checked\"";} ?> />
+                            Bad business</td>
+                          </tr>
+                        <tr>
+                          <td><input type="radio" name="Rating" value="Neutral" <?php if (!(strcmp(htmlentities($row_Sector['Rating'], ENT_COMPAT, 'UTF-8'),"Neutral"))) {echo "checked=\"checked\"";} ?> />
+                            Neutral</td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr valign="baseline">
+                      <td><input type="submit" value="Update rating" /></td>
+                    </tr>
+                  </table>
+                  <input type="hidden" name="MM_update" value="form12" />
+                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
+                </form>
+              </td>
             </tr>
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td width="45%">&nbsp;</td>
             </tr>
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td width="45%">&nbsp;</td>
             </tr>
           </table>
           <p>&nbsp;</p>
@@ -920,7 +948,6 @@ do {
               <li class="TabbedPanelsTab" tabindex="0">Investment case</li>
               <li class="TabbedPanelsTab" tabindex="0">BDL Discussions</li>
 <li class="TabbedPanelsTab" tabindex="0">Investment risks</li>
-              <li class="TabbedPanelsTab" tabindex="0">Rating</li>
 </ul>
             <div class="TabbedPanelsContentGroup">
               <div class="TabbedPanelsContent">
@@ -1025,35 +1052,6 @@ do {
                     </tr>
                   </table>
                   <input type="hidden" name="MM_update" value="form10" />
-                  <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
-                </form>
-              </div>
-              <div class="TabbedPanelsContent">
-                <form action="<?php echo $editFormAction; ?>" method="post" name="form12" id="form12">
-                  <table align="center">
-                    <tr valign="baseline">
-                      <td nowrap="nowrap" align="right">Rating</td>
-                      <td valign="baseline"><table>
-                        <tr>
-                          <td><input type="radio" name="Rating" value="Good business" <?php if (!(strcmp(htmlentities($row_Sector['Rating'], ENT_COMPAT, 'UTF-8'),"Good business"))) {echo "checked=\"checked\"";} ?> />
-                            Good business</td>
-                        </tr>
-                        <tr>
-                          <td><input type="radio" name="Rating" value="Bad business" <?php if (!(strcmp(htmlentities($row_Sector['Rating'], ENT_COMPAT, 'UTF-8'),"Bad business"))) {echo "checked=\"checked\"";} ?> />
-                            Bad business</td>
-                        </tr>
-                        <tr>
-                          <td><input type="radio" name="Rating" value="Neutral" <?php if (!(strcmp(htmlentities($row_Sector['Rating'], ENT_COMPAT, 'UTF-8'),"Neutral"))) {echo "checked=\"checked\"";} ?> />
-                            Neutral</td>
-                        </tr>
-                      </table></td>
-                    </tr>
-                    <tr valign="baseline">
-                      <td nowrap="nowrap" align="right">&nbsp;</td>
-                      <td><input type="submit" value="Update rating" /></td>
-                    </tr>
-                  </table>
-                  <input type="hidden" name="MM_update" value="form12" />
                   <input type="hidden" name="Stock_ID" value="<?php echo $row_Sector['Stock_ID']; ?>" />
                 </form>
               </div>
