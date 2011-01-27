@@ -1077,7 +1077,6 @@ do {
                           <td width="10%">Meeting Date</td>
                           <td width="15%">Contact</td>
                           <td width="10%">BDL Contact</td>
-                          <td width="25%">Notes</td>
                           <td width="25%">Conclusions</td>
                         </tr>
                         <?php do { ?>
@@ -1086,7 +1085,6 @@ do {
                           <td><a href="#" onclick="MM_openBrWindow('EditMeeting.php?Meeting_ID=<?php echo $row_Meetins_Results['Meeting_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Meetins_Results['Meeting_Date']; ?></a></td>
                           <td><?php echo $row_Meetins_Results['Meeting_Contact']; ?>&nbsp; </td>
                           <td><?php echo $row_Meetins_Results['Initiales']; ?>&nbsp; </td>
-                          <td><?php echo substr(strip_tags($row_Meetins_Results['Meeting_Notes']),0,200); ?></td>
                           <td><?php echo substr(strip_tags($row_Meetins_Results['Meeting_Conclusions']),0,200); ?>&nbsp; </td>
                         </tr>
                         <?php } while ($row_Meetins_Results = mysql_fetch_assoc($Meetins_Results)); ?>
