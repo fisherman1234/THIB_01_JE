@@ -224,9 +224,17 @@ $(function() {
 }
 -->
 </style>
+
+
+<script language="JavaScript">
+function pop() { 
+var W1 = window.open('StockOfTheDay.php','Popup1',"toolbar=no,status=no,location=yes, directories=no,menubar=no,scrollbars=yes,resizable=yes,width=160,height=160"); 
+}
+</script>
+
 </head>
 
-<body class="oneColElsCtrHdr">
+<body class="oneColElsCtrHdr" onload="pop()">
 
 <div id="container">
   <div id="header">
@@ -261,7 +269,7 @@ $(function() {
         <input type="submit" name="Submit" id="Submit" value="Submit" />
       </label>
     </form>
-        <h4><a href="Administration.php">Administration</a></h4></td>
+        </td>
         <td width="50%" colspan="-1">
         <h3>My lasts stocks </h3>
         <div id="Small_text">
@@ -313,7 +321,7 @@ $(function() {
     </table>
 	<!-- end #mainContent --></div>
   <div id="footer">
-    <p style="font-size:12px;">BDL Capital Management - 2010</p>
+    <p style="font-size:12px;"><a href="Administration.php">Administration</a> /// BDL Capital Management - 2010 </p>
   <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>

@@ -1,5 +1,4 @@
 <?php require_once('Connections/localhost.php'); ?>
-
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -173,7 +172,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Flagged stocks</title>
+<title>Search</title>
 <link href="css/oneColElsCtrHdr.css" rel="stylesheet" type="text/css" />
 </head>
 
