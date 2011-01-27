@@ -1,5 +1,27 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
+function check_in_range($user_date)
+{
+  // check if flag will occur in the next 7 days
+  if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
+
+  {
+	return '<span style="background-color: orange;">'.$user_date.'</span>';
+  }
+  // show past flags
+  else if ($user_date < date('Y-m-d'))
+  {
+	  return '<span style="background-color: red;">'.$user_date.'</span>';
+  }
+  else
+  {
+	  return '<span style="background-color: lime;">'.$user_date.'</span>';
+  }
+
+  
+}
+?>
+<?php
 //initialize the session
 if (!isset($_SESSION)) {
   session_start();
@@ -131,6 +153,16 @@ if (isset($_GET['totalRows_MyLastStocks'])) {
 }
 $totalPages_MyLastStocks = ceil($totalRows_MyLastStocks/$maxRows_MyLastStocks)-1;
 
+$colname_MyFlaggedStocks = "-1";
+if (isset($_SESSION['MM_UserID'])) {
+  $colname_MyFlaggedStocks = $_SESSION['MM_UserID'];
+}
+mysql_select_db($database_localhost, $localhost);
+$query_MyFlaggedStocks = sprintf("SELECT * FROM Stocks, Sectors WHERE Stocks.In_Charge = %s AND Stocks.Flagged = 1 AND Sectors.Sector_ID =Stocks.Sector_ID AND (TO_DAYS(Stocks.Flag_Date) - TO_DAYS(LOCALTIME) <= 7) ORDER BY Stocks.Flag_Date DESC, Stock_Name ASC", GetSQLValueString($colname_MyFlaggedStocks, "int"));
+$MyFlaggedStocks = mysql_query($query_MyFlaggedStocks, $localhost) or die(mysql_error());
+$row_MyFlaggedStocks = mysql_fetch_assoc($MyFlaggedStocks);
+$totalRows_MyFlaggedStocks = mysql_num_rows($MyFlaggedStocks);
+
 $queryString_MyLastStocks = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);
@@ -204,7 +236,7 @@ $(function() {
   <p align="right"><a href="<?php echo $logoutAction ?>">Log out</a></p>
 <table width="100%" border="0">
       <tr>
-        <td colspan="3" rowspan="2" valign="top"><h3>Find a stock </h3>
+        <td rowspan="2" valign="top"><h3>Find a stock </h3>
           <form   method="post" actions="">
             <p class="ui-widget">
               <label for="stock">Stock : </label>
@@ -222,7 +254,7 @@ $(function() {
           </form>
           <h2>&nbsp;</h2>
         <h4><a href="Administration.php">Administration</a></h4></td>
-        <td width="50%">
+        <td width="50%" colspan="-1">
         <h3>My lasts stocks </h3>
         <div id="Small_text">
           <table width="100%" border="1" align="center">
@@ -241,7 +273,7 @@ $(function() {
         </td>
       </tr>
       <tr>
-        <td width="50%" valign="top"><h3>Queries</h3>
+        <td width="50%" colspan="-1" valign="top"><h3>Queries</h3>
           <ul>
             <li><a href="Portfolio.php">Portfolio</a></li>
             <li>Flagged stocks : <a href="Flagged.php?Flagged=1">Yes</a> // <a href="Flagged.php?Flagged=0">No</a></li>
@@ -253,8 +285,23 @@ $(function() {
         <p>&nbsp;</p></td>
       </tr>
       <tr>
-        <td colspan="3" valign="top">&nbsp;</td>
-        <td valign="top">&nbsp;</td>
+        <td colspan="2" valign="top"><h3>Upcoming stocks</h3><table width="100%" border="1" align="center">
+  <tr>
+    <td width="34%">Stock name</td>
+    <td width="30%">Flag date</td>
+    <td width="36%">Sector</td>
+  </tr>
+  <?php do { ?>
+    <tr>
+      <td><a href="Stock.php?Stock_ID=<?php echo $row_MyFlaggedStocks['Stock_ID']; ?>"> <?php echo $row_MyFlaggedStocks['Stock_Name']; ?>&nbsp; </a></td>
+      <td><?php echo check_in_range($row_MyFlaggedStocks['Flag_Date']); ?>&nbsp; </td>
+      <td><?php echo $row_MyFlaggedStocks['Sector_Name']; ?>&nbsp; </td>
+    </tr>
+    <?php } while ($row_MyFlaggedStocks = mysql_fetch_assoc($MyFlaggedStocks)); ?>
+</table>
+<br />
+<?php echo $totalRows_MyFlaggedStocks ?> Records Total
+</p></td>
       </tr>
     </table>
 	<!-- end #mainContent --></div>
@@ -266,4 +313,6 @@ $(function() {
 </html>
 <?php
 mysql_free_result($MyLastStocks);
+
+mysql_free_result($MyFlaggedStocks);
 ?>
