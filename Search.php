@@ -1,26 +1,4 @@
 <?php require_once('Connections/localhost.php'); ?>
-<?php
-function check_in_range($user_date)
-{
-  // check if flag will occur in the next 7 days
-  if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
-
-  {
-	return '<span style="background-color: orange;">'.$user_date.'</span>';
-  }
-  // show past flags
-  else if ($user_date < date('Y-m-d'))
-  {
-	  return '<span style="background-color: red;">'.$user_date.'</span>';
-  }
-  else
-  {
-	  return '<span style="background-color: lime;">'.$user_date.'</span>';
-  }
-
-  
-}
-?>
 
 <?php
 if (!isset($_SESSION)) {
@@ -67,6 +45,30 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
   exit;
 }
 ?>
+
+<?php
+function check_in_range($user_date)
+{
+  // check if flag will occur in the next 7 days
+  if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
+
+  {
+	return '<span style="background-color: orange;">'.$user_date.'</span>';
+  }
+  // show past flags
+  else if ($user_date < date('Y-m-d'))
+  {
+	  return '<span style="background-color: red;">'.$user_date.'</span>';
+  }
+  else
+  {
+	  return '<span style="background-color: lime;">'.$user_date.'</span>';
+  }
+
+  
+}
+?>
+
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -201,7 +203,7 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
       </tr>
       <?php do { ?>
         <tr>
-          <td><a href="foo.php?recordID=<?php echo $row_Stock_Results['Stock_ID']; ?>"> <?php echo $row_Stock_Results['Stock_Name']; ?>&nbsp; </a></td>
+          <td><a href="Stock.php?Stock_ID=<?php echo $row_Stock_Results['Stock_ID']; ?>"> <?php echo $row_Stock_Results['Stock_Name']; ?>&nbsp; </a></td>
         </tr>
         <?php } while ($row_Stock_Results = mysql_fetch_assoc($Stock_Results)); ?>
     </table>
