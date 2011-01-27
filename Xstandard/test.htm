@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0021)http://xstandard.com/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>XStandard XHTML Editor Test Page</title>
+		<style type="text/css">
+			body {background-color:white;font-family:arial,sans-serif;color:black;font-size:.8em}
+			h1 {font-size: 1.6em}
+			div.row {clear: both;padding:5px 0;}
+			div.row textarea {width:100%}
+			div.row input {width:100%}
+			fieldset {border: 1px dashed #666666;background-color:transparent;display:block;margin:2px;padding:0.75em 0.625em;}
+			legend {background-color:white;color:blue;padding-left:2px;padding-right:2px;border:none;}
+			#formparams {width:25em}
+		</style>
+	</head>
+	<body>
+		<p>This page will help you test the connectivity between XStandard Pro and Web Services. Enter the URLs for Web Services and the path to a license file then click the &quot;Update&quot; button.  You should then be able to spell check, drag an image into the editor or select images from a library.  Free <a href="http://xstandard.com/en/contact-us/">technical support</a> is available.</p>
+		<p>
+			<object type="application/x-xstandard" id="editor1" width="680" height="300">
+				<param name="CSS" value="" />
+				<param name="Styles" value="" />
+
+				<param name="ImageLibraryURL" value="http://soap.xstandard.com/imagelibrary.aspx"/>
+				<param name="AttachmentLibraryURL" value="http://soap.xstandard.com/attachmentlibrary.aspx"/>
+
+				<param name="SpellCheckerURL" value="http://soap.xstandard.com/spellchecker.aspx" />
+				<param name="SpellCheckerLangFilter" value="" />
+				<param name="SpellCheckerLang" value="en-us" />
+
+				<param name="DirectoryURL" value="http://soap.xstandard.com/directory.aspx" />
+				
+				<param name="SubdocumentURL" value="http://soap.xstandard.com/subdocument.aspx" />
+
+				<param name="CustomInlineElements" value="" />
+				<param name="CustomBlockElements" value="include" />
+				<param name="CustomEmptyElements" value="include" />
+
+				<param name="Toolbar" value="" />
+				<param name="ShowStyles" value="yes" />
+				<param name="ShowToolbar" value="yes" />
+	
+				<param name="IndentOutput" value="no"/>
+				<param name="Debug" value="no"/>
+				<param name="BackgroundColor" value="" />
+				<param name="BorderColor" value="black" />
+				<param name="Base" value="http://soap.xstandard.com/library" />
+				<param name="Value" value="<p></p>"/>
+				<param name="LatestVersion" value="1.7.1.0"/>
+
+				<param name="License" value="http://soap.xstandard.com/license/" />
+					
+				<span>If you do not see the editor here, you have not yet installed XStandard to your computer. Before proceeding, please download XStandard from <a href="http://xstandard.com">http://xstandard.com</a></span>
+			</object>
+		</p>
+		
+		<fieldset id="formparams">
+			<legend>XStandard Settings</legend>
+			<div class="row">
+				<label for="license">Licese File Path/URL</label><br />
+				<input type="text" id="license" value="http://soap.xstandard.com/license/" size="50" />
+			</div>
+			<div class="row">
+				<label for="spellchecker">URL For SpellChecker Web Service</label><br />
+				<input type="text" id="spellchecker" value="http://soap.xstandard.com/spellchecker.aspx" size="50" />
+			</div>
+			<div class="row">
+				<label for="directory">URL For Directory Web Service</label><br />
+				<input type="text" id="directory" value="http://soap.xstandard.com/directory.aspx" size="50" />
+			</div>
+			<div class="row">
+				<label for="image">URL For ImageLibrary Web Service</label><br />
+				<input type="text" id="image" value="http://soap.xstandard.com/imagelibrary.aspx" size="50" />
+			</div>
+			<div class="row">
+				<label for="attachment">URL For AttachmentLibrary Web Service</label><br />
+				<input type="text" id="attachment" value="http://soap.xstandard.com/attachmentlibrary.aspx" size="50" />
+			</div>
+			<div class="row">
+				<label for="attachment">URL For Subdocument Web Service</label><br />
+				<input type="text" id="subdocument" value="http://soap.xstandard.com/subdocument.aspx" size="50" />
+			</div>
+			<div class="row">
+				<label for="base">Base URL</label><br />
+				<input type="text" id="base" value="http://soap.xstandard.com/library" size="50" />
+			</div>
+			<div>
+				<input type="button" onclick="document.getElementById('editor1').License = document.getElementById('license').value;document.getElementById('editor1').SpellCheckerURL = document.getElementById('spellchecker').value;document.getElementById('editor1').DirectoryURL = document.getElementById('directory').value;document.getElementById('editor1').ImageLibraryURL = document.getElementById('image').value;document.getElementById('editor1').AttachmentLibraryURL = document.getElementById('attachment').value;document.getElementById('editor1').SubdocumentURL = document.getElementById('subdocument').value;document.getElementById('editor1').Base = document.getElementById('base').value;alert('Settings Updated');" value="Update" />
+			</div>
+		</fieldset>
+	</body>
+</html>

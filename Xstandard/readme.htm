@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>XStandard Web Services Readme File</title>
+		<style type="text/css">
+			body {background-color:white;font-family:arial,sans-serif;color:black;font-size:.8em}
+			h1 {font-size: 1.6em}
+			h2 {font-size: 1.3em}
+			li {padding:10px 0}
+			#wordmark {float:right;background-color:#336699;color:white;font-size:1em;font-weight:normal;padding:5px 15px 5px 15px}
+			#content {clear:both;padding:5px}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<h1 id="wordmark">XStandard Web Services For PHP Readme File</h1>
+		</div>
+		<div id="content">
+			<h2>Introduction To XStandard Web Services</h2>
+			<p>
+				Web Services are applications that run on server computers and communicate with other computers using a dialect of XML called SOAP (Simple Object Access Protocol). Typically, business users do not interact directly with Web Services. Instead, they interact with user-friendly programs (such as XStandard) that in turn use Web Services. XStandard uses Web Services to check spelling, to upload files from the local computer to the server and to reference files located on remote servers.
+			</p>
+			<p>
+				XStandard Pro works with 5 Web Services - Spell Checker, Image Library, Attachment Library, Directory and Subdocument.  Spell Checker is used for spell checking.  Image Library is used to upload images from a local computer to the server and to build and browse image libraries. Attachment Library is used to upload files from a local computer to the server and to build and browse file libraries. Directory is used to communicate with 3rd party systems (like your CMS) and insert code snippets into the editor. Subdocument is used to replace custom elements with subdocuments.
+			</p>
+			<h2>Requirements</h2>
+			<ul>
+				<li>
+					PHP 4.3.0+
+				</li>
+				<li>
+					PHP modules: zlib, pspell
+				</li>
+				<li>
+					Linux, FreeBSD or Windows NT+
+				</li>
+			</ul>
+			<h2>Installation</h2>
+			<p>
+				<ol>
+					<li>Unzip x-web-services-php.zip</li>
+					<li>Move spellchecker.php, spellchecker.config, imagelibrary.php, attachmentlibrary.php, linklibrary.php, imagelibrary.config, attachmentlibrary.config, directory.php, directory.config, directory-example-product-1.txt, directory-example-product-2.txt, directory-example-product-3.txt, directory-example-product-4.txt, directory-xhtml-entities.xml, directory-xhtml-latin1.xml, directory-xhtml-special.xml, directory-xhtml-symbol.xml, directory_example_staff.csv, subdocument.php, subdocument-example-A.txt, subdocument-example-B.txt, subdocument-example-C.txt, subdocument-example-D.txt and subdocument-example-E.txt to a virtual root.</li>
+				</ol>
+			</p>
+			<h2>Testing</h2>
+			<p>Open a Web browser and for each Web Service navigate to the URL where the Web Services is located.  For example:<br /><samp>http://localhost/imagelibrary.php</samp><br /><samp>http://localhost/attachmentlibrary.php</samp><br /><samp>http://localhost/directory.php</samp><br /><samp>http://localhost/spellchecker.php</samp><br /><samp>http://localhost/subdocument.php</samp><br />If you don't see <code>Status: Ready</code> in the browser, then the Web Service is not correctly installed.  The most common cause of this is incorrectly set file permissions.</p>
+			<p>Launch test file <a href="test.htm">test.htm</a>. Specify the path to the license file and to Web Services.  Click on the "Update" button.  You should now be able to reference files from a library, drag an image into the editor, or spell check the editor's content.</p>
+			<h2>Support</h2>
+			<p>Additional dictionaries (German, French, Spanish, etc.) for the Spell Web Service are available from <a href="http://aspell.net">aspell.net</a>. See online <a href="http://xstandard.com/en/documentation/">documentation</a> for configuration details. Free <a href="http://xstandard.com/en/contact-us/">technical support</a> is available.</p>
+			<h2>Miscellaneous</h2>
+			<p>A <a href="http://xstandard.com/download/spellchecker-cz.zip">Czech version of the Spell Checker Web Service</a> is available. This implementation was kindly contributed by one of our users and is not yet officially supported.</p>
+		</div>
+	</body>
+</html>

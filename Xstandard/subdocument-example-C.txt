@@ -1,0 +1,4 @@
+<h2>Annual Widget Production</h2>
+<p>Annual production of widgits is up by 3,000 units since this time last year. There was a slight decrease in production in May due to unusually cold weather, but by June, production returned to previous levels and has been on a steady increase since then. Below is a graph for the last 12 months.</p>
+<p><img alt="Monthly production of widgits over a period of 12 months. Production in the first month is 4,000 units, increasing to 7,500 in the final month." height="159" src="http://xstandard.com/images/demo/graph1.gif" width="473" /> </p>
+<p>In 6 months, we forecast monthly production of widgits will surpass the 10,000 unit barrier.</p>

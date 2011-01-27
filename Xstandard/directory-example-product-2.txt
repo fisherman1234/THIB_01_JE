@@ -1,0 +1,44 @@
+<table border="1" cellpadding="1" cellspacing="2" summary="This table describes the features of a hand vacuum.">
+	<tbody>
+		<tr>
+			<th id="th02AAC2100000" valign="top" align="left">
+				Product Image
+			</th>
+			<td headers="th02AAC2100000" valign="top" align="left">
+				<img width="72" title="On Sale Now!" alt="Hand vacuum" height="72" src="http://xstandard.com/images/demo/vacuum.gif" />
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100100" valign="top" align="left">
+				<abbr title="Manufacturer">Mfr.</abbr> Part Number
+			</th>
+			<td headers="th02AAC2100100" valign="top" align="left">
+				RX12-1
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100200" valign="top" align="left">
+				Product Name
+			</th>
+			<td headers="th02AAC2100200" valign="top" align="left">
+				XStandard Hand Vacuum
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100300" valign="top" align="left">
+				Price
+			</th>
+			<td headers="th02AAC2100300" valign="top" align="left">
+				$39.99
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100400" valign="top" align="left">
+				Description
+			</th>
+			<td headers="th02AAC2100400" valign="top" align="left">
+				The XStandard RX12-1 Hand Vacuum has a powerful 7 amps of suction power. It is lightweight and comes with a convenient crevice tool, dusting brush, shoulder strap and a 16' power cord. Plus, the bagless dust containment system means you don't ever have to buy bags or belts!
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,44 @@
+<table border="1" cellpadding="1" cellspacing="2" summary="This table describes the features of a cordless phone.">
+	<tbody>
+		<tr>
+			<th id="th02AAC2100000" valign="top" align="left">
+				Product Image
+			</th>
+			<td headers="th02AAC2100000" valign="top" align="left">
+				<img width="72" title="On Sale Now!" alt="Cordless phone" height="72" src="http://xstandard.com/images/demo/phone.gif" />
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100100" valign="top" align="left">
+				<abbr title="Manufacturer">Mfr.</abbr> Part Number
+			</th>
+			<td headers="th02AAC2100100" valign="top" align="left">
+				M400
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100200" valign="top" align="left">
+				Product Name
+			</th>
+			<td headers="th02AAC2100200" valign="top" align="left">
+				XStandard Cordless Phone
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100300" valign="top" align="left">
+				Price
+			</th>
+			<td headers="th02AAC2100300" valign="top" align="left">
+				$249.95
+			</td>
+		</tr>
+		<tr>
+			<th id="th02AAC2100400" valign="top" align="left">
+				Description
+			</th>
+			<td headers="th02AAC2100400" valign="top" align="left">
+				The XStandard M400 2.4GHz Digital Cordless Phone features an answering system, dual keypad and signature XStandard rubberized grips. Additional features include caller ID with visual call waiting, backlit LCD display and handset speakerphone. Expandable up to 4 handsets.
+			</td>
+		</tr>
+	</tbody>
+</table>
