@@ -1,5 +1,19 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
+<?php
+
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -57,7 +71,7 @@ $totalRows_Meeting = mysql_num_rows($Meeting);
   </tr>
   <tr>
     <td width="15%">Date</td>
-    <td><?php echo $row_Meeting['Meeting_Date']; ?></td>
+    <td><?php echo changedateusfr($row_Meeting['Meeting_Date']); ?></td>
   </tr>
   <tr>
     <td width="15%">Meeting type</td>

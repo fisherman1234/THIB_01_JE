@@ -1,5 +1,18 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
+<?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -63,7 +76,7 @@ $totalRows_Studies = mysql_num_rows($Studies);
         <?php do { ?>
           <tr>
             <td><?php echo $row_Studies['Sector_Name']; ?>&nbsp; </td>
-            <td><?php echo $row_Studies['Last_Entry_Date']; ?>&nbsp; </td>
+            <td><?php echo changedateusfr($row_Studies['Last_Entry_Date']); ?>&nbsp; </td>
             <td width="50%"><a href="PrintDetail.php?Detail_ID=<?php echo $row_Studies['Detail_ID']; ?>"> <?php echo $row_Studies['Sector_Analysis_Title']; ?>&nbsp; </a><a href="Edit_Detail.php?Detail_ID=<?php echo $row_Studies['Detail_ID']; ?>">(edit)</a></td>
           </tr>
           <?php } while ($row_Studies = mysql_fetch_assoc($Studies)); ?>

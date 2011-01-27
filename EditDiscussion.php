@@ -38,7 +38,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $updateSQL = sprintf("UPDATE BDL_Discussions SET Discussion_Date=%s, View_BDL=%s, Stock_Price=%s, Position_BDL=%s WHERE Discussion_ID=%s",
-                       GetSQLValueString($_POST['Discussion_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Discussion_Date']), "date"),
                        GetSQLValueString($_POST['View_BDL'], "text"),
                        GetSQLValueString($_POST['Stock_Price'], "text"),
                        GetSQLValueString($_POST['Position_BDL'], "text"),
@@ -58,6 +58,21 @@ $current_discussion = mysql_query($query_current_discussion, $localhost) or die(
 $row_current_discussion = mysql_fetch_assoc($current_discussion);
 $totalRows_current_discussion = mysql_num_rows($current_discussion);
 ?>
+
+<?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -200,7 +215,7 @@ $totalRows_current_discussion = mysql_num_rows($current_discussion);
 
 <script>
 $(function() {
-		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
+		$( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , showButtonPanel: true });
 	});
 function MM_openBrWindow(theURL,winName,features) { //v2.0
   window.open(theURL,winName,features);
@@ -227,7 +242,7 @@ function MM_callJS(jsStr) { //v2.0
       <table width="100%" align="center">
         <tr valign="baseline">
           <td width="21%" align="right" nowrap="nowrap">Discussion date</td>
-          <td width="79%"><input type="text" name="Discussion_Date" value="<?php echo htmlentities($row_current_discussion['Discussion_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
+          <td width="79%"><input type="text" class="datepicker" name="Discussion_Date" value="<?php echo htmlentities(changedateusfr($row_current_discussion['Discussion_Date']), ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
         </tr>
         <tr valign="baseline">
           <td nowrap="nowrap" align="right" valign="top">BDL View</td>

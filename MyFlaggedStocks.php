@@ -51,16 +51,16 @@ function check_in_range($user_date)
   if (($user_date > date('Y-m-d')) && ($user_date < date('Y-m-d',strtotime("+7 days"))))
 
   {
-	return '<span style="background-color: orange;">'.$user_date.'</span>';
+	return '<span style="background-color: orange;">'.changedateusfr($user_date).'</span>';
   }
   // show past flags
   else if ($user_date < date('Y-m-d'))
   {
-	  return '<span style="background-color: red;">'.$user_date.'</span>';
+	  return '<span style="background-color: red;">'.changedateusfr($user_date).'</span>';
   }
   else
   {
-	  return '<span style="background-color: lime;">'.$user_date.'</span>';
+	  return '<span style="background-color: lime;">'.changedateusfr($user_date).'</span>';
   }
 
   
@@ -140,6 +140,19 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $totalRows_MyFlaggedStocks, $queryString_MyFlaggedStocks);
+?>
+<?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

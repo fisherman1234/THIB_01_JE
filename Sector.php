@@ -1,6 +1,17 @@
 <?php require_once('Connections/localhost.php'); ?>
-<?php require_once('Connections/localhost.php'); ?>
-<?php require_once('Connections/localhost.php'); ?>
+<?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -41,7 +52,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   $insertSQL = sprintf("INSERT INTO Details (Sector_ID, Last_Entry_Date, Sector_Analysis_Title, Sector_Analysis_Text) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['Sector_ID'], "int"),
-                       GetSQLValueString($_POST['Last_Entry_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Last_Entry_Date']), "date"),
                        GetSQLValueString($_POST['Sector_Analysis_Title'], "text"),
                        GetSQLValueString($_POST['Sector_Analysis_Text'], "text"));
 
@@ -233,7 +244,7 @@ $totalRows_Details = mysql_num_rows($Details);
 
 <script>
 $(function() {
-		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
+		$( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , showButtonPanel: true });
 	});
 function MM_openBrWindow(theURL,winName,features) { //v2.0
   window.open(theURL,winName,features);
@@ -290,7 +301,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                 </tr>
                 <?php do { ?>
                   <tr>
-                    <td><?php echo $row_Details['Last_Entry_Date']; ?>&nbsp;</td>
+                    <td><?php echo changedateusfr($row_Details['Last_Entry_Date']); ?>&nbsp;</td>
                     <td><a href="#" onclick="MM_openBrWindow('Edit_Detail.php?Detail_ID=<?php echo $row_Details['Detail_ID']; ?>','','scrollbars=yes,resizable=yes,width=900,height=500')"> <?php echo $row_Details['Sector_Analysis_Title']; ?>&nbsp; </a></td>
                     <td><?php echo  substr(strip_tags($row_Details['Sector_Analysis_Text']),0,200); ?>&nbsp; </td>
                   </tr>
@@ -307,7 +318,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                     <td width="29%" align="right" nowrap="nowrap">Date</td>
                     <td width="71%"><span id="sprytextfield1">
                       <input type="text" name="Last_Entry_Date" class="datepicker" value="" size="32" />
-                      <span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span></span></td>
+                      <span class="textfieldInvalidFormatMsg">Invalid format. Should be dd-mm-yyyy</span></span></td>
                   </tr>
                   <tr valign="baseline">
                     <td nowrap="nowrap" align="right">Sector analysis title</td>
@@ -345,7 +356,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 <!--
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
 var Accordion1 = new Spry.Widget.Accordion("Accordion1");
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"yyyy-mm-dd", validateOn:["blur"]});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"dd-mm-yyyy", validateOn:["blur"]});
 //-->
 </script>
 </body>

@@ -1,5 +1,17 @@
 <?php require_once('Connections/localhost.php'); ?>
-<?php require_once('Connections/localhost.php'); ?>
+<?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
 <?php 
 
   // Original PHP code by Chirp Internet: www.chirp.com.au
@@ -344,7 +356,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
                        GetSQLValueString($_POST['In_Charge'], "int"),
 					   GetSQLValueString(isset($_POST['Is_In_Portfolio']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString(isset($_POST['Flagged']) ? "true" : "", "defined","1","0"),
-                       GetSQLValueString($_POST['Flag_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Flag_Date']), "date"),
                        GetSQLValueString($_POST['Stock_ID'], "int"));
 
   mysql_select_db($database_localhost, $localhost);
@@ -367,7 +379,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form18")) {
                        GetSQLValueString($_POST['Meeting_ID'], "int"),
                        GetSQLValueString($_POST['Stock_ID'], "int"),
                        GetSQLValueString($_POST['Meeting_Type'], "text"),
-                       GetSQLValueString($_POST['Meeting_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Meeting_Date']), "date"),
                        GetSQLValueString($_POST['Meeting_Contact'], "text"),
                        GetSQLValueString($_POST['BDL_Contact'], "int"),
                        GetSQLValueString($_POST['Meeting_Notes'], "text"),
@@ -380,7 +392,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form18")) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form13")) {
   $insertSQL = sprintf("INSERT INTO Details (Stock_ID, Last_Entry_Date, Sector_Analysis_Title, Sector_Analysis_Text) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "int"),
-                       GetSQLValueString($_POST['Last_Entry_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Last_Entry_Date']), "date"),
                        GetSQLValueString($_POST['Sector_Analysis_Title'], "text"),
                        GetSQLValueString($_POST['Sector_Analysis_Text'], "text"));
 
@@ -405,7 +417,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form9")) {
   $insertSQL = sprintf("INSERT INTO Meetings_Results (Stock_ID, Meeting_Type, Meeting_Date, Meeting_Contact, BDL_Contact, Meeting_Notes, Meeting_Conclusions) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "int"),
                        GetSQLValueString($_POST['Meeting_Type'], "text"),
-                       GetSQLValueString($_POST['Meeting_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Meeting_Date']), "date"),
                        GetSQLValueString($_POST['Meeting_Contact'], "text"),
                        GetSQLValueString($_POST['BDL_Contact'], "int"),
                        GetSQLValueString($_POST['Meeting_Notes'], "text"),
@@ -418,7 +430,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form9")) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form8")) {
   $insertSQL = sprintf("INSERT INTO BDL_Discussions (Stock_ID, Discussion_Date, View_BDL, Alert_BDL, Alert_Date, Stock_Price, Position_BDL) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['Stock_ID'], "text"),
-                       GetSQLValueString($_POST['Discussion_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Discussion_Date']), "date"),
                        GetSQLValueString($_POST['View_BDL'], "text"),
                        GetSQLValueString(isset($_POST['Alert_BDL']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString($_POST['Alert_Date'], "date"),
@@ -693,7 +705,7 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 
 <script>
 $(function() {
-		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
+		$( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , showButtonPanel: true });
 	});
 function MM_openBrWindow(theURL,winName,features) { //v2.0
   window.open(theURL,winName,features);
@@ -752,8 +764,8 @@ do {
                   <tr valign="baseline">
                     <td nowrap="nowrap" align="right"><p>Flag date</p></td>
                     <td><span id="sprytextfield1">
-                    <input type="text" class="datepicker" name="Flag_Date" value="<?php echo htmlentities($row_Sector['Flag_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" />
-<span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span></span></td>
+                    <input type="text" class="datepicker" name="Flag_Date" value="<?php echo htmlentities(changedateusfr($row_Sector['Flag_Date']), ENT_COMPAT, 'UTF-8'); ?>" size="32" />
+<span class="textfieldInvalidFormatMsg">Invalid format. Should be dd-mm-yyyy</span></span></td>
                   </tr>
                   <tr valign="baseline">
                     <td nowrap="nowrap" align="right">&nbsp;</td>
@@ -772,7 +784,7 @@ do {
                 </tr>
                 <?php do { ?>
                   <tr>
-                    <td width="33%"><?php echo $row_Detail['Last_Entry_Date']; ?></td>
+                    <td width="33%"><?php echo changedateusfr($row_Detail['Last_Entry_Date']); ?></td>
                     <td><a href="#" onclick="MM_openBrWindow('Edit_Detail.php?Detail_ID=<?php echo $row_Detail['Detail_ID']; ?>','','scrollbars=yes,resizable=yes,width=800,height=500')"> <?php echo $row_Detail['Sector_Analysis_Title']; ?></a></td>
                   </tr>
                   <?php } while ($row_Detail = mysql_fetch_assoc($Detail)); ?>
@@ -982,7 +994,7 @@ do {
                   </tr>
                   <?php do { ?>
                   <tr>
-                    <td><a href="#" onclick="MM_openBrWindow('EditDiscussion.php?Discussion_ID=<?php echo $row_Discussions['Discussion_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Discussions['Discussion_Date']; ?></a></td>
+                    <td><a href="#" onclick="MM_openBrWindow('EditDiscussion.php?Discussion_ID=<?php echo $row_Discussions['Discussion_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo changedateusfr($row_Discussions['Discussion_Date']); ?></a></td>
                     <td width="60%"><?php echo substr(strip_tags($row_Discussions['View_BDL']),0,200); ?>&nbsp; </td>
                     <td><?php echo $row_Discussions['Stock_Price']; ?>&nbsp; </td>
                     <td><?php echo $row_Discussions['Position_BDL']; ?>&nbsp; </td>
@@ -999,7 +1011,7 @@ do {
                           <td width="30%" align="right" nowrap="nowrap">Discussion date</td>
                           <td width="70%"><span id="sprytextfield2">
                             <input type="text" name="Discussion_Date" class="datepicker" value="" size="32" />
-                            <span class="textfieldInvalidFormatMsg">Invalid format (should be : yyyy-mm-dd)</span></span></td>
+                            <span class="textfieldInvalidFormatMsg">Invalid format (should be : dd-mm-yyyy)</span></span></td>
                         </tr>
                         <tr valign="baseline">
                           <td nowrap="nowrap" align="right">BDL View</td>
@@ -1084,7 +1096,7 @@ do {
                         <?php do { ?>
                         <tr>
                           <td><?php echo $row_Meetins_Results['Meeting_Type']; ?>&nbsp;</td>
-                          <td><a href="#" onclick="MM_openBrWindow('EditMeeting.php?Meeting_ID=<?php echo $row_Meetins_Results['Meeting_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo $row_Meetins_Results['Meeting_Date']; ?></a></td>
+                          <td><a href="#" onclick="MM_openBrWindow('EditMeeting.php?Meeting_ID=<?php echo $row_Meetins_Results['Meeting_ID']; ?>','','scrollbars=yes,width=900,height=500')"><?php echo changedateusfr($row_Meetins_Results['Meeting_Date']); ?></a></td>
                           <td><?php echo $row_Meetins_Results['Meeting_Contact']; ?>&nbsp; </td>
                           <td><?php echo $row_Meetins_Results['Initiales']; ?>&nbsp; </td>
                           <td><?php echo substr(strip_tags($row_Meetins_Results['Meeting_Conclusions']),0,200); ?>&nbsp; </td>
@@ -1123,7 +1135,7 @@ do {
                             <td nowrap="nowrap" align="right">Meeting date:</td>
                             <td><span id="sprytextfield5">
                             <input type="text" name="Meeting_Date" class="datepicker" value="" size="32" />
-                            <span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span><span class="textfieldRequiredMsg">A value is required.</span></span></td>
+                            <span class="textfieldInvalidFormatMsg">Invalid format. Should be dd-mm-yyyy</span><span class="textfieldRequiredMsg">A value is required.</span></span></td>
                           </tr>
                           <tr valign="baseline">
                             <td nowrap="nowrap" align="right">Meeting contact:</td>
@@ -1268,15 +1280,15 @@ do {
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
 var TabbedPanels4 = new Spry.Widget.TabbedPanels("TabbedPanels4");
 var CollapsiblePanel2 = new Spry.Widget.CollapsiblePanel("CollapsiblePanel2", {contentIsOpen:false});
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"]});
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "date", {format:"dd-mm-yyyy", isRequired:false, validateOn:["blur"]});
 var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
 var Accordion1 = new Spry.Widget.Accordion("Accordion1");
 var Accordion2 = new Spry.Widget.Accordion("Accordion2");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email", {isRequired:false});
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "none", {hint:"+00.0.00.00.00.00", isRequired:false});
-var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"yyyy-mm-dd", isRequired:false, validateOn:["blur"]});
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"dd-mm-yyyy", isRequired:false, validateOn:["blur"]});
 var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3");
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"yyyy-mm-dd"});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"dd-mm-yyyy"});
 var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
 //-->
 </script>

@@ -39,7 +39,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $updateSQL = sprintf("UPDATE Details SET Sector_ID=%s, Last_Entry_Date=%s, Sector_Analysis_Title=%s, Sector_Analysis_Text=%s WHERE Detail_ID=%s",
                        GetSQLValueString($_POST['Sector_ID'], "int"),
-                       GetSQLValueString($_POST['Last_Entry_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Last_Entry_Date']), "date"),
                        GetSQLValueString($_POST['Sector_Analysis_Title'], "text"),
                        GetSQLValueString($_POST['Sector_Analysis_Text'], "text"),
                        GetSQLValueString($_POST['Detail_ID'], "int"));
@@ -57,6 +57,19 @@ $query_Current_Detail = sprintf("SELECT * FROM Details WHERE Detail_ID = %s", Ge
 $Current_Detail = mysql_query($query_Current_Detail, $localhost) or die(mysql_error());
 $row_Current_Detail = mysql_fetch_assoc($Current_Detail);
 $totalRows_Current_Detail = mysql_num_rows($Current_Detail);
+?>
+<?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -201,7 +214,7 @@ $totalRows_Current_Detail = mysql_num_rows($Current_Detail);
 
 <script>
 $(function() {
-		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
+		$( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , showButtonPanel: true });
 	});
 function MM_callJS(jsStr) { //v2.0
   return eval(jsStr)
@@ -232,8 +245,8 @@ function MM_callJS(jsStr) { //v2.0
         <tr valign="baseline">
           <td width="29%" align="right" nowrap="nowrap">Date</td>
           <td width="71%"><span id="sprytextfield1">
-          <input type="text" name="Last_Entry_Date" class="datepicker" value="<?php echo htmlentities($row_Current_Detail['Last_Entry_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" />
-<span class="textfieldInvalidFormatMsg">Invalid format.Should be yyyy-mm-dd</span></span></td>
+          <input type="text" name="Last_Entry_Date" class="datepicker" value="<?php echo htmlentities(changedateusfr($row_Current_Detail['Last_Entry_Date']), ENT_COMPAT, 'UTF-8'); ?>" size="32" />
+<span class="textfieldInvalidFormatMsg">Invalid format.Should be dd-mm-yyyy</span></span></td>
         </tr>
         <tr valign="baseline">
           <td nowrap="nowrap" align="right">Sector analysis title</td>
@@ -260,7 +273,7 @@ function MM_callJS(jsStr) { //v2.0
 </div>
 <script type="text/javascript">
 <!--
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {format:"yyyy-mm-dd", isRequired:false});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {format:"dd-mm-yyyy", isRequired:false});
 //-->
 </script>
 </body>

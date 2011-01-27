@@ -1,5 +1,18 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
+<?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -132,7 +145,7 @@ $(document).ready(function() {
   </tr>
   <tr>
     <td width="15%">Flag date</td>
-    <td><?php echo $row_Current_Stock['Flag_Date']; ?></td>
+    <td><?php echo changedateusfr($row_Current_Stock['Flag_Date']); ?></td>
   </tr>
   <tr>
     <td width="15%">In portfolio</td>
@@ -192,7 +205,7 @@ $(document).ready(function() {
   <table width="100%" border="1">
     <tr>
       <td width="15%" valign="top">Discussion date</td>
-      <td><?php echo $row_Related_Discussions['Discussion_Date']; ?></td>
+      <td><?php echo changedateusfr($row_Related_Discussions['Discussion_Date']); ?></td>
     </tr>
     <tr>
       <td width="15%" valign="top">Stock price</td>
@@ -224,7 +237,7 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td width="15%" valign="top">Date</td>
-      <td><?php echo $row_Meeting_results['Meeting_Date']; ?></td>
+      <td><?php echo changedateusfr($row_Meeting_results['Meeting_Date']); ?></td>
     </tr>
     <tr>
       <td width="15%" valign="top">Meeting contact</td>

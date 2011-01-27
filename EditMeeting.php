@@ -51,7 +51,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $updateSQL = sprintf("UPDATE Meetings_Results SET Meeting_Type=%s, Meeting_Date=%s, Meeting_Contact=%s, BDL_Contact=%s, Meeting_Notes=%s, Meeting_Conclusions=%s WHERE Meeting_ID=%s",
                        GetSQLValueString($_POST['Meeting_Type'], "text"),
-                       GetSQLValueString($_POST['Meeting_Date'], "date"),
+                       GetSQLValueString(changedatefrus($_POST['Meeting_Date']), "date"),
                        GetSQLValueString($_POST['Meeting_Contact'], "text"),
                        GetSQLValueString($_POST['BDL_Contact'], "int"),
                        GetSQLValueString($_POST['Meeting_Notes'], "text"),
@@ -77,6 +77,20 @@ $query_All_Users = "SELECT * FROM Users";
 $All_Users = mysql_query($query_All_Users, $localhost) or die(mysql_error());
 $row_All_Users = mysql_fetch_assoc($All_Users);
 $totalRows_All_Users = mysql_num_rows($All_Users);
+?>
+
+<?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -221,7 +235,7 @@ $totalRows_All_Users = mysql_num_rows($All_Users);
 
 <script>
 $(function() {
-		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' , showButtonPanel: true });
+		$( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , showButtonPanel: true });
 	});
 function MM_openBrWindow(theURL,winName,features) { //v2.0
   window.open(theURL,winName,features);
@@ -270,8 +284,8 @@ function MM_callJS(jsStr) { //v2.0
         <tr valign="baseline">
           <td nowrap="nowrap" align="right">Meeting date</td>
           <td><span id="sprytextfield1">
-          <input type="text" name="Meeting_Date" class="datepicker" value="<?php echo htmlentities($row_current_meeting['Meeting_Date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" />
-<span class="textfieldInvalidFormatMsg">Invalid format. Should be yyyy-mm-dd</span></span></td>
+          <input type="text" name="Meeting_Date" class="datepicker" value="<?php echo htmlentities(changedateusfr($row_current_meeting['Meeting_Date']), ENT_COMPAT, 'UTF-8'); ?>" size="32" />
+<span class="textfieldInvalidFormatMsg">Invalid format. Should be dd-mm-yyyy</span></span></td>
         </tr>
         <tr valign="baseline">
           <td nowrap="nowrap" align="right">Meeting contact</td>
@@ -317,7 +331,7 @@ do {
 <!-- end #container --></div>
 <script type="text/javascript">
 <!--
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {format:"yyyy-mm-dd", isRequired:false});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {format:"dd-mm-yyyy", isRequired:false});
 //-->
 </script>
 </body>
