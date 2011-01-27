@@ -192,6 +192,8 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
       </label>
     </form>
     <hr />
+	<?php if ($totalRows_Stock_Results > 0) { // Show if recordset not empty ?> 
+	
     <p>Stocks    </p>
     <table width="100%" border="1" align="center">
       <tr>
@@ -203,6 +205,9 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
         </tr>
         <?php } while ($row_Stock_Results = mysql_fetch_assoc($Stock_Results)); ?>
     </table>
+      <?php } // Show if recordset not empty ?>
+
+	<?php if ($totalRows_Meetings_Results > 0) { // Show if recordset not empty ?> 
     <p>Meetings/Results    </p>
     <table width="100%" border="1" align="center">
       <tr>
@@ -218,6 +223,9 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
         </tr>
         <?php } while ($row_Meetings_Results = mysql_fetch_assoc($Meetings_Results)); ?>
     </table>
+          <?php } // Show if recordset not empty ?>
+
+    <?php if ($totalRows_Details_Results > 0) { // Show if recordset not empty ?> 
     <p>Analysis    </p>
     <table width="100%" border="1" align="center">
       <tr>
@@ -233,6 +241,9 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
         </tr>
         <?php } while ($row_Details_Results = mysql_fetch_assoc($Details_Results)); ?>
     </table>
+              <?php } // Show if recordset not empty ?>
+
+    <?php if ($totalRows_Contact_Result > 0) { // Show if recordset not empty ?> 
     <p>Contacts    </p>
     <table width="100%" border="1" align="center">
       <tr>
@@ -246,6 +257,10 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
         </tr>
         <?php } while ($row_Contact_Result = mysql_fetch_assoc($Contact_Result)); ?>
     </table>
+                  <?php } // Show if recordset not empty ?>
+
+   	
+    <?php if ($totalRows_Discussions_Results > 0) { // Show if recordset not empty ?> 
     <p>BDL Discussions&nbsp;    </p>
     <table width="100%" border="1" align="center">
       <tr>
@@ -259,6 +274,8 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
         </tr>
         <?php } while ($row_Discussions_Results = mysql_fetch_assoc($Discussions_Results)); ?>
     </table>
+                      <?php } // Show if recordset not empty ?>
+
     <p>&nbsp;</p>
   </div>
 <div id="footer">

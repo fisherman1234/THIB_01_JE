@@ -252,7 +252,15 @@ $(function() {
               <input type="hidden" id="sector_id" name="sector_id" />
               <br />Click on the suggested name to access its form. </p>
           </form>
-          <h2>&nbsp;</h2>
+          <h3>Full text search</h3>
+          <form id="form1" name="form1" method="get" action="Search.php">
+      <label>Search
+        <input name="Search" type="text" id="Search"  size="30" />
+      </label>
+      <label>
+        <input type="submit" name="Submit" id="Submit" value="Submit" />
+      </label>
+    </form>
         <h4><a href="Administration.php">Administration</a></h4></td>
         <td width="50%" colspan="-1">
         <h3>My lasts stocks </h3>
@@ -285,7 +293,9 @@ $(function() {
         <p>&nbsp;</p></td>
       </tr>
       <tr>
-        <td colspan="2" valign="top"><h3>Upcoming stocks</h3><table width="100%" border="1" align="center">
+        <td colspan="2" valign="top"><hr />
+          <h3>Upcoming stocks</h3>
+          <table width="100%" border="1" align="center">
   <tr>
     <td width="34%">Stock name</td>
     <td width="30%">Flag date</td>
@@ -298,10 +308,7 @@ $(function() {
       <td><?php echo $row_MyFlaggedStocks['Sector_Name']; ?>&nbsp; </td>
     </tr>
     <?php } while ($row_MyFlaggedStocks = mysql_fetch_assoc($MyFlaggedStocks)); ?>
-</table>
-<br />
-<?php echo $totalRows_MyFlaggedStocks ?> Records Total
-</p></td>
+</table></td>
       </tr>
     </table>
 	<!-- end #mainContent --></div>
