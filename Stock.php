@@ -284,14 +284,14 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form12")) {
   $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
 }
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
-  $updateSQL = sprintf("UPDATE Stocks SET In_Charge=%s WHERE Stock_ID=%s",
-                       GetSQLValueString($_POST['In_Charge'], "int"),
-                       GetSQLValueString($_POST['Stock_ID'], "int"));
-
-  mysql_select_db($database_localhost, $localhost);
-  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
-}
+#if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
+#  $updateSQL = sprintf("UPDATE Stocks SET In_Charge=%s WHERE Stock_ID=%s",
+#                       GetSQLValueString($_POST['In_Charge'], "int"),
+#                       GetSQLValueString($_POST['Stock_ID'], "int"));
+#
+#  mysql_select_db($database_localhost, $localhost);
+#  $Result1 = mysql_query($updateSQL, $localhost) or die(mysql_error());
+#}
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form17")) {
   $updateSQL = sprintf("UPDATE Stocks SET Sector_ID=%s, In_Charge=%s WHERE Stock_ID=%s",
@@ -340,8 +340,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form14")) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form16")) {
-  $updateSQL = sprintf("UPDATE Stocks SET In_Charge=%s, Flagged=%s, Flag_Date=%s WHERE Stock_ID=%s",
+  $updateSQL = sprintf("UPDATE Stocks SET In_Charge=%s, Is_In_Portfolio=%s, Flagged=%s, Flag_Date=%s WHERE Stock_ID=%s",
                        GetSQLValueString($_POST['In_Charge'], "int"),
+					   GetSQLValueString(isset($_POST['Is_In_Portfolio']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString(isset($_POST['Flagged']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString($_POST['Flag_Date'], "date"),
                        GetSQLValueString($_POST['Stock_ID'], "int"));
@@ -741,6 +742,10 @@ do {
 } while ($row_All_Users = mysql_fetch_assoc($All_Users));
 ?>
                       </select></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td height="45" align="right" nowrap="nowrap">In portfolio</td>
+                    <td><input type="checkbox" name="Is_In_Portfolio" value=""  <?php if (!(strcmp(htmlentities($row_Sector['Is_In_Portfolio'], ENT_COMPAT, 'UTF-8'),1))) {echo "checked=\"checked\"";} ?> /></td>
                   </tr>
                   <tr valign="baseline">
                     <td nowrap="nowrap" align="right">Flagged</td>
