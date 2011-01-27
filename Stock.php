@@ -451,7 +451,7 @@ if (isset($_GET['Stock_ID'])) {
   $colname_Discussions = $_GET['Stock_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Discussions = sprintf("SELECT * FROM BDL_Discussions WHERE Stock_ID = %s ORDER BY BDL_Discussions.Discussion_Date", GetSQLValueString($colname_Discussions, "text"));
+$query_Discussions = sprintf("SELECT * FROM BDL_Discussions WHERE Stock_ID = %s ORDER BY BDL_Discussions.Discussion_Date DESC", GetSQLValueString($colname_Discussions, "text"));
 $query_limit_Discussions = sprintf("%s LIMIT %d, %d", $query_Discussions, $startRow_Discussions, $maxRows_Discussions);
 $Discussions = mysql_query($query_limit_Discussions, $localhost) or die(mysql_error());
 $row_Discussions = mysql_fetch_assoc($Discussions);
@@ -469,7 +469,7 @@ if (isset($_GET['Stock_ID'])) {
   $colname_Meetins_Results = $_GET['Stock_ID'];
 }
 mysql_select_db($database_localhost, $localhost);
-$query_Meetins_Results = sprintf("SELECT * FROM Meetings_Results, Users WHERE Stock_ID = %s AND Meetings_Results.BDL_Contact=Users.Id ORDER BY Meetings_Results.Meeting_Date", GetSQLValueString($colname_Meetins_Results, "int"));
+$query_Meetins_Results = sprintf("SELECT * FROM Meetings_Results, Users WHERE Stock_ID = %s AND Meetings_Results.BDL_Contact=Users.Id ORDER BY Meetings_Results.Meeting_Date DESC", GetSQLValueString($colname_Meetins_Results, "int"));
 $Meetins_Results = mysql_query($query_Meetins_Results, $localhost) or die(mysql_error());
 $row_Meetins_Results = mysql_fetch_assoc($Meetins_Results);
 $totalRows_Meetins_Results = mysql_num_rows($Meetins_Results);
