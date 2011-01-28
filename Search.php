@@ -1,5 +1,18 @@
 <?php require_once('Connections/localhost.php'); ?>
 <?php
+function changedateusfr($dateus) 
+{ 
+$datefr=$dateus{8}.$dateus{9}."-".$dateus{5}.$dateus{6}."-".$dateus{0}.$dateus{1}.$dateus{2}.$dateus{3}; 
+return $datefr; 
+} 
+
+function changedatefrus($datefr) 
+{ 
+$dateus=$datefr{6}.$datefr{7}.$datefr{8}.$datefr{9}."-".$datefr{3}.$datefr{4}."-".$datefr{0}.$datefr{1}; 
+return $dateus; 
+} 
+?>
+<?php
 if (!isset($_SESSION)) {
   session_start();
 }
@@ -44,7 +57,82 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
   exit;
 }
 ?>
+<?php
+function search_results($text_string)
+{
+	  	$search_string = htmlentities(utf8_decode($_GET['Search']));
+		$words = explode(' ', $search_string);
+		$clean_text_string = strip_tags($text_string);
+		foreach ( $words as $word )
+			{
+				$result = strpos(strtolower($clean_text_string), strtolower($word));
+				if ($result <> 0)
+				{
+				break 1;
+				}
+			}
+		return $result;
+	
+	}
+	
+function highlightWords($string, $words)
+ {
+	 $words = explode(' ', $words);
+    foreach ( $words as $word )
+    {
+        $string = str_ireplace($word, '<span STYLE="background-color: rgb(255,255,0)">'.$word.'</span>', $string);
+    }
+    /*** return the highlighted string ***/
+    return $string;
+ }
 
+function highlight($c,$q){ 
+$q=explode(' ',str_replace(array('','\\','+','*','?','[','^',']','$','(',')','{','}','=','!','<','>','|',':','#','-','_'),'',$q));
+for($i=0;$i<sizeOf($q);$i++) 
+    $c=preg_replace("/($q[$i])(?![^<]*>)/i","<span class=\"highlight\">\${1}</span>",$c);
+return $c;}
+
+function excerpt($text, $radius = 100, $ending = "...") { 
+
+		$text=strip_tags($text);
+		$phrase=htmlentities(utf8_decode($_GET['Search']));
+         $phraseLen = strlen($phrase); 
+       if ($radius < $phraseLen) { 
+             $radius = $phraseLen; 
+         } 
+
+         $phrases = explode (' ',$phrase);
+
+         foreach ($phrases as $phrase) {
+                 $pos = strpos(strtolower($text), strtolower($phrase)); 
+                 if ($pos > -1) break;
+         }
+
+         $startPos = 0; 
+         if ($pos > $radius) { 
+             $startPos = $pos - $radius; 
+         } 
+
+         $textLen = strlen($text); 
+
+         $endPos = $pos + $phraseLen + $radius; 
+         if ($endPos >= $textLen) { 
+             $endPos = $textLen; 
+         } 
+
+         $excerpt = substr($text, $startPos, $endPos - $startPos); 
+         if ($startPos != 0) { 
+             $excerpt = substr_replace($excerpt, $ending, 0, $phraseLen); 
+         } 
+
+         if ($endPos != $textLen) { 
+             $excerpt = substr_replace($excerpt, $ending, -$phraseLen); 
+         } 
+		
+        return highlightWords($excerpt,$phrase); 
+		
+   }
+?>
 <?php
 function check_in_range($user_date)
 {
@@ -197,12 +285,74 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
 	
     <p>Stocks    </p>
     <table width="100%" border="1" align="center">
-      <tr>
-        <td width="100%">Results</td>
-      </tr>
       <?php do { ?>
         <tr>
-          <td><a href="Stock.php?Stock_ID=<?php echo $row_Stock_Results['Stock_ID']; ?>"> <?php echo $row_Stock_Results['Stock_Name']; ?>&nbsp; </a></td>
+          <td><p><a href="Stock.php?Stock_ID=<?php echo $row_Stock_Results['Stock_ID']; ?>"> <?php echo $row_Stock_Results['Stock_Name']; ?>&nbsp; </a></p>
+            <table width="100%" border="1">
+            
+            	<?php if (search_results($row_Stock_Results['Environment']) <> 0) { // Show if recordset not empty ?> 
+
+            
+              <tr>
+                <th width="20%" scope="row">Environment</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=1"><?php echo  excerpt($row_Stock_Results['Environment']); ?></a></td>
+              </tr>
+                    <?php } // Show if recordset not empty ?>
+     		
+			<?php if (search_results($row_Stock_Results['Business_Description']) <> 0) { // Show if recordset not empty ?> 
+
+
+              <tr>
+                <th width="20%" scope="row">Business description</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=1&tab2=1"><?php echo excerpt($row_Stock_Results['Business_Description']); ?></a></td>
+              </tr>
+           
+           <?php } // Show if recordset not empty ?>
+           			<?php if (search_results($row_Stock_Results['Competition']) <> 0) { // Show if recordset not empty ?> 
+
+              <tr>
+                <th width="20%" scope="row">Competition</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=1&tab2=2"><?php echo excerpt($row_Stock_Results['Competition']); ?></a></td>
+              </tr>
+              
+            <?php } // Show if recordset not empty ?>
+           			<?php if (search_results($row_Stock_Results['Management']) <> 0) { // Show if recordset not empty ?> 
+
+           
+              <tr>
+                <th width="20%" scope="row">Management</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=1&tab2=3"><?php echo excerpt($row_Stock_Results['Management']); ?></a></td>
+              </tr>
+            
+            <?php } // Show if recordset not empty ?>
+           			<?php if (search_results($row_Stock_Results['Investment_Case']) <> 0) { // Show if recordset not empty ?>   
+            
+              <tr>
+                <th width="20%" scope="row">Investment Case</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=2"><?php echo excerpt($row_Stock_Results['Investment_Case']); ?></a></td>
+              </tr>
+              
+              <?php } // Show if recordset not empty ?>
+           			<?php if (search_results($row_Stock_Results['Investment_Risks_Macro']) <> 0) { // Show if recordset not empty ?>   
+            
+              
+              <tr>
+                <th width="20%" scope="row">Risks macro</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=2&tab3=2"><?php echo excerpt($row_Stock_Results['Investment_Risks_Macro']); ?></a></td>
+              </tr>
+              
+               <?php } // Show if recordset not empty ?>
+           			<?php if (search_results($row_Stock_Results['Investment_Risks_Micro']) <> 0) { // Show if recordset not empty ?>   
+              
+              <tr>
+                <th width="20%" scope="row">Risks micro</th>
+                <td><a href="Stock.php?Stock_ID=<?php echo  excerpt($row_Stock_Results['Stock_ID']); ?>&tab1=2&tab3=2"><?php echo excerpt($row_Stock_Results['Investment_Risks_Micro']); ?></a></td>
+              </tr>
+               
+                <?php } // Show if recordset not empty ?>
+
+            </table>
+            </td>
         </tr>
         <?php } while ($row_Stock_Results = mysql_fetch_assoc($Stock_Results)); ?>
     </table>
@@ -212,15 +362,15 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
     <p>Meetings/Results    </p>
     <table width="100%" border="1" align="center">
       <tr>
-        <td width="34%">Meeting_Type</td>
-        <td width="33%">Meeting_Date</td>
-        <td width="33%">Stock_Name</td>
+        <td>Meeting type</td>
+        <td width="30%">Stock</td>
+        <td width="50%">Abstract</td>
       </tr>
       <?php do { ?>
         <tr>
-          <td><a href="EditMeeting.php?Meeting_ID=<?php echo $row_Meetings_Results['Meeting_ID']; ?>"> <?php echo $row_Meetings_Results['Meeting_Type']; ?>&nbsp; </a></td>
-          <td><?php echo $row_Meetings_Results['Meeting_Date']; ?> </td>
-          <td><a href="Stock.php?Stock_ID=<?php echo $row_Meetings_Results['Stock_ID']; ?>"><?php echo $row_Meetings_Results['Stock_Name']; ?> </a></td>
+          <td> <?php echo $row_Meetings_Results['Meeting_Type']; ?></td>
+          <td width="30%"><a href="Stock.php?Stock_ID=<?php echo $row_Meetings_Results['Stock_ID']; ?>"><?php echo $row_Meetings_Results['Stock_Name']; ?></a></td>
+          <td width="50%"><a href="EditMeeting.php?Meeting_ID=<?php echo $row_Meetings_Results['Meeting_ID']; ?>"><?php echo excerpt($row_Meetings_Results['Meeting_Notes']); ?> // <?php echo excerpt($row_Meetings_Results['Meeting_Conclusions']); ?></a></td>
         </tr>
         <?php } while ($row_Meetings_Results = mysql_fetch_assoc($Meetings_Results)); ?>
     </table>
@@ -230,15 +380,15 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
     <p>Analysis    </p>
     <table width="100%" border="1" align="center">
       <tr>
-        <td width="37%">Sector_Analysis_Title</td>
-        <td width="32%">Last_Entry_Date</td>
-        <td width="31%">Sector_Name</td>
+        <td>Title</td>
+        <td width="15%">Date</td>
+        <td width="50%">Abstract</td>
       </tr>
       <?php do { ?>
         <tr>
           <td><a href="Edit_Detail.php?Detail_ID=<?php echo $row_Details_Results['Detail_ID']; ?>"> <?php echo $row_Details_Results['Sector_Analysis_Title']; ?>&nbsp; </a></td>
-          <td><?php echo $row_Details_Results['Last_Entry_Date']; ?>&nbsp; </td>
-          <td><a href="Sector.php?Sector_ID=<?php echo $row_Details_Results['Sector_ID']; ?>"><?php echo $row_Details_Results['Sector_Name']; ?></a> </td>
+          <td width="15%"><?php echo changedateusfr($row_Details_Results['Last_Entry_Date']); ?>&nbsp; </td>
+          <td width="50%"><?php echo excerpt($row_Details_Results['Sector_Analysis_Text']); ?></td>
         </tr>
         <?php } while ($row_Details_Results = mysql_fetch_assoc($Details_Results)); ?>
     </table>
@@ -248,8 +398,8 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
     <p>Contacts    </p>
     <table width="100%" border="1" align="center">
       <tr>
-        <td width="43%">Name</td>
-        <td width="57%">Stock_Name</td>
+        <td width="43%">Contact</td>
+        <td width="57%">Stock</td>
       </tr>
       <?php do { ?>
         <tr>
@@ -265,13 +415,15 @@ $queryString_MyFlaggedStocks = sprintf("&totalRows_MyFlaggedStocks=%d%s", $total
     <p>BDL Discussions&nbsp;    </p>
     <table width="100%" border="1" align="center">
       <tr>
-        <td width="52%">Discussion_Date</td>
-        <td width="48%">Stock_Name</td>
+        <td>Date</td>
+        <td width="30%">Stock</td>
+        <td width="50%">Abstract</td>
       </tr>
       <?php do { ?>
         <tr>
-          <td><a href="EditDiscussion.php?Discussion_ID=<?php echo $row_Discussions_Results['Discussion_ID']; ?>"> <?php echo $row_Discussions_Results['Discussion_Date']; ?>&nbsp; </a></td>
-          <td><a href="Stock.php?Stock_ID=<?php echo $row_Discussions_Results['Stock_ID']; ?>"> <?php echo $row_Discussions_Results['Stock_Name']; ?></a> </td>
+          <td><?php echo changedateusfr($row_Discussions_Results['Discussion_Date']); ?></td>
+          <td width="30%"><a href="Stock.php?Stock_ID=<?php echo $row_Discussions_Results['Stock_ID']; ?>"> <?php echo $row_Discussions_Results['Stock_Name']; ?></a> </td>
+          <td width="50%"><a href="EditDiscussion.php?Discussion_ID=<?php echo $row_Discussions_Results['Discussion_ID']; ?>"> <?php echo excerpt($row_Discussions_Results['View_BDL']); ?></a></td>
         </tr>
         <?php } while ($row_Discussions_Results = mysql_fetch_assoc($Discussions_Results)); ?>
     </table>
