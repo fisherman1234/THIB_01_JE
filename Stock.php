@@ -567,6 +567,7 @@ $queryString_Discussions = sprintf("&totalRows_Discussions=%d%s", $totalRows_Dis
 <link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
 <link href="SpryAssets/SpryCollapsiblePanel.css" rel="stylesheet" type="text/css" />
 <link href="SpryAssets/SpryAccordion.css" rel="stylesheet" type="text/css" />
+
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
@@ -718,7 +719,12 @@ back-button {
 	padding-bottom: 10px;
 }
 -->
-</style></head>
+</style>
+<script type="text/javascript" src="SpryAssets/SpryURLUtils.js"></script>
+<script type="text/javascript">
+var params = Spry.Utils.getLocationParamsAsObject();
+</script>
+</head>
 
 <body class="twoColElsLtHdr">
 
@@ -1277,8 +1283,8 @@ do {
 <!-- end #container --></div>
 <script type="text/javascript">
 <!--
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
-var TabbedPanels4 = new Spry.Widget.TabbedPanels("TabbedPanels4");
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1", {defaultTab: params.tab1 ? params.tab1 : 0});
+var TabbedPanels4 = new Spry.Widget.TabbedPanels("TabbedPanels4", {defaultTab: params.tab3 ? params.tab3 : 0});
 var CollapsiblePanel2 = new Spry.Widget.CollapsiblePanel("CollapsiblePanel2", {contentIsOpen:false});
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "date", {format:"dd-mm-yyyy", isRequired:false, validateOn:["blur"]});
 var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
@@ -1287,7 +1293,7 @@ var Accordion2 = new Spry.Widget.Accordion("Accordion2");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email", {isRequired:false});
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "none", {hint:"+00.0.00.00.00.00", isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "date", {format:"dd-mm-yyyy", isRequired:false, validateOn:["blur"]});
-var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3");
+var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3", {defaultTab: params.tab2 ? params.tab2 : 0});
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "date", {isRequired:false, format:"dd-mm-yyyy"});
 var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
 //-->
